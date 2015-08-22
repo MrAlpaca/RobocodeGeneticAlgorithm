@@ -103,7 +103,6 @@ public class Argument
 	static
 	{
 		possibilities = new ArrayList<>();
-		allPossibilities = new ArrayList<>();
 		
 		/*
 		 * Boolean Arguments
@@ -359,7 +358,7 @@ public class Argument
 			}
 		}
 		
-		allPossibilities.addAll(possibilities);
+		allPossibilities = new ArrayList<>(possibilities);
 	}
 	
 	public static void add (Class<? extends Argument> type)
@@ -372,9 +371,7 @@ public class Argument
 		for (int i = 0; i < times; i++) possibilities.add(type);
 	}
 	
-	public static interface RunTimeValue {}
-	
-	public static interface EventInfo extends RunTimeValue
+	public static interface EventInfo
 	{
 		public static interface Bullet {}
 		public static interface HitBullet {}
@@ -387,27 +384,40 @@ public class Argument
 		public static interface Distance {}
 	}
 	
-	public static interface RobotInfo extends RunTimeValue {}
+	public static interface RobotInfo {}
 	public static interface Constant {}
-	public static interface Random extends RunTimeValue {}
+	public static interface Random {}
 	public static interface Compound {}
-	public static interface Variable extends RunTimeValue {}
+	public static interface Variable {}
 	
 	/*
-	 * Generate methods modify the static list possibilities
-	 * Useful for when the requirements need to match the requirements of upper levels in the call stack
+	 * Public generate methods modify the list allPossibilities so the outside caller's requirements will be considered further down the stack call
 	 */
 	
+	/**
+	 * Returns a random argument
+	 * @return New instance of an argument type, chosen randomly from all of the possibilities
+	 */
 	public static Argument generate ()
 	{
 		return generate(new ArrayList<Class <?> >(), new ArrayList<Class <?> >());
 	}
 	
+	/**
+	 * Returns a new argument according to the requirements
+	 * @param a The argument to recreate
+	 * @return A new argument of the same type as a
+	 */
 	public static Argument generate (Argument a)
 	{
 		return generate(a.getClass());
 	}
 	
+	/**
+	 * Returns a new argument according to the requirements
+	 * @param hasToBe The new argument must be of this type
+	 * @return A new argument
+	 */
 	public static Argument generate (Class <?> hasToBe)
 	{
 		ArrayList<Class <?> > htb = new ArrayList<>();
@@ -416,6 +426,12 @@ public class Argument
 		return generate(htb, new ArrayList<Class <?> >());
 	}
 	
+	/**
+	 * Returns a new argument according to the requirements
+	 * @param hasToBe The new argument must be of this type
+	 * @param cannotBe The new argument cannot be of this type
+	 * @return A new argument
+	 */
 	public static Argument generate (Class <?> hasToBe, Class <?> cannotBe)
 	{
 		ArrayList<Class <?> > htb = new ArrayList<>();
@@ -427,7 +443,105 @@ public class Argument
 		return generate(htb, cnb);
 	}
 	
+	/**
+	 * Returns a new argument according to the requirements
+	 * @param hasToBe The new argument must be of all specified types in this list
+	 * @param cannotBe The new argument cannot be of any of the specified types in this list
+	 * @return
+	 */
 	public static Argument generate (List<Class<?>> hasToBe, List<Class<?>> cannotBe)
+	{
+		ArrayList <Class <? extends Argument> > excludedPossibilities = new ArrayList<>();
+		
+		Iterator< Class <? extends Argument> > possibilitiesIterator = allPossibilities.listIterator();
+		
+		while (possibilitiesIterator.hasNext())
+		{
+			Iterator< Class <?> > htbIterator = hasToBe.listIterator();
+			Iterator< Class <?> > cnbIterator = cannotBe.listIterator();
+			
+			Class<? extends Argument> poss = possibilitiesIterator.next();
+			
+			while (htbIterator.hasNext())
+			{
+				Class<?> type = htbIterator.next();
+				if (!type.isAssignableFrom(poss))
+				{
+					excludedPossibilities.add(poss);
+					possibilitiesIterator.remove();
+				}
+			}
+			
+			while (cnbIterator.hasNext())
+			{
+				Class<?> type = cnbIterator.next();
+				if (type.isAssignableFrom(poss))
+				{
+					excludedPossibilities.add(poss);
+					possibilitiesIterator.remove();
+				}
+			}
+		}
+		
+		Argument toReturn = m_generate(hasToBe, cannotBe);
+		allPossibilities.addAll(excludedPossibilities);
+		
+		return toReturn;
+	}
+	
+	
+	/*
+	 * Generate method changes possibilities so it contains all of the possibilities that have been allowed by the outside caller (a copy of allPossibilities).
+	 * Then picks one possibility at random, creates a new instance of it, and return it.
+	 */
+	
+	private static Argument m_generate ()
+	{
+		return m_generate(new ArrayList<Class <?> >(), new ArrayList<Class <?> >());
+	}
+	
+	@SuppressWarnings("unused")
+	private static Argument m_generate (Argument a)
+	{
+		return m_generate(a.getClass());
+	}
+	
+	private static Argument m_generate (Class <?> hasToBe)
+	{
+		ArrayList<Class <?> > htb = new ArrayList<>();
+		htb.add(hasToBe);
+		
+		return m_generate(htb, new ArrayList<Class <?> >());
+	}
+	
+	@SuppressWarnings("unused")
+	private static Argument m_generate (Class <?> hasToBe, Class <?> cannotBe)
+	{
+		ArrayList<Class <?> > htb = new ArrayList<>();
+		ArrayList<Class <?> > cnb = new ArrayList<>();
+		
+		htb.add(hasToBe);
+		cnb.add(cannotBe);
+		
+		return m_generate(htb, cnb);
+	}
+	
+	private static Argument m_generate (List<Class<?>> hasToBe, List<Class<?>> cannotBe)
+	{
+		ArrayList <Class <? extends Argument> > copyPossibilities = new ArrayList<>(possibilities);
+		
+		possibilities.clear();
+		possibilities.addAll(allPossibilities);
+		
+		Argument toReturn = getRandomPossibility(hasToBe, cannotBe);
+		
+		possibilities.clear();
+		possibilities.addAll(copyPossibilities);
+		
+		return toReturn;
+	}
+	
+	private static Argument getRandomPossibility (List<Class<?>> hasToBe, List<Class<?>> cannotBe)
 	{
 		ArrayList <Class <? extends Argument> > excludedPossibilities = new ArrayList<>();
 		
@@ -477,67 +591,6 @@ public class Argument
 		possibilities.addAll(excludedPossibilities);
 		
 		return toReturn;
-	}
-	
-	/*
-	 * New Generate methods create a new list of possibilities (from the list allPossibilities)
-	 * Useful for when it is needed to ignore the requirements of the upper levels in the call stack
-	 * 
-	 * ***SHOULD BE REMOVED - THESE METHODS WILL CAUSE BUGS IN THE FUTURE*** 
-	 */
-	
-	public static Argument newGenerate ()
-	{
-		return newGenerate(new ArrayList<Class <?> >(), new ArrayList<Class <?> >());
-	}
-	
-	public static Argument newGenerate (Argument a)
-	{
-		return newGenerate(a.getClass());
-	}
-	
-	public static Argument newGenerate (Class <?> hasToBe)
-	{
-		ArrayList<Class <?> > htb = new ArrayList<>();
-		htb.add(hasToBe);
-		
-		return newGenerate(htb, new ArrayList<Class <?> >());
-	}
-	
-	public static Argument newGenerate (Class <?> hasToBe, Class <?> cannotBe)
-	{
-		ArrayList<Class <?> > htb = new ArrayList<>();
-		ArrayList<Class <?> > cnb = new ArrayList<>();
-		
-		htb.add(hasToBe);
-		cnb.add(cannotBe);
-		
-		return newGenerate(htb, cnb);
-	}
-	
-	public static Argument newGenerate (List<Class<?>> hasToBe, List<Class<?>> cannotBe)
-	{
-		
-		ArrayList <Class <? extends Argument> > copyPossibilities = new ArrayList<>(possibilities);
-		
-		possibilities.clear();
-		possibilities.addAll(allPossibilities);
-		
-		Argument toReturn = generate(hasToBe, cannotBe);
-		
-		possibilities.clear();
-		possibilities.addAll(copyPossibilities);
-		
-		return toReturn;
-		
-		
-		//return generate(hasToBe, cannotBe);
-	}
-	
-	public static int sign (Integer a)
-	{
-		if (a > 0) return 1;
-		else return -1;
 	}
 	
 	public boolean containsArgumentType (Class<?> type)
@@ -669,8 +722,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentBoolean) Argument.newGenerate(ArgumentBoolean.class);
-							b = (ArgumentBoolean) Argument.newGenerate(ArgumentBoolean.class);
+							a = (ArgumentBoolean) Argument.m_generate(ArgumentBoolean.class);
+							b = (ArgumentBoolean) Argument.m_generate(ArgumentBoolean.class);
 						}
 						
 						this.a = a;
@@ -691,8 +744,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentBoolean) Argument.newGenerate(ArgumentBoolean.class);
-							b = (ArgumentBoolean) Argument.newGenerate(ArgumentBoolean.class);
+							a = (ArgumentBoolean) Argument.m_generate(ArgumentBoolean.class);
+							b = (ArgumentBoolean) Argument.m_generate(ArgumentBoolean.class);
 						}
 						
 						this.a = a;
@@ -713,23 +766,23 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = Argument.newGenerate();
+							a = Argument.m_generate();
 							
 							if (a instanceof ArgumentBoolean)
 							{
-								b = Argument.newGenerate(ArgumentBoolean.class);
+								b = Argument.m_generate(ArgumentBoolean.class);
 							}
 							else if (a instanceof ArgumentInteger)
 							{
-								b = Argument.newGenerate(ArgumentInteger.class);
+								b = Argument.m_generate(ArgumentInteger.class);
 							}
 							else if (a instanceof ArgumentDouble)
 							{
-								b = Argument.newGenerate(ArgumentDouble.class);
+								b = Argument.m_generate(ArgumentDouble.class);
 							}
 							else
 							{
-								b = Argument.newGenerate(ArgumentString.class);
+								b = Argument.m_generate(ArgumentString.class);
 							}
 						}
 						
@@ -758,8 +811,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.newGenerate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.newGenerate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -780,8 +833,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.newGenerate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.newGenerate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -805,7 +858,7 @@ public class Argument
 				{
 					if (a == null)
 					{
-						a = (ArgumentBoolean) Argument.generate(ArgumentBoolean.class);
+						a = (ArgumentBoolean) Argument.m_generate(ArgumentBoolean.class);
 					}
 					
 					this.a = a;
@@ -967,7 +1020,7 @@ public class Argument
 			{
 				public IntegerRandomRange ()
 				{
-					this((ArgumentInteger)Argument.generate(ArgumentInteger.class));
+					this((ArgumentInteger)Argument.m_generate(ArgumentInteger.class));
 				}
 				
 				public IntegerRandomRange (ArgumentInteger range)
@@ -980,8 +1033,8 @@ public class Argument
 			{
 				public IntegerRandomOriginRange ()
 				{
-					this((ArgumentInteger)Argument.generate(ArgumentInteger.class),
-							(ArgumentInteger)Argument.generate(ArgumentInteger.class));
+					this((ArgumentInteger)Argument.m_generate(ArgumentInteger.class),
+							(ArgumentInteger)Argument.m_generate(ArgumentInteger.class));
 				}
 				
 				public IntegerRandomOriginRange (ArgumentInteger origin, ArgumentInteger range)
@@ -1013,8 +1066,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
-							b = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
+							a = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
+							b = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
 						}
 						
 						this.a = a;
@@ -1035,8 +1088,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
-							b = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
+							a = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
+							b = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
 						}
 						
 						this.a = a;
@@ -1057,8 +1110,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
-							b = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
+							a = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
+							b = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
 						}
 						
 						this.a = a;
@@ -1079,8 +1132,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
-							b = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
+							a = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
+							b = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
 							
 							
 						}
@@ -1103,7 +1156,7 @@ public class Argument
 				
 				public Absolute (ArgumentInteger a)
 				{
-					if (a == null) a = (ArgumentInteger) generate(ArgumentInteger.class);
+					if (a == null) a = (ArgumentInteger) m_generate(ArgumentInteger.class);
 					
 					this.a = a;
 					
@@ -1463,7 +1516,7 @@ public class Argument
 			{
 				public DoubleRandomBound ()
 				{
-					this((ArgumentDouble)Argument.generate(ArgumentDouble.class));
+					this((ArgumentDouble)Argument.m_generate(ArgumentDouble.class));
 				}
 				
 				public DoubleRandomBound (ArgumentDouble scale)
@@ -1476,8 +1529,8 @@ public class Argument
 			{
 				public DoubleRandomOriginBound ()
 				{
-					this((ArgumentDouble)Argument.generate(ArgumentDouble.class),
-							(ArgumentDouble)Argument.generate(ArgumentDouble.class));
+					this((ArgumentDouble)Argument.m_generate(ArgumentDouble.class),
+							(ArgumentDouble)Argument.m_generate(ArgumentDouble.class));
 				}
 				
 				public DoubleRandomOriginBound (ArgumentDouble origin, ArgumentDouble scale)
@@ -1509,8 +1562,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1531,8 +1584,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1553,8 +1606,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1575,8 +1628,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1597,8 +1650,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1619,8 +1672,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1641,8 +1694,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1663,8 +1716,8 @@ public class Argument
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1695,7 +1748,7 @@ public class Argument
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1715,7 +1768,7 @@ public class Argument
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1735,7 +1788,7 @@ public class Argument
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1755,7 +1808,7 @@ public class Argument
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1775,7 +1828,7 @@ public class Argument
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1795,7 +1848,7 @@ public class Argument
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1815,7 +1868,7 @@ public class Argument
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1835,7 +1888,7 @@ public class Argument
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
