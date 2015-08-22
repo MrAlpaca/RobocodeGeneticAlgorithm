@@ -89,20 +89,40 @@ import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringEventIn
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringRobotInfo.RobotInfoName;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.Null;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
-public class Argument
+public class Argument implements Generatable
 {
-	public Object value = "";
+	protected Object value = "";
 	
-	public static ArrayList <Class<? extends Argument>> possibilities, allPossibilities;
+	public boolean containsArgumentType (Class<?> type)
+	{
+		return (type.isInstance(this));
+	}
+	
+	public boolean isArgumentType (Class<?> type)
+	{
+		return (type.isInstance(this));
+	}
+	
+	public String toString ()
+	{
+		return value.toString();
+	}
+	
+	public int complexity ()
+	{
+		return 1;
+	}
+	
+	
+	
+	private static Generator <Argument> generator;
+	private static java.util.Random rnd = new java.util.Random();
 	
 	static
 	{
-		possibilities = new ArrayList<>();
+		generator = new Generator<>();
 		
 		/*
 		 * Boolean Arguments
@@ -112,44 +132,44 @@ public class Argument
 			 * Event Info
 			 */
 			{
-				add(EventInfoIsMyFault.class);
-				add(EventInfoIsSentryRobot.class);
+				generator.add(EventInfoIsMyFault.class);
+				generator.add(EventInfoIsSentryRobot.class);
 			}
 			
 			/*
 			 * Robot Info
 			 */
 			{
-				add(RobotInfoAdjustGunForRobotTurn.class);
-				add(RobotInfoAdjustRadarForGunTurn.class);
-				add(RobotInfoAdjustRadarForRobotTurn.class);
+				generator.add(RobotInfoAdjustGunForRobotTurn.class);
+				generator.add(RobotInfoAdjustRadarForGunTurn.class);
+				generator.add(RobotInfoAdjustRadarForRobotTurn.class);
 			}
 			
 			/*
 			 * Constants
 			 */
 			{
-				add(True.class);
-				add(False.class);
+				generator.add(True.class);
+				generator.add(False.class);
 			}
 			
 			/*
 			 * Random
 			 */
 			{
-				add(ArgumentBooleanRandom.class);
+				generator.add(ArgumentBooleanRandom.class);
 			}
 			
 			/*
 			 * Compound
 			 */
 			{
-				add(And.class);
-				add(Or.class);
-				add(Equals.class);
-				add(Greater.class);
-				add(GreaterEquals.class);
-				add(Not.class);
+				generator.add(And.class);
+				generator.add(Or.class);
+				generator.add(Equals.class);
+				generator.add(Greater.class);
+				generator.add(GreaterEquals.class);
+				generator.add(Not.class);
 			}
 			
 			/*
@@ -170,46 +190,46 @@ public class Argument
 			 * Robot Info
 			 */
 			{
-				add(RobotInfoNumRounds.class);
-				add(RobotInfoNumSentries.class);
-				add(RobotInfoOthers.class);
-				add(RobotInfoRoundNum.class);
-				add(RobotInfoTime.class);
+				generator.add(RobotInfoNumRounds.class);
+				generator.add(RobotInfoNumSentries.class);
+				generator.add(RobotInfoOthers.class);
+				generator.add(RobotInfoRoundNum.class);
+				generator.add(RobotInfoTime.class);
 			}
 			
 			/*
 			 * Constants
 			 */
 			{
-				add(One.class);
-				add(Zero.class);
-				add(NegativeOne.class);
-				add(Two.class);
-				add(Ten.class);
-				add(OneHundred.class);
-				add(ThreeHundredAndSixty.class);
-				add(ArgumentIntegerConstant.RandomConstant.class);
+				generator.add(One.class);
+				generator.add(Zero.class);
+				generator.add(NegativeOne.class);
+				generator.add(Two.class);
+				generator.add(Ten.class);
+				generator.add(OneHundred.class);
+				generator.add(ThreeHundredAndSixty.class);
+				generator.add(ArgumentIntegerConstant.RandomConstant.class);
 			}
 			
 			/*
 			 * Random
 			 */
 			{
-				add(IntegerRandomNoArguments.class);
-				add(IntegerRandomRange.class);
-				add(IntegerRandomOriginRange.class);
+				generator.add(IntegerRandomNoArguments.class);
+				generator.add(IntegerRandomRange.class);
+				generator.add(IntegerRandomOriginRange.class);
 			}
 			
 			/*
 			 * Compound
 			 */
 			{
-				add(ArgumentIntegerCompound.Binary.Addition.class);
-				add(ArgumentIntegerCompound.Binary.Subtraction.class);
-				add(ArgumentIntegerCompound.Binary.Multiplication.class);
-				add(Modulu.class);
+				generator.add(ArgumentIntegerCompound.Binary.Addition.class);
+				generator.add(ArgumentIntegerCompound.Binary.Subtraction.class);
+				generator.add(ArgumentIntegerCompound.Binary.Multiplication.class);
+				generator.add(Modulu.class);
 				
-				add(ArgumentIntegerCompound.Absolute.class);
+				generator.add(ArgumentIntegerCompound.Absolute.class);
 			}
 			
 			/*
@@ -230,87 +250,87 @@ public class Argument
 			 * Event Info
 			 */
 			{
-				add(EventInfoPower.class);
-				add(EventInfoEnergy.class);
-				add(EventInfoBearing.class);
-				add(EventInfoHeading.class);
-				add(EventInfoVelocity.class);
-				add(EventInfoDistance.class);
+				generator.add(EventInfoPower.class);
+				generator.add(EventInfoEnergy.class);
+				generator.add(EventInfoBearing.class);
+				generator.add(EventInfoHeading.class);
+				generator.add(EventInfoVelocity.class);
+				generator.add(EventInfoDistance.class);
 				
-				add(BulletPower.class);
-				add(BulletHeading.class);
-				add(BulletVelocity.class);
-				add(BulletX.class);
-				add(BulletY.class);
+				generator.add(BulletPower.class);
+				generator.add(BulletHeading.class);
+				generator.add(BulletVelocity.class);
+				generator.add(BulletX.class);
+				generator.add(BulletY.class);
 				
-				add(HitBulletPower.class);
-				add(HitBulletHeading.class);
-				add(HitBulletVelocity.class);
-				add(HitBulletX.class);
-				add(HitBulletY.class);
+				generator.add(HitBulletPower.class);
+				generator.add(HitBulletHeading.class);
+				generator.add(HitBulletVelocity.class);
+				generator.add(HitBulletX.class);
+				generator.add(HitBulletY.class);
 			}
 			
 			/*
 			 * Robot Info
 			 */
 			{
-				add(RobotInfoTurnRemaining.class);
-				add(RobotInfoDistanceRemaining.class);
-				add(RobotInfoBattleFieldHeight.class);
-				add(RobotInfoBattleFieldWidth.class);
-				add(RobotInfoEnergy.class);
-				add(RobotInfoGunCoolingRate.class);
-				add(RobotInfoGunHeading.class);
-				add(RobotInfoGunHeat.class);
-				add(RobotInfoHeading.class);
-				add(RobotInfoHeight.class);
-				add(RobotInfoRadarHeading.class);
-				add(RobotInfoX.class);
-				add(RobotInfoY.class);
-				add(RobotInfoGunTurnRemaining.class);
-				add(RobotInfoRadarTurnRemaining.class);
+				generator.add(RobotInfoTurnRemaining.class);
+				generator.add(RobotInfoDistanceRemaining.class);
+				generator.add(RobotInfoBattleFieldHeight.class);
+				generator.add(RobotInfoBattleFieldWidth.class);
+				generator.add(RobotInfoEnergy.class);
+				generator.add(RobotInfoGunCoolingRate.class);
+				generator.add(RobotInfoGunHeading.class);
+				generator.add(RobotInfoGunHeat.class);
+				generator.add(RobotInfoHeading.class);
+				generator.add(RobotInfoHeight.class);
+				generator.add(RobotInfoRadarHeading.class);
+				generator.add(RobotInfoX.class);
+				generator.add(RobotInfoY.class);
+				generator.add(RobotInfoGunTurnRemaining.class);
+				generator.add(RobotInfoRadarTurnRemaining.class);
 			}
 			
 			/*
 			 * Constants
 			 */
 			{
-				add(PI.class);
-				add(E.class);
-				add(SQRT2.class);
-				add(ArgumentDoubleConstant.RandomConstant.class);
+				generator.add(PI.class);
+				generator.add(E.class);
+				generator.add(SQRT2.class);
+				generator.add(ArgumentDoubleConstant.RandomConstant.class);
 			}
 			
 			/*
 			 * Random
 			 */
 			{
-				add(DoubleRandomNoArguments.class);
-				add(DoubleRandomBound.class);
-				add(DoubleRandomOriginBound.class);
+				generator.add(DoubleRandomNoArguments.class);
+				generator.add(DoubleRandomBound.class);
+				generator.add(DoubleRandomOriginBound.class);
 			}
 			
 			/*
 			 * Compound
 			 */
 			{
-				add(ArgumentDoubleCompound.Binary.Addition.class);
-				add(ArgumentDoubleCompound.Binary.Subtraction.class);
-				add(ArgumentDoubleCompound.Binary.Multiplication.class);
-				add(Division.class);
-				add(Power.class);
-				add(Minimum.class);
-				add(Maximum.class);
-				add(Hypotenuse.class);
+				generator.add(ArgumentDoubleCompound.Binary.Addition.class);
+				generator.add(ArgumentDoubleCompound.Binary.Subtraction.class);
+				generator.add(ArgumentDoubleCompound.Binary.Multiplication.class);
+				generator.add(Division.class);
+				generator.add(Power.class);
+				generator.add(Minimum.class);
+				generator.add(Maximum.class);
+				generator.add(Hypotenuse.class);
 				
-				add(Sine.class);
-				add(Cosine.class);
-				add(Tangent.class);
-				add(SquareRoot.class);
-				add(CubeRoot.class);
-				add(Logarithm.class);
-				add(Exponent.class);
-				add(ArgumentDoubleCompound.Unary.Absolute.class);
+				generator.add(Sine.class);
+				generator.add(Cosine.class);
+				generator.add(Tangent.class);
+				generator.add(SquareRoot.class);
+				generator.add(CubeRoot.class);
+				generator.add(Logarithm.class);
+				generator.add(Exponent.class);
+				generator.add(ArgumentDoubleCompound.Unary.Absolute.class);
 			}
 			
 			/*
@@ -331,23 +351,23 @@ public class Argument
 			 * Event Info
 			 */
 			{
-				add(EventInfoName.class);
-				add(BulletName.class);
-				add(HitBulletName.class);
+				generator.add(EventInfoName.class);
+				generator.add(BulletName.class);
+				generator.add(HitBulletName.class);
 			}
 			
 			/*
 			 * Robot Info
 			 */
 			{
-				add(RobotInfoName.class);
+				generator.add(RobotInfoName.class);
 			}
 			
 			/*
 			 * Constant
 			 */
 			{
-				add(Null.class);
+				generator.add(Null.class);
 			}
 			
 			/*
@@ -357,19 +377,24 @@ public class Argument
 				
 			}
 		}
-		
-		allPossibilities = new ArrayList<>(possibilities);
 	}
 	
-	public static void add (Class<? extends Argument> type)
+	private static Argument m_generate ()
 	{
-		add(type, 1);
+		return generator.generate();
 	}
 	
-	public static void add (Class<? extends Argument> type, int times)
+	private static Argument m_generate (Class <?> hasToBe)
 	{
-		for (int i = 0; i < times; i++) possibilities.add(type);
+		return generator.generate(hasToBe);
 	}
+	
+	public static List < Class <? extends Argument> > getAllPossibilities ()
+	{
+		return generator.getAllPossibilities();
+	}
+	
+	
 	
 	public static interface EventInfo
 	{
@@ -389,224 +414,6 @@ public class Argument
 	public static interface Random {}
 	public static interface Compound {}
 	public static interface Variable {}
-	
-	/*
-	 * Public generate methods modify the list allPossibilities so the outside caller's requirements will be considered further down the stack call
-	 */
-	
-	/**
-	 * Returns a random argument
-	 * @return New instance of an argument type, chosen randomly from all of the possibilities
-	 */
-	public static Argument generate ()
-	{
-		return generate(new ArrayList<Class <?> >(), new ArrayList<Class <?> >());
-	}
-	
-	/**
-	 * Returns a new argument according to the requirements
-	 * @param a The argument to recreate
-	 * @return A new argument of the same type as a
-	 */
-	public static Argument generate (Argument a)
-	{
-		return generate(a.getClass());
-	}
-	
-	/**
-	 * Returns a new argument according to the requirements
-	 * @param hasToBe The new argument must be of this type
-	 * @return A new argument
-	 */
-	public static Argument generate (Class <?> hasToBe)
-	{
-		ArrayList<Class <?> > htb = new ArrayList<>();
-		htb.add(hasToBe);
-		
-		return generate(htb, new ArrayList<Class <?> >());
-	}
-	
-	/**
-	 * Returns a new argument according to the requirements
-	 * @param hasToBe The new argument must be of this type
-	 * @param cannotBe The new argument cannot be of this type
-	 * @return A new argument
-	 */
-	public static Argument generate (Class <?> hasToBe, Class <?> cannotBe)
-	{
-		ArrayList<Class <?> > htb = new ArrayList<>();
-		ArrayList<Class <?> > cnb = new ArrayList<>();
-		
-		htb.add(hasToBe);
-		cnb.add(cannotBe);
-		
-		return generate(htb, cnb);
-	}
-	
-	/**
-	 * Returns a new argument according to the requirements
-	 * @param hasToBe The new argument must be of all specified types in this list
-	 * @param cannotBe The new argument cannot be of any of the specified types in this list
-	 * @return
-	 */
-	public static Argument generate (List<Class<?>> hasToBe, List<Class<?>> cannotBe)
-	{
-		ArrayList <Class <? extends Argument> > excludedPossibilities = new ArrayList<>();
-		
-		Iterator< Class <? extends Argument> > possibilitiesIterator = allPossibilities.listIterator();
-		
-		while (possibilitiesIterator.hasNext())
-		{
-			Iterator< Class <?> > htbIterator = hasToBe.listIterator();
-			Iterator< Class <?> > cnbIterator = cannotBe.listIterator();
-			
-			Class<? extends Argument> poss = possibilitiesIterator.next();
-			
-			while (htbIterator.hasNext())
-			{
-				Class<?> type = htbIterator.next();
-				if (!type.isAssignableFrom(poss))
-				{
-					excludedPossibilities.add(poss);
-					possibilitiesIterator.remove();
-				}
-			}
-			
-			while (cnbIterator.hasNext())
-			{
-				Class<?> type = cnbIterator.next();
-				if (type.isAssignableFrom(poss))
-				{
-					excludedPossibilities.add(poss);
-					possibilitiesIterator.remove();
-				}
-			}
-		}
-		
-		Argument toReturn = m_generate(hasToBe, cannotBe);
-		allPossibilities.addAll(excludedPossibilities);
-		
-		return toReturn;
-	}
-	
-	
-	/*
-	 * Generate method changes possibilities so it contains all of the possibilities that have been allowed by the outside caller (a copy of allPossibilities).
-	 * Then picks one possibility at random, creates a new instance of it, and return it.
-	 */
-	
-	private static Argument m_generate ()
-	{
-		return m_generate(new ArrayList<Class <?> >(), new ArrayList<Class <?> >());
-	}
-	
-	@SuppressWarnings("unused")
-	private static Argument m_generate (Argument a)
-	{
-		return m_generate(a.getClass());
-	}
-	
-	private static Argument m_generate (Class <?> hasToBe)
-	{
-		ArrayList<Class <?> > htb = new ArrayList<>();
-		htb.add(hasToBe);
-		
-		return m_generate(htb, new ArrayList<Class <?> >());
-	}
-	
-	@SuppressWarnings("unused")
-	private static Argument m_generate (Class <?> hasToBe, Class <?> cannotBe)
-	{
-		ArrayList<Class <?> > htb = new ArrayList<>();
-		ArrayList<Class <?> > cnb = new ArrayList<>();
-		
-		htb.add(hasToBe);
-		cnb.add(cannotBe);
-		
-		return m_generate(htb, cnb);
-	}
-	
-	private static Argument m_generate (List<Class<?>> hasToBe, List<Class<?>> cannotBe)
-	{
-		ArrayList <Class <? extends Argument> > copyPossibilities = new ArrayList<>(possibilities);
-		
-		possibilities.clear();
-		possibilities.addAll(allPossibilities);
-		
-		Argument toReturn = getRandomPossibility(hasToBe, cannotBe);
-		
-		possibilities.clear();
-		possibilities.addAll(copyPossibilities);
-		
-		return toReturn;
-	}
-	
-	private static Argument getRandomPossibility (List<Class<?>> hasToBe, List<Class<?>> cannotBe)
-	{
-		ArrayList <Class <? extends Argument> > excludedPossibilities = new ArrayList<>();
-		
-		Iterator< Class <? extends Argument> > possibilitiesIterator = possibilities.listIterator();
-		
-		while (possibilitiesIterator.hasNext())
-		{
-			Iterator< Class <?> > htbIterator = hasToBe.listIterator();
-			Iterator< Class <?> > cnbIterator = cannotBe.listIterator();
-			
-			Class<? extends Argument> poss = possibilitiesIterator.next();
-			
-			while (htbIterator.hasNext())
-			{
-				Class<?> type = htbIterator.next();
-				if (!type.isAssignableFrom(poss))
-				{
-					excludedPossibilities.add(poss);
-					possibilitiesIterator.remove();
-				}
-			}
-			
-			while (cnbIterator.hasNext())
-			{
-				Class<?> type = cnbIterator.next();
-				if (type.isAssignableFrom(poss))
-				{
-					excludedPossibilities.add(poss);
-					possibilitiesIterator.remove();
-				}
-			}
-		}
-		
-		Collections.shuffle(possibilities);
-		Class<? extends Argument> chosen = possibilities.get(0);
-		Argument toReturn = null;
-		
-		try 
-		{
-			toReturn = chosen.newInstance();
-		} 
-		catch (InstantiationException | IllegalAccessException e) 
-		{
-			e.printStackTrace();
-		}
-		
-		possibilities.addAll(excludedPossibilities);
-		
-		return toReturn;
-	}
-	
-	public boolean containsArgumentType (Class<?> type)
-	{
-		return (type.isInstance(this));
-	}
-	
-	public boolean isArgumentType (Class<?> type)
-	{
-		return (type.isInstance(this));
-	}
-	
-	public String toString ()
-	{
-		return value.toString();
-	}
 	
 	
 	
@@ -705,6 +512,11 @@ public class Argument
 			public static class Binary extends ArgumentBooleanCompound
 			{
 				Argument a, b;
+				
+				public int complexity ()
+				{
+					return 1 + a.complexity() + b.complexity();
+				}
 				
 				public boolean containsArgumentType (Class<?> type)
 				{
@@ -866,6 +678,11 @@ public class Argument
 					value = "!(" + a + ")";
 				}
 				
+				public int complexity ()
+				{
+					return 1 + a.complexity();
+				}
+				
 				public boolean containsArgumentType (Class<?> type)
 				{
 					return super.containsArgumentType(type) || a.containsArgumentType(type);
@@ -933,9 +750,7 @@ public class Argument
 		}
 		
 		public static class ArgumentIntegerConstant extends ArgumentInteger implements Constant
-		{
-			static java.util.Random rnd = new java.util.Random();
-			
+		{	
 			public ArgumentIntegerConstant (int a)
 			{
 				value = Integer.valueOf(a);
@@ -1050,6 +865,11 @@ public class Argument
 			{
 				ArgumentInteger a, b;
 				
+				public int complexity ()
+				{
+					return 1 + a.complexity() + b.complexity();
+				}
+				
 				public boolean containsArgumentType (Class<?> type)
 				{
 					return super.containsArgumentType(type) || a.containsArgumentType(type) || b.containsArgumentType(type);
@@ -1149,6 +969,7 @@ public class Argument
 			public static class Absolute extends ArgumentIntegerCompound
 			{
 				ArgumentInteger a;
+				
 				public Absolute ()
 				{
 					this(null);
@@ -1161,6 +982,11 @@ public class Argument
 					this.a = a;
 					
 					value = "Math.abs(" + a + ")";
+				}
+				
+				public int complexity ()
+				{
+					return 1 + a.complexity();
 				}
 				
 				public boolean containsArgumentType (Class<?> type)
@@ -1462,8 +1288,6 @@ public class Argument
 		
 		public static class ArgumentDoubleConstant extends ArgumentDouble implements Constant
 		{
-			static java.util.Random rnd = new java.util.Random();
-			
 			public ArgumentDoubleConstant (double a)
 			{
 				value = Double.valueOf(a);
@@ -1545,6 +1369,11 @@ public class Argument
 			public static class Binary extends ArgumentDoubleCompound
 			{
 				ArgumentDouble a, b;
+				
+				public int complexity ()
+				{
+					return 1 + a.complexity() + b.complexity();
+				}
 				
 				public boolean containsArgumentType (Class<?> type)
 				{
@@ -1731,6 +1560,11 @@ public class Argument
 			public static class Unary extends ArgumentDoubleCompound
 			{
 				ArgumentDouble a;
+				
+				public int complexity ()
+				{
+					return 1 + a.complexity();
+				}
 				
 				public boolean containsArgumentType (Class<?> type)
 				{

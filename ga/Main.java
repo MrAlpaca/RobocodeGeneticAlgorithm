@@ -1,38 +1,45 @@
 package RobocodeGeneticAlgorithm.ga;
 
-import java.util.LinkedList;
-
-import RobocodeGeneticAlgorithm.ga.Argument.EventInfo;
-import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Bearing;
-import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Distance;
-import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Energy;
-import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Heading;
-import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Name;
-import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Velocity;
+import java.util.List;
 
 public class Main 
 {
+	@SuppressWarnings("unused")
 	public static void main (String [] args)
 	{
-		for (int i = 0; i < 100; i++)
+		double averageTimeTaken = 0;
+		
+		for (int j = 0; j < 10; j++)
 		{
-			System.out.println("i = " + i);
-			Argument arg;
+			long startingTime = System.currentTimeMillis();
 			
-			LinkedList <Class <?>> hasToBe = new LinkedList<>();
-			LinkedList <Class <?>> cannotBe = new LinkedList<>();
+			for (int i = 0; i < 1000; i++)
+			{
+				List <Class <? extends Argument> > possibilities = Argument.getAllPossibilities();
+				
+				try 
+				{
+					for (Class<? extends Argument> poss : possibilities)
+					{
+						Argument newArg = poss.newInstance();
+					}
+				}
+				catch (InstantiationException e) 
+				{
+					e.printStackTrace();
+				} catch (IllegalAccessException e) 
+				{
+					e.printStackTrace();
+				}
+			}
 			
-			cannotBe.add(Bearing.class);
-			cannotBe.add(Energy.class);
-			cannotBe.add(Name.class);
-			cannotBe.add(Heading.class);
-			cannotBe.add(Velocity.class);
-			cannotBe.add(Distance.class);
+			long endingTime = System.currentTimeMillis();
+			long timeTaken = endingTime - startingTime;
 			
-			arg = Argument.generate(hasToBe, cannotBe);
-			
-			System.out.println("Argument is: " + arg);
-			for (Class <?> type : cannotBe) System.out.println("Argument contains event info " + arg.containsArgumentType(type));
+			averageTimeTaken += timeTaken;
 		}
+		
+		averageTimeTaken /= 10;
+		System.out.println("Average time taken: " + averageTimeTaken);
 	}
 }
