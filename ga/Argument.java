@@ -379,12 +379,12 @@ public class Argument implements Generatable
 		}
 	}
 	
-	private static Argument m_generate ()
+	private static Argument generate ()
 	{
 		return generator.generate();
 	}
 	
-	private static Argument m_generate (Class <?> hasToBe)
+	private static Argument generate (Class <?> hasToBe)
 	{
 		return generator.generate(hasToBe);
 	}
@@ -534,8 +534,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentBoolean) Argument.m_generate(ArgumentBoolean.class);
-							b = (ArgumentBoolean) Argument.m_generate(ArgumentBoolean.class);
+							a = (ArgumentBoolean) generate(ArgumentBoolean.class);
+							b = (ArgumentBoolean) generate(ArgumentBoolean.class);
 						}
 						
 						this.a = a;
@@ -556,8 +556,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentBoolean) Argument.m_generate(ArgumentBoolean.class);
-							b = (ArgumentBoolean) Argument.m_generate(ArgumentBoolean.class);
+							a = (ArgumentBoolean) generate(ArgumentBoolean.class);
+							b = (ArgumentBoolean) generate(ArgumentBoolean.class);
 						}
 						
 						this.a = a;
@@ -578,23 +578,23 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = Argument.m_generate();
+							a = generate();
 							
 							if (a instanceof ArgumentBoolean)
 							{
-								b = Argument.m_generate(ArgumentBoolean.class);
+								b = generate(ArgumentBoolean.class);
 							}
 							else if (a instanceof ArgumentInteger)
 							{
-								b = Argument.m_generate(ArgumentInteger.class);
+								b = generate(ArgumentInteger.class);
 							}
 							else if (a instanceof ArgumentDouble)
 							{
-								b = Argument.m_generate(ArgumentDouble.class);
+								b = generate(ArgumentDouble.class);
 							}
 							else
 							{
-								b = Argument.m_generate(ArgumentString.class);
+								b = generate(ArgumentString.class);
 							}
 						}
 						
@@ -623,8 +623,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
+							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -645,8 +645,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
+							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -670,7 +670,7 @@ public class Argument implements Generatable
 				{
 					if (a == null)
 					{
-						a = (ArgumentBoolean) Argument.m_generate(ArgumentBoolean.class);
+						a = (ArgumentBoolean) generate(ArgumentBoolean.class);
 					}
 					
 					this.a = a;
@@ -835,7 +835,7 @@ public class Argument implements Generatable
 			{
 				public IntegerRandomRange ()
 				{
-					this((ArgumentInteger)Argument.m_generate(ArgumentInteger.class));
+					this((ArgumentInteger)generate(ArgumentInteger.class));
 				}
 				
 				public IntegerRandomRange (ArgumentInteger range)
@@ -848,8 +848,8 @@ public class Argument implements Generatable
 			{
 				public IntegerRandomOriginRange ()
 				{
-					this((ArgumentInteger)Argument.m_generate(ArgumentInteger.class),
-							(ArgumentInteger)Argument.m_generate(ArgumentInteger.class));
+					this((ArgumentInteger)generate(ArgumentInteger.class),
+							(ArgumentInteger)generate(ArgumentInteger.class));
 				}
 				
 				public IntegerRandomOriginRange (ArgumentInteger origin, ArgumentInteger range)
@@ -886,8 +886,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
-							b = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
+							a = (ArgumentInteger) generate(ArgumentInteger.class);
+							b = (ArgumentInteger) generate(ArgumentInteger.class);
 						}
 						
 						this.a = a;
@@ -908,8 +908,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
-							b = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
+							a = (ArgumentInteger) generate(ArgumentInteger.class);
+							b = (ArgumentInteger) generate(ArgumentInteger.class);
 						}
 						
 						this.a = a;
@@ -930,8 +930,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
-							b = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
+							a = (ArgumentInteger) generate(ArgumentInteger.class);
+							b = (ArgumentInteger) generate(ArgumentInteger.class);
 						}
 						
 						this.a = a;
@@ -952,8 +952,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
-							b = (ArgumentInteger) Argument.m_generate(ArgumentInteger.class);
+							a = (ArgumentInteger) generate(ArgumentInteger.class);
+							b = (ArgumentInteger) generate(ArgumentInteger.class);
 							
 							
 						}
@@ -977,7 +977,7 @@ public class Argument implements Generatable
 				
 				public Absolute (ArgumentInteger a)
 				{
-					if (a == null) a = (ArgumentInteger) m_generate(ArgumentInteger.class);
+					if (a == null) a = (ArgumentInteger) generate(ArgumentInteger.class);
 					
 					this.a = a;
 					
@@ -1340,7 +1340,7 @@ public class Argument implements Generatable
 			{
 				public DoubleRandomBound ()
 				{
-					this((ArgumentDouble)Argument.m_generate(ArgumentDouble.class));
+					this((ArgumentDouble)generate(ArgumentDouble.class));
 				}
 				
 				public DoubleRandomBound (ArgumentDouble scale)
@@ -1353,8 +1353,8 @@ public class Argument implements Generatable
 			{
 				public DoubleRandomOriginBound ()
 				{
-					this((ArgumentDouble)Argument.m_generate(ArgumentDouble.class),
-							(ArgumentDouble)Argument.m_generate(ArgumentDouble.class));
+					this((ArgumentDouble)generate(ArgumentDouble.class),
+							(ArgumentDouble)generate(ArgumentDouble.class));
 				}
 				
 				public DoubleRandomOriginBound (ArgumentDouble origin, ArgumentDouble scale)
@@ -1391,8 +1391,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
+							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1413,8 +1413,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
+							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1435,8 +1435,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
+							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1457,8 +1457,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
+							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1479,8 +1479,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
+							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1501,8 +1501,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
+							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1523,8 +1523,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
+							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1545,8 +1545,8 @@ public class Argument implements Generatable
 					{
 						if (a == null || b == null)
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
-							b = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
+							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1582,7 +1582,7 @@ public class Argument implements Generatable
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1602,7 +1602,7 @@ public class Argument implements Generatable
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1622,7 +1622,7 @@ public class Argument implements Generatable
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1642,7 +1642,7 @@ public class Argument implements Generatable
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1662,7 +1662,7 @@ public class Argument implements Generatable
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1682,7 +1682,7 @@ public class Argument implements Generatable
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1702,7 +1702,7 @@ public class Argument implements Generatable
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
@@ -1722,7 +1722,7 @@ public class Argument implements Generatable
 					{
 						if (a == null) 
 						{
-							a = (ArgumentDouble) Argument.m_generate(ArgumentDouble.class);
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
 						
 						this.a = a;
