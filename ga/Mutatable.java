@@ -1,4 +1,4 @@
-package ga;
+package RobocodeGeneticAlgorithm.ga;
 
 public abstract class Mutatable 
 {

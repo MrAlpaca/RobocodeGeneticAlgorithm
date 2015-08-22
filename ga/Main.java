@@ -1,36 +1,45 @@
-package ga;
+package RobocodeGeneticAlgorithm.ga;
 
 import java.util.ArrayList;
-
-import ga.Argument.RunTimeValue;
 
 public class Main 
 {
 	public static void main (String [] args)
 	{
-		System.out.println(0 % 5);
+		double averageTimeTaken = 0;
 		
-		ArrayList <Class <? extends Argument> > possibilities = new ArrayList<>();
-		possibilities.addAll(Argument.allPossibilities);
-		
-		try 
+		for (int j = 0; j < 50; j++)
 		{
-			for (Class<? extends Argument> poss : possibilities)
+			long startingTime = System.currentTimeMillis();
+			
+			for (int i = 0; i < 1000; i++)
 			{
-				System.out.println("Current poss is " + poss.getSimpleName());
-				Argument newArg = poss.newInstance();
-				System.out.println("Argument is: " + newArg);
-				System.out.println("Argument get: " + newArg.get());
-				System.out.println("Argument contains RunTimeValue: " + newArg.containsArgumentType(RunTimeValue.class));
+				ArrayList <Class <? extends Argument> > possibilities = new ArrayList<>(Argument.allPossibilities);
+				
+				try 
+				{
+					for (Class<? extends Argument> poss : possibilities)
+					{
+						@SuppressWarnings("unused")
+						Argument newArg = poss.newInstance();
+					}
+				}
+				catch (InstantiationException e) 
+				{
+					e.printStackTrace();
+				} catch (IllegalAccessException e) 
+				{
+					e.printStackTrace();
+				}
 			}
+			
+			long endingTime = System.currentTimeMillis();
+			long timeTaken = endingTime - startingTime;
+			
+			averageTimeTaken += timeTaken;
 		}
 		
-		catch (InstantiationException e) 
-		{
-			e.printStackTrace();
-		} catch (IllegalAccessException e) 
-		{
-			e.printStackTrace();
-		}
+		averageTimeTaken /= 50;
+		System.out.println("Average time taken: " + averageTimeTaken);
 	}
 }

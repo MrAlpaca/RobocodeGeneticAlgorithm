@@ -1,100 +1,97 @@
-package ga;
+package RobocodeGeneticAlgorithm.ga;
 
-import ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.And;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.Equals;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.Greater;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.GreaterEquals;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.Or;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Unary.Not;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanConstant.False;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanConstant.True;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanEventInfo.EventInfoIsMyFault;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanEventInfo.EventInfoIsSentryRobot;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanRandom;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanRandomConstant;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanRobotInfo.RobotInfoAdjustGunForRobotTurn;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanRobotInfo.RobotInfoAdjustRadarForGunTurn;
-import ga.Argument.ArgumentBoolean.ArgumentBooleanRobotInfo.RobotInfoAdjustRadarForRobotTurn;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Division;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Hypotenuse;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Maximum;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Minimum;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Power;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Cosine;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.CubeRoot;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Exponent;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Logarithm;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Sine;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.SquareRoot;
-import ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Tangent;
-import ga.Argument.ArgumentDouble.ArgumentDoubleConstant.E;
-import ga.Argument.ArgumentDouble.ArgumentDoubleConstant.PI;
-import ga.Argument.ArgumentDouble.ArgumentDoubleConstant.SQRT2;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoBearing;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoBullet.BulletHeading;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoBullet.BulletPower;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoBullet.BulletVelocity;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoBullet.BulletX;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoBullet.BulletY;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoDistance;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoEnergy;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoHeading;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoHitBullet.HitBulletHeading;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoHitBullet.HitBulletPower;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoHitBullet.HitBulletVelocity;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoHitBullet.HitBulletX;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoHitBullet.HitBulletY;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoPower;
-import ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoVelocity;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRandom.DoubleRandomBound;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRandom.DoubleRandomNoArguments;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRandom.DoubleRandomOriginBound;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRandomConstant.DoubleRandomConstantBound;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRandomConstant.DoubleRandomConstantNoArguments;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRandomConstant.DoubleRandomConstantOriginBound;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoBattleFieldHeight;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoBattleFieldWidth;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoDistanceRemaining;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoEnergy;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoGunCoolingRate;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoGunHeading;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoGunHeat;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoGunTurnRemaining;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoHeading;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoHeight;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoRadarHeading;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoRadarTurnRemaining;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoTurnRemaining;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoX;
-import ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoY;
-import ga.Argument.ArgumentInteger.ArgumentIntegerCompound;
-import ga.Argument.ArgumentInteger.ArgumentIntegerCompound.Binary.Modulu;
-import ga.Argument.ArgumentInteger.ArgumentIntegerConstant.NegativeOne;
-import ga.Argument.ArgumentInteger.ArgumentIntegerConstant.One;
-import ga.Argument.ArgumentInteger.ArgumentIntegerConstant.OneHundred;
-import ga.Argument.ArgumentInteger.ArgumentIntegerConstant.Ten;
-import ga.Argument.ArgumentInteger.ArgumentIntegerConstant.ThreeHundredAndSixty;
-import ga.Argument.ArgumentInteger.ArgumentIntegerConstant.Two;
-import ga.Argument.ArgumentInteger.ArgumentIntegerConstant.Zero;
-import ga.Argument.ArgumentInteger.ArgumentIntegerRandom.IntegerRandomRange;
-import ga.Argument.ArgumentInteger.ArgumentIntegerRandom.IntegerRandomNoArguments;
-import ga.Argument.ArgumentInteger.ArgumentIntegerRandom.IntegerRandomOriginRange;
-import ga.Argument.ArgumentInteger.ArgumentIntegerRandomConstant.IntegerRandomConstantRange;
-import ga.Argument.ArgumentInteger.ArgumentIntegerRandomConstant.IntegerRandomConstantNoArguments;
-import ga.Argument.ArgumentInteger.ArgumentIntegerRandomConstant.IntegerRandomConstantOriginRange;
-import ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoNumRounds;
-import ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoNumSentries;
-import ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoOthers;
-import ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoRoundNum;
-import ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoTime;
-import ga.Argument.ArgumentString.ArgumentStringEventInfo.BulletName;
-import ga.Argument.ArgumentString.ArgumentStringEventInfo.EventInfoName;
-import ga.Argument.ArgumentString.ArgumentStringEventInfo.HitBulletName;
-import ga.Argument.ArgumentString.ArgumentStringRobotInfo.RobotInfoName;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.And;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.Or;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.Greater;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.GreaterEquals;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.Equals;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Not;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanConstant.False;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanConstant.True;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanEventInfo.EventInfoIsMyFault;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanEventInfo.EventInfoIsSentryRobot;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRandom;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRobotInfo.RobotInfoAdjustGunForRobotTurn;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRobotInfo.RobotInfoAdjustRadarForGunTurn;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRobotInfo.RobotInfoAdjustRadarForRobotTurn;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Division;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Hypotenuse;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Maximum;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Minimum;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Power;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Cosine;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.CubeRoot;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Exponent;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Logarithm;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Sine;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.SquareRoot;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Tangent;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleConstant;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleConstant.E;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleConstant.PI;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleConstant.SQRT2;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoBearing;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoBullet.BulletHeading;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoBullet.BulletPower;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoBullet.BulletVelocity;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoBullet.BulletX;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoBullet.BulletY;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoDistance;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoEnergy;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoHeading;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoHitBullet.HitBulletHeading;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoHitBullet.HitBulletPower;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoHitBullet.HitBulletVelocity;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoHitBullet.HitBulletX;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoHitBullet.HitBulletY;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoPower;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleEventInfo.EventInfoVelocity;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRandom.DoubleRandomBound;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRandom.DoubleRandomNoArguments;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRandom.DoubleRandomOriginBound;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoBattleFieldHeight;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoBattleFieldWidth;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoDistanceRemaining;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoEnergy;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoGunCoolingRate;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoGunHeading;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoGunHeat;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoGunTurnRemaining;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoHeading;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoHeight;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoRadarHeading;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoRadarTurnRemaining;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoTurnRemaining;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoX;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoY;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerCompound;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerCompound.Binary.Modulu;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerConstant;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerConstant.NegativeOne;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerConstant.One;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerConstant.OneHundred;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerConstant.Ten;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerConstant.ThreeHundredAndSixty;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerConstant.Two;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerConstant.Zero;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerRandom.IntegerRandomRange;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerRandom.IntegerRandomNoArguments;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerRandom.IntegerRandomOriginRange;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoNumRounds;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoNumSentries;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoOthers;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoRoundNum;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoTime;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringEventInfo.BulletName;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringEventInfo.EventInfoName;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringEventInfo.HitBulletName;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringRobotInfo.RobotInfoName;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.Null;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class Argument
@@ -135,13 +132,6 @@ public class Argument
 			{
 				add(True.class);
 				add(False.class);
-			}
-			
-			/*
-			 * Random Constant
-			 */
-			{
-				add(ArgumentBooleanRandomConstant.class);
 			}
 			
 			/*
@@ -199,15 +189,7 @@ public class Argument
 				add(Ten.class);
 				add(OneHundred.class);
 				add(ThreeHundredAndSixty.class);
-			}
-			
-			/*
-			 * Random Constant
-			 */
-			{
-				add(IntegerRandomConstantNoArguments.class);
-				add(IntegerRandomConstantRange.class);
-				add(IntegerRandomConstantOriginRange.class);
+				add(ArgumentIntegerConstant.RandomConstant.class);
 			}
 			
 			/*
@@ -228,7 +210,7 @@ public class Argument
 				add(ArgumentIntegerCompound.Binary.Multiplication.class);
 				add(Modulu.class);
 				
-				add(ArgumentIntegerCompound.Unary.Absolute.class);
+				add(ArgumentIntegerCompound.Absolute.class);
 			}
 			
 			/*
@@ -297,15 +279,7 @@ public class Argument
 				add(PI.class);
 				add(E.class);
 				add(SQRT2.class);
-			}
-			
-			/*
-			 * Random Constant
-			 */
-			{
-				add(DoubleRandomConstantNoArguments.class);
-				add(DoubleRandomConstantBound.class);
-				add(DoubleRandomConstantOriginBound.class);
+				add(ArgumentDoubleConstant.RandomConstant.class);
 			}
 			
 			/*
@@ -371,6 +345,13 @@ public class Argument
 			}
 			
 			/*
+			 * Constant
+			 */
+			{
+				add(Null.class);
+			}
+			
+			/*
 			 * Variable
 			 */
 			{
@@ -408,7 +389,6 @@ public class Argument
 	
 	public static interface RobotInfo extends RunTimeValue {}
 	public static interface Constant {}
-	public static interface RandomConstant {}
 	public static interface Random extends RunTimeValue {}
 	public static interface Compound {}
 	public static interface Variable extends RunTimeValue {}
@@ -449,42 +429,45 @@ public class Argument
 	
 	public static Argument generate (List<Class<?>> hasToBe, List<Class<?>> cannotBe)
 	{
-		//System.out.println("Generating!\nhas to be: " + hasToBe + "\ncannot be: " + cannotBe);
-		//System.out.println("Current possibilities: " + possibilities.size());
-		
 		ArrayList <Class <? extends Argument> > excludedPossibilities = new ArrayList<>();
 		
-		for (Class<? extends Argument> poss : possibilities)
+		Iterator< Class <? extends Argument> > possibilitiesIterator = possibilities.listIterator();
+		
+		while (possibilitiesIterator.hasNext())
 		{
-			for (Class<?> type : hasToBe)
+			Iterator< Class <?> > htbIterator = hasToBe.listIterator();
+			Iterator< Class <?> > cnbIterator = cannotBe.listIterator();
+			
+			Class<? extends Argument> poss = possibilitiesIterator.next();
+			
+			while (htbIterator.hasNext())
 			{
-				if (type != null && !type.isAssignableFrom(poss) && !excludedPossibilities.contains(poss))
+				Class<?> type = htbIterator.next();
+				if (!type.isAssignableFrom(poss))
 				{
 					excludedPossibilities.add(poss);
+					possibilitiesIterator.remove();
 				}
 			}
 			
-			for (Class<?> type : cannotBe)
+			while (cnbIterator.hasNext())
 			{
-				if (type != null && type.isAssignableFrom(poss) && !excludedPossibilities.contains(poss))
+				Class<?> type = cnbIterator.next();
+				if (type.isAssignableFrom(poss))
 				{
 					excludedPossibilities.add(poss);
+					possibilitiesIterator.remove();
 				}
 			}
 		}
 		
-		possibilities.removeAll(excludedPossibilities);
-		
 		Collections.shuffle(possibilities);
-		
 		Class<? extends Argument> chosen = possibilities.get(0);
 		Argument toReturn = null;
 		
 		try 
 		{
-			System.out.println("Trying to make new " + chosen.getSimpleName());
 			toReturn = chosen.newInstance();
-			System.out.println("Successfully made new " + chosen.getSimpleName());
 		} 
 		catch (InstantiationException | IllegalAccessException e) 
 		{
@@ -492,10 +475,6 @@ public class Argument
 		}
 		
 		possibilities.addAll(excludedPossibilities);
-		
-		if (toReturn == null) System.out.println("Generate returned null");
-		else System.out.println("Generate returned " + toReturn.toString());
-		//System.out.println("Contains RunTimeValue " + toReturn.containsArgumentType(RunTimeValue.class));
 		
 		return toReturn;
 	}
@@ -538,12 +517,11 @@ public class Argument
 	
 	public static Argument newGenerate (List<Class<?>> hasToBe, List<Class<?>> cannotBe)
 	{
-		ArrayList <Class <? extends Argument> > copyPossibilities = new ArrayList<>();
-		copyPossibilities.addAll(possibilities);
+		
+		ArrayList <Class <? extends Argument> > copyPossibilities = new ArrayList<>(possibilities);
 		
 		possibilities.clear();
 		possibilities.addAll(allPossibilities);
-		
 		
 		Argument toReturn = generate(hasToBe, cannotBe);
 		
@@ -551,6 +529,9 @@ public class Argument
 		possibilities.addAll(copyPossibilities);
 		
 		return toReturn;
+		
+		
+		//return generate(hasToBe, cannotBe);
 	}
 	
 	public static int sign (Integer a)
@@ -572,11 +553,6 @@ public class Argument
 	public String toString ()
 	{
 		return value.toString();
-	}
-	
-	public Object get ()
-	{
-		return value;
 	}
 	
 	
@@ -663,20 +639,11 @@ public class Argument
 			}
 		}
 		
-		public static class ArgumentBooleanRandomConstant extends ArgumentBoolean implements RandomConstant
-		{
-			public ArgumentBooleanRandomConstant ()
-			{
-				if (Math.random() > 0.5) value = Boolean.valueOf(true);
-				else value =  Boolean.valueOf(false);
-			}
-		}
-		
 		public static class ArgumentBooleanRandom extends ArgumentBoolean implements Random
 		{
 			public ArgumentBooleanRandom ()
 			{
-				value = "Math.random() > 0.5";
+				value = "(Math.random() > 0.5)";
 			}
 		}
 		
@@ -685,23 +652,6 @@ public class Argument
 			public static class Binary extends ArgumentBooleanCompound
 			{
 				Argument a, b;
-				
-				public Binary ()
-				{
-					this(null, null, null);
-				}
-				
-				public Binary (Argument a, Argument b, Class<? extends Argument> type)
-				{
-					if (a == null || b == null)
-					{
-						a = Argument.newGenerate(type);
-						b = Argument.newGenerate(type);
-					}
-					
-					this.a = a;
-					this.b = b;
-				}
 				
 				public boolean containsArgumentType (Class<?> type)
 				{
@@ -715,16 +665,18 @@ public class Argument
 						this(null, null);
 					}
 					
-					public And (Argument a, Argument b)
+					public And (ArgumentBoolean a, ArgumentBoolean b)
 					{
-						super(a, b, ArgumentBoolean.class);
+						if (a == null || b == null)
+						{
+							a = (ArgumentBoolean) Argument.newGenerate(ArgumentBoolean.class);
+							b = (ArgumentBoolean) Argument.newGenerate(ArgumentBoolean.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = "(" + a + " && " + b + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Boolean.valueOf(a.get().toString()) && Boolean.valueOf(b.get().toString());
 					}
 				}
 				
@@ -735,16 +687,18 @@ public class Argument
 						this(null, null);
 					}
 					
-					public Or (Argument a, Argument b)
+					public Or (ArgumentBoolean a, ArgumentBoolean b)
 					{
-						super(a, b, ArgumentBoolean.class);
+						if (a == null || b == null)
+						{
+							a = (ArgumentBoolean) Argument.newGenerate(ArgumentBoolean.class);
+							b = (ArgumentBoolean) Argument.newGenerate(ArgumentBoolean.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = "(" + a + " || " + b + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Boolean.valueOf(a.get().toString()) || Boolean.valueOf(b.get().toString());
 					}
 				}
 				
@@ -773,11 +727,14 @@ public class Argument
 							{
 								b = Argument.newGenerate(ArgumentDouble.class);
 							}
-							else if (a instanceof ArgumentString)
+							else
 							{
 								b = Argument.newGenerate(ArgumentString.class);
 							}
 						}
+						
+						this.a = a;
+						this.b = b;
 						
 						if (a instanceof ArgumentString)
 						{
@@ -788,39 +745,27 @@ public class Argument
 							value = "(" + a + " == " + b + ")";
 						}
 					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						
-						if (a instanceof ArgumentBoolean)
-						{
-							return Boolean.valueOf(a.get().toString()) == Boolean.valueOf(b.get().toString());
-						}
-						else 
-						{
-							return Double.valueOf(a.get().toString()) == Double.valueOf(b.get().toString());
-						}
-					}
 				}
 				
 				public static class Greater extends Binary
 				{
 					public Greater ()
 					{
-						super(null, null, ArgumentDouble.class);
+						this(null, null);
 					}
 					
 					public Greater (ArgumentDouble a, ArgumentDouble b)
 					{
-						super(a, b, Argument.ArgumentDouble.class);
+						if (a == null || b == null)
+						{
+							a = (ArgumentDouble) Argument.newGenerate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.newGenerate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = a + " > " + b;
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Double.valueOf(a.get().toString()) > Double.valueOf(b.get().toString());
 					}
 				}
 				
@@ -828,67 +773,51 @@ public class Argument
 				{
 					public GreaterEquals ()
 					{
-						super(null, null, ArgumentDouble.class);
+						this(null, null);
 					}
 					
 					public GreaterEquals (ArgumentDouble a, ArgumentDouble b)
 					{
-						super(a, b, ArgumentDouble.class);
+						if (a == null || b == null)
+						{
+							a = (ArgumentDouble) Argument.newGenerate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.newGenerate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = a + " >= " + b;
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Double.valueOf(a.get().toString()) >= Double.valueOf(b.get().toString());
 					}
 				}
 			}
-			
-			public static class Unary extends ArgumentBooleanCompound
+				
+			public static class Not extends ArgumentBooleanCompound
 			{
 				Argument a;
 				
-				public Unary ()
+				public Not ()
 				{
 					this(null);
 				}
 				
-				public Unary (Argument a)
+				public Not (ArgumentBoolean a)
 				{
 					if (a == null)
 					{
-						a = Argument.generate(ArgumentBoolean.class);
+						a = (ArgumentBoolean) Argument.generate(ArgumentBoolean.class);
 					}
 					
 					this.a = a;
+					
+					value = "!(" + a + ")";
 				}
 				
 				public boolean containsArgumentType (Class<?> type)
 				{
 					return super.containsArgumentType(type) || a.containsArgumentType(type);
 				}
-				
-				public static class Not extends Unary
-				{
-					public Not ()
-					{
-						this(null);
-					}
-					
-					public Not (Argument a)
-					{
-						super(a);
-						value = "!(" + a + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return !Boolean.valueOf(a.get().toString());
-					}
-				}
-			}	
+			}
 		}
 		
 		public static class ArgumentBooleanVariable extends ArgumentBoolean implements Variable
@@ -952,6 +881,8 @@ public class Argument
 		
 		public static class ArgumentIntegerConstant extends ArgumentInteger implements Constant
 		{
+			static java.util.Random rnd = new java.util.Random();
+			
 			public ArgumentIntegerConstant (int a)
 			{
 				value = Integer.valueOf(a);
@@ -1012,81 +943,12 @@ public class Argument
 					super(360);
 				}
 			}
-		}
-		
-		public static class ArgumentIntegerRandomConstant extends ArgumentInteger implements RandomConstant
-		{
-			static java.util.Random rnd;
-			static ArrayList<Class <?>> htb, cnb;
 			
-			static
+			public static class RandomConstant extends ArgumentIntegerConstant
 			{
-				rnd = new java.util.Random();
-				
-				htb = new ArrayList<>();
-				htb.add(ArgumentInteger.class);
-				
-				cnb = new ArrayList<>();
-				cnb.add(Zero.class);
-				cnb.add(RunTimeValue.class);
-			}
-			
-			public static class IntegerRandomConstantNoArguments extends ArgumentIntegerRandomConstant
-			{
-				public IntegerRandomConstantNoArguments ()
+				public RandomConstant ()
 				{
-					value = Integer.valueOf(rnd.nextInt(201)); //default range is 0-200
-				}
-			}
-			
-			public static class IntegerRandomConstantRange extends ArgumentIntegerRandomConstant
-			{
-				public IntegerRandomConstantRange ()
-				{
-					this(null);
-				}
-				
-				public IntegerRandomConstantRange (ArgumentInteger range)
-				{
-					while (range == null ||
-							range.containsArgumentType(RunTimeValue.class) || 
-							(Integer) range.get() == 0) 
-					{
-						
-						range = (ArgumentInteger) generate(htb, cnb);
-					}
-					
-					int r = Integer.valueOf(range.get().toString());
-					value = sign(r) * Integer.valueOf(rnd.nextInt(Math.abs(r)));
-				}
-			}
-			
-			public static class IntegerRandomConstantOriginRange extends ArgumentIntegerRandomConstant
-			{
-				public IntegerRandomConstantOriginRange ()
-				{
-					this(null, null);
-				}
-				
-				public IntegerRandomConstantOriginRange (ArgumentInteger origin, ArgumentInteger range)
-				{
-					while (range == null ||
-							range.containsArgumentType(RunTimeValue.class) || 
-							(Integer) range.get() == 0) 
-					{
-						
-						range = (ArgumentInteger) generate(htb, cnb);
-					}
-					while (origin == null ||
-							origin.containsArgumentType(RunTimeValue.class)) 
-					{
-						
-						origin = (ArgumentInteger) generate(ArgumentInteger.class, RunTimeValue.class);
-					}
-					
-					int r = Integer.valueOf(range.get().toString());
-					
-					value = Integer.valueOf(origin.get().toString()) + (sign(r) * Integer.valueOf(rnd.nextInt(Math.abs(r))));
+					super(rnd.nextInt(401) - 200);
 				}
 			}
 		}
@@ -1135,23 +997,6 @@ public class Argument
 			{
 				ArgumentInteger a, b;
 				
-				public Binary ()
-				{
-					this(null, null);
-				}
-				
-				public Binary (ArgumentInteger a, ArgumentInteger b)
-				{
-					if (a == null || b == null)
-					{
-						a = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
-						b = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
-					}
-					
-					this.a = a;
-					this.b = b;
-				}
-				
 				public boolean containsArgumentType (Class<?> type)
 				{
 					return super.containsArgumentType(type) || a.containsArgumentType(type) || b.containsArgumentType(type);
@@ -1166,14 +1011,16 @@ public class Argument
 					
 					public Addition (ArgumentInteger a, ArgumentInteger b)
 					{
-						super(a, b);
+						if (a == null || b == null)
+						{
+							a = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
+							b = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = "(" + a + " + " + b + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return (Integer.valueOf(a.get().toString()) + Integer.valueOf(b.get().toString()));
 					}
 				}
 				
@@ -1186,14 +1033,16 @@ public class Argument
 					
 					public Subtraction (ArgumentInteger a, ArgumentInteger b)
 					{
-						super(a, b);
+						if (a == null || b == null)
+						{
+							a = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
+							b = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = "(" + a + " - " + b + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return (Integer.valueOf(a.get().toString()) - Integer.valueOf(b.get().toString()));
 					}
 				}
 				
@@ -1206,14 +1055,16 @@ public class Argument
 					
 					public Multiplication (ArgumentInteger a, ArgumentInteger b)
 					{
-						super(a, b);
+						if (a == null || b == null)
+						{
+							a = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
+							b = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = "(" + a + " * " + b + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Integer.valueOf(a.get().toString()) * Integer.valueOf(b.get().toString());
 					}
 				}
 				
@@ -1229,66 +1080,39 @@ public class Argument
 						if (a == null || b == null)
 						{
 							a = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
+							b = (ArgumentInteger) Argument.generate(ArgumentInteger.class);
 							
-							while (b == null)
-							{
-								b = (ArgumentInteger) Argument.generate(ArgumentInteger.class, Zero.class);
-								if ( !(b.containsArgumentType(RunTimeValue.class)) )
-								{		
-									if (Integer.valueOf(b.get().toString()) == 0) b = null;
-								}
-							}
-						
-							value = "(" + a + " % " + b + ")";
+							
 						}
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Integer.valueOf(a.get().toString()) % Integer.valueOf(b.get().toString());
+						
+						this.a = a;
+						this.b = b;
+						
+						value = "(" + a + " % " + b + ")";
 					}
 				}
 			}
 			
-			public static class Unary extends ArgumentIntegerCompound
+			public static class Absolute extends ArgumentIntegerCompound
 			{
 				ArgumentInteger a;
-				
-				public Unary ()
+				public Absolute ()
 				{
 					this(null);
 				}
 				
-				public Unary (ArgumentInteger a)
+				public Absolute (ArgumentInteger a)
 				{
 					if (a == null) a = (ArgumentInteger) generate(ArgumentInteger.class);
+					
 					this.a = a;
+					
+					value = "Math.abs(" + a + ")";
 				}
 				
 				public boolean containsArgumentType (Class<?> type)
 				{
 					return super.containsArgumentType(type) || a.containsArgumentType(type);
-				}
-				
-				public static class Absolute extends Unary
-				{
-					public Absolute ()
-					{
-						this(null);
-					}
-					
-					public Absolute (ArgumentInteger a)
-					{
-						super(a);
-						value = "Math.abs(" + a + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.abs(Integer.valueOf(a.get().toString()));
-					}
 				}
 			}
 		}
@@ -1585,6 +1409,8 @@ public class Argument
 		
 		public static class ArgumentDoubleConstant extends ArgumentDouble implements Constant
 		{
+			static java.util.Random rnd = new java.util.Random();
+			
 			public ArgumentDoubleConstant (double a)
 			{
 				value = Double.valueOf(a);
@@ -1613,67 +1439,12 @@ public class Argument
 					super(Math.sqrt(2));
 				}
 			}
-		}
-		
-		public static class ArgumentDoubleRandomConstant extends ArgumentDouble implements RandomConstant
-		{
-			static java.util.Random rnd = new java.util.Random();
 			
-			public static class DoubleRandomConstantNoArguments extends ArgumentDoubleRandomConstant
+			public static class RandomConstant extends ArgumentDoubleConstant
 			{
-				public DoubleRandomConstantNoArguments ()
+				public RandomConstant ()
 				{
-					value = Double.valueOf(rnd.nextDouble() * 200); //default range is 0-200
-				}
-			}
-			
-			public static class DoubleRandomConstantBound extends ArgumentDoubleRandomConstant
-			{
-				public DoubleRandomConstantBound ()
-				{
-					this(null);
-				}
-				
-				public DoubleRandomConstantBound (ArgumentDouble scale)
-				{
-					while (scale == null || 
-							scale.containsArgumentType(RunTimeValue.class)) 
-					{
-						scale = (ArgumentDouble) generate(ArgumentDouble.class, RunTimeValue.class);
-					}
-					
-					Double s = Double.valueOf(scale.get().toString());
-					
-					value = Double.valueOf(rnd.nextDouble() * s);
-				}
-			}
-			
-			public static class DoubleRandomConstantOriginBound extends ArgumentDoubleRandomConstant
-			{
-				public DoubleRandomConstantOriginBound ()
-				{
-					this(null, null);
-				}
-				
-				public DoubleRandomConstantOriginBound (ArgumentDouble origin, ArgumentDouble scale)
-				{
-					while (scale == null || 
-							scale.containsArgumentType(RunTimeValue.class)) 
-					{
-						scale = (ArgumentDouble) generate(ArgumentDouble.class, RunTimeValue.class);
-					}
-					
-					Double s = Double.valueOf(scale.get().toString());
-					
-					while (origin == null || 
-							origin.containsArgumentType(RunTimeValue.class)) 
-					{
-						origin = (ArgumentDouble) generate(ArgumentDouble.class, RunTimeValue.class);
-					}
-					
-					Double o = Double.valueOf(origin.get().toString());
-					
-					value = o + Double.valueOf(rnd.nextDouble() * s);
+					super((rnd.nextDouble() * 400) - 200);
 				}
 			}
 		}
@@ -1721,23 +1492,6 @@ public class Argument
 			public static class Binary extends ArgumentDoubleCompound
 			{
 				ArgumentDouble a, b;
-					
-				public Binary ()
-				{
-					this(null, null);
-				}
-				
-				public Binary (ArgumentDouble a, ArgumentDouble b)
-				{
-					if (a == null || b == null)
-					{
-						a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
-						b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
-					}
-					
-					this.a = a;
-					this.b = b;
-				}
 				
 				public boolean containsArgumentType (Class<?> type)
 				{
@@ -1753,14 +1507,16 @@ public class Argument
 					
 					public Addition (ArgumentDouble a, ArgumentDouble b)
 					{
-						super(a, b);
+						if (a == null || b == null)
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = "(" + a + " + " + b + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Double.valueOf(a.get().toString()) + Double.valueOf(b.get().toString());
 					}
 				}
 				
@@ -1773,14 +1529,16 @@ public class Argument
 					
 					public Subtraction (ArgumentDouble a, ArgumentDouble b)
 					{
-						super(a, b);
+						if (a == null || b == null)
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = "(" + a + " - " + b + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Double.valueOf(a.get().toString()) - Double.valueOf(b.get().toString());
 					}
 				}
 				
@@ -1793,14 +1551,16 @@ public class Argument
 					
 					public Multiplication (ArgumentDouble a, ArgumentDouble b)
 					{
-						super(a, b);
+						if (a == null || b == null)
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = "(" + a + " * " + b + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Double.valueOf(a.get().toString()) * Double.valueOf(b.get().toString());
 					}
 				}
 				
@@ -1816,21 +1576,13 @@ public class Argument
 						if (a == null || b == null)
 						{
 							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
-							
-							while (b == null)
-							{
-								b = (ArgumentDouble) Argument.generate(ArgumentDouble.class, Zero.class);
-								if (!(b instanceof RunTimeValue) && (Double) b.get() == 0) b = null;
-							}
-						
-							value = "(" + a + " / " + b + ")";
+							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
 						}
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Double.valueOf(a.get().toString()) / Double.valueOf(b.get().toString());
+						
+						this.a = a;
+						this.b = b;
+						
+						value = "(" + a + " / " + b + ")";
 					}
 				}
 				
@@ -1843,14 +1595,16 @@ public class Argument
 					
 					public Power (ArgumentDouble a, ArgumentDouble b)
 					{
-						super(a, b);
+						if (a == null || b == null)
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = "Math.pow(" + a + ", " + b + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.pow(Double.valueOf(a.get().toString()), Double.valueOf(b.get().toString()));
 					}
 				}
 				
@@ -1863,14 +1617,16 @@ public class Argument
 					
 					public Minimum (ArgumentDouble a, ArgumentDouble b)
 					{
-						super(a, b);
+						if (a == null || b == null)
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = "Math.min(" + a + ", " + b + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.min(Double.valueOf(a.get().toString()), Double.valueOf(b.get().toString()));
 					}
 				}
 				
@@ -1883,14 +1639,16 @@ public class Argument
 					
 					public Maximum (ArgumentDouble a, ArgumentDouble b)
 					{
-						super(a, b);
+						if (a == null || b == null)
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = "Math.max(" + a + ", " + b + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.max(Double.valueOf(a.get().toString()), Double.valueOf(b.get().toString()));
 					}
 				}
 				
@@ -1903,14 +1661,16 @@ public class Argument
 					
 					public Hypotenuse (ArgumentDouble a, ArgumentDouble b)
 					{
-						super(a, b);
+						if (a == null || b == null)
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+							b = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
 						value = "Math.hypot(" + a + ", " + b + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.hypot(Double.valueOf(a.get().toString()), Double.valueOf(b.get().toString()));
 					}
 				}
 			}
@@ -1918,21 +1678,6 @@ public class Argument
 			public static class Unary extends ArgumentDoubleCompound
 			{
 				ArgumentDouble a;
-				
-				public Unary ()
-				{
-					this(null);
-				}
-				
-				public Unary (ArgumentDouble a)
-				{
-					if (a == null) 
-					{
-						a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
-					}
-					
-					this.a = a;
-				}
 				
 				public boolean containsArgumentType (Class<?> type)
 				{
@@ -1948,14 +1693,14 @@ public class Argument
 					
 					public Sine (ArgumentDouble a)
 					{
-						super(a);
+						if (a == null) 
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						
 						value = "Math.sin(Math.toRadians(" + a + "))";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.sin(Math.toRadians(Double.valueOf(a.get().toString())));
 					}
 				}
 				
@@ -1968,14 +1713,14 @@ public class Argument
 					
 					public Cosine (ArgumentDouble a)
 					{
-						super(a);
+						if (a == null) 
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						
 						value = "Math.cos(Math.toRadians(" + a + "))";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.cos(Math.toRadians(Double.valueOf(a.get().toString())));
 					}
 				}
 				
@@ -1988,14 +1733,14 @@ public class Argument
 					
 					public Tangent (ArgumentDouble a)
 					{
-						super(a);
+						if (a == null) 
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						
 						value = "Math.tan(Math.toRadians(" + a + "))";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.tan(Math.toRadians(Double.valueOf(a.get().toString())));
 					}
 				}
 				
@@ -2008,14 +1753,14 @@ public class Argument
 					
 					public SquareRoot (ArgumentDouble a)
 					{
-						super(a);
+						if (a == null) 
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						
 						value = "Math.sqrt(" + a + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.sqrt(Double.valueOf(a.get().toString()));
 					}
 				}
 				
@@ -2028,14 +1773,14 @@ public class Argument
 					
 					public CubeRoot (ArgumentDouble a)
 					{
-						super(a);
+						if (a == null) 
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						
 						value = "Math.cbrt(" + a + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.cbrt(Double.valueOf(a.get().toString()));
 					}
 				}
 				
@@ -2048,14 +1793,14 @@ public class Argument
 					
 					public Logarithm (ArgumentDouble a)
 					{
-						super(a);
+						if (a == null) 
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						
 						value = "Math.log(" + a + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.log(Double.valueOf(a.get().toString()));
 					}
 				}
 				
@@ -2068,14 +1813,14 @@ public class Argument
 					
 					public Exponent (ArgumentDouble a)
 					{
-						super(a);
+						if (a == null) 
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						
 						value = "Math.exp(" + a + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.exp(Double.valueOf(a.get().toString()));
 					}
 				}
 				
@@ -2088,14 +1833,14 @@ public class Argument
 					
 					public Absolute (ArgumentDouble a)
 					{
-						super(a);
+						if (a == null) 
+						{
+							a = (ArgumentDouble) Argument.generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						
 						value = "Math.abs(" + a + ")";
-					}
-					
-					public Object get ()
-					{
-						if (this.containsArgumentType(RunTimeValue.class)) return null;
-						else return Math.abs(Double.valueOf(a.get().toString()));
 					}
 				}
 			}
@@ -2109,7 +1854,7 @@ public class Argument
 	
 	public static class ArgumentString extends Argument
 	{
-		public static class ArgumentStringEventInfo extends Argument implements EventInfo
+		public static class ArgumentStringEventInfo extends ArgumentString implements EventInfo
 		{
 			public ArgumentStringEventInfo ()
 			{
@@ -2157,7 +1902,15 @@ public class Argument
 			}
 		}
 		
-		public static class ArgumentStringVariable extends Argument implements Variable
+		public static class Null extends ArgumentString implements Constant
+		{
+			public Null ()
+			{
+				value = "null";
+			}
+		}
+		
+		public static class ArgumentStringVariable extends ArgumentString implements Variable
 		{
 			
 		}
