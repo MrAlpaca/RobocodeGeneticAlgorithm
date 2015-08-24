@@ -10,7 +10,9 @@ import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanConst
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanConstant.True;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanEventInfo.EventInfoIsMyFault;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanEventInfo.EventInfoIsSentryRobot;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRandom;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanVariable;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRobotInfo.RobotInfoAdjustGunForRobotTurn;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRobotInfo.RobotInfoAdjustRadarForGunTurn;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRobotInfo.RobotInfoAdjustRadarForRobotTurn;
@@ -65,6 +67,7 @@ import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotIn
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoTurnRemaining;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoX;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoY;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleVariable;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerCompound;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerCompound.Binary.Modulu;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerConstant;
@@ -83,12 +86,28 @@ import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerRobot
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoOthers;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoRoundNum;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerRobotInfo.RobotInfoTime;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerVariable;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringEventInfo.BulletName;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringEventInfo.EventInfoName;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringEventInfo.HitBulletName;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringRobotInfo.RobotInfoName;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringVariable;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.Null;
+import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Bearing;
+import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Bullet;
+import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Distance;
+import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Energy;
+import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Heading;
+import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.HitBullet;
+import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.IsMyFault;
+import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.IsSentryRobot;
+import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Name;
+import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Velocity;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Argument implements Generatable
@@ -176,7 +195,7 @@ public class Argument implements Generatable
 			 * Variable
 			 */
 			{
-				
+				generator.add(ArgumentBooleanVariable.class);
 			}
 		}
 		
@@ -236,7 +255,7 @@ public class Argument implements Generatable
 			 * Variable
 			 */
 			{
-				
+				generator.add(ArgumentIntegerVariable.class);
 			}
 		}
 		
@@ -337,7 +356,7 @@ public class Argument implements Generatable
 			 * Variable
 			 */
 			{
-				
+				generator.add(ArgumentDoubleVariable.class);
 			}
 		}
 		
@@ -374,20 +393,195 @@ public class Argument implements Generatable
 			 * Variable
 			 */
 			{
-				
+				generator.add(ArgumentStringVariable.class);
 			}
 		}
 	}
 	
-	private static Argument generate ()
+	/**
+	 * Generates an argument for a certain chromosome of a certain robot
+	 * @param argType The argument type (should be ArgumentBoolean, ArgumentInteger, ArgumentDouble or ArgumentString)
+	 * @param cNum The chromosome number this argument will be placed in
+	 * @param booleansNum The number of boolean variables this robot has
+	 * @param integersNum The number of integer variables this robot has
+	 * @param doublesNum The number of double variables this robot has
+	 * @param stringsNum The number of string variables this robot has
+	 * @return A new argument that holds up to all requirements
+	 */
+	public static Argument chromosomeGenerate (Class <? extends Argument> argType, int cNum, int booleansNum, int integersNum, int doublesNum, int stringsNum)
+	{
+		/*
+		 * Adds to the hasToBe list the required argument type
+		 */
+		List < Class <?> > hasToBe = new ArrayList<>();
+		hasToBe.add(argType);
+		
+		List < Class <?> > cannotBe = new ArrayList<>();
+		
+		/*
+		 * This block adds to the cannotBe list any event info's that are not allowable in the particular chromosome
+		 */
+		switch (cNum) 
+		{
+			case 1:
+			case 2:
+				cannotBe.add(EventInfo.class);
+				break;
+			
+			default:
+				cannotBe.add(Bullet.class);
+				cannotBe.add(HitBullet.class);
+				cannotBe.add(IsMyFault.class);
+				cannotBe.add(IsSentryRobot.class);
+				cannotBe.add(Power.class);
+				cannotBe.add(Bearing.class);
+				cannotBe.add(Energy.class);
+				cannotBe.add(Heading.class);
+				cannotBe.add(Velocity.class);
+				cannotBe.add(Distance.class);
+				cannotBe.add(Name.class);
+				
+				Iterator < Class <?> > iter = cannotBe.iterator();
+				while (iter.hasNext())
+				{
+					Class <? extends EventInfo> next = iter.next().asSubclass(EventInfo.class);
+					try 
+					{
+						Method getChromosomes = next.getMethod("getChromosomes");
+						int [] chromosomes = (int[]) getChromosomes.invoke(null);
+						
+						for (int i = 0; i < chromosomes.length; i++)
+						{
+							if (chromosomes[i] == cNum)
+							{
+								iter.remove();
+								break;
+							}
+						}
+					} 
+					catch (	NoSuchMethodException | 
+							SecurityException | 
+							IllegalAccessException | 
+							IllegalArgumentException | 
+							InvocationTargetException e) 
+					{
+						e.printStackTrace();
+					}
+							
+				}
+				
+				break;
+		}
+		
+		/*
+		 * This block adds to the cannotBe list variable arguments if the corresponding arguments do not exist
+		 */
+		if (booleansNum <= 0)
+		{
+			cannotBe.add(ArgumentBooleanVariable.class);
+		}
+		
+		if (integersNum <= 0)
+		{
+			cannotBe.add(ArgumentIntegerVariable.class);
+		}
+		
+		if (doublesNum <= 0)
+		{
+			cannotBe.add(ArgumentDoubleVariable.class);
+		}
+		
+		if (stringsNum <= 0)
+		{
+			cannotBe.add(ArgumentStringVariable.class);
+		}
+		
+		/*
+		 * Generates an argument and sets the id of all variable arguments
+		 */
+		Argument toReturn = generate(hasToBe, cannotBe);
+		
+		List <Variable> allVariableArguments = getVariableArguments(toReturn);
+		
+		for (Variable arg : allVariableArguments)
+		{
+			if (arg instanceof ArgumentBooleanVariable)
+			{
+				arg.setID(rnd.nextInt(booleansNum));
+			}
+			
+			if (arg instanceof ArgumentIntegerVariable)
+			{
+				arg.setID(rnd.nextInt(integersNum));
+			}
+			
+			if (arg instanceof ArgumentDoubleVariable)
+			{
+				arg.setID(rnd.nextInt(doublesNum));
+			}
+			
+			if (arg instanceof ArgumentStringVariable)
+			{
+				arg.setID(rnd.nextInt(stringsNum));
+			}
+		}
+		
+		return toReturn;
+	}
+	//
+	
+	/**
+	 *  Returns a random Argument
+	 * @return A new Argument chosen randomly from all possibilities
+	 */
+	public static Argument generate ()
 	{
 		return generator.generate();
 	}
 	
-	private static Argument generate (Class <?> hasToBe)
+	
+	//
+	
+	/**
+	 * Returns a new Argument according to the requirements
+	 * @param hasToBe The new Argument must be of this type
+	 * @return A new Argument
+	 */
+	public static Argument generate (Class <?> hasToBe)
 	{
 		return generator.generate(hasToBe);
 	}
+	//
+	
+	
+	
+	/**
+	 * Returns a new Argument according to the requirements
+	 * @param hasToBe The new Argument must be of this type
+	 * @param cannotBe The new Argument cannot be of this type
+	 * @return A new Argument
+	 */
+	public static Argument generate (Class <?> hasToBe, Class <?> cannotBe)
+	{
+		return generator.generate(hasToBe, cannotBe);
+	}
+	//
+	
+	
+	
+	/**
+	 * Returns a new Argument according to the requirements
+	 * @param hasToBe The new Argument must be of all specified types in this list
+	 * @param cannotBe The new Argument cannot be of any of the specified types in this list
+	 * @return A new Argument
+	 */
+	public static Argument generate (List<Class<?>> hasToBe, List<Class<?>> cannotBe)
+	{
+		return generator.generate(hasToBe, cannotBe);
+	}
+	//
+	
+	
 	
 	public static List < Class <? extends Argument> > getAllPossibilities ()
 	{
@@ -395,38 +589,190 @@ public class Argument implements Generatable
 	}
 	
 	
-	
-	public static interface EventInfo
+	public static List <Variable> getVariableArguments (Argument a)
 	{
-		public static interface Bullet {}
-		public static interface HitBullet {}
+		List <Variable> toReturn = new ArrayList<>();
+		addVariablesToList(toReturn, a);
 		
-		public static interface Bearing {}
-		public static interface Energy {}
-		public static interface Name {}
-		public static interface Heading {}
-		public static interface Velocity {}
-		public static interface Distance {}
+		return toReturn;
 	}
 	
+	
+	private static void addVariablesToList (List <Variable> l, Argument a)
+	{
+		if (a instanceof Variable)
+		{
+			l.add((Variable)a);
+		}
+		else if (a instanceof Compound)
+		{
+			if (a instanceof ArgumentBooleanCompound.Binary)
+			{
+				addVariablesToList(l, ((ArgumentBooleanCompound.Binary) a).a);
+				addVariablesToList(l, ((ArgumentBooleanCompound.Binary) a).b);
+			}
+			
+			if (a instanceof ArgumentBooleanCompound.Not)
+			{
+				addVariablesToList(l, ((ArgumentBooleanCompound.Not) a).a);
+			}
+			
+			if (a instanceof ArgumentIntegerCompound.Binary)
+			{
+				addVariablesToList(l, ((ArgumentIntegerCompound.Binary) a).a);
+				addVariablesToList(l, ((ArgumentIntegerCompound.Binary) a).b);
+			}
+			
+			if (a instanceof ArgumentIntegerCompound.Absolute)
+			{
+				addVariablesToList(l, ((ArgumentIntegerCompound.Absolute) a).a);
+			}
+			
+			if (a instanceof ArgumentDoubleCompound.Binary)
+			{
+				addVariablesToList(l, ((ArgumentDoubleCompound.Binary) a).a);
+				addVariablesToList(l, ((ArgumentDoubleCompound.Binary) a).b);
+			}
+			
+			if (a instanceof ArgumentDoubleCompound.Unary)
+			{
+				addVariablesToList(l, ((ArgumentDoubleCompound.Unary) a).a);
+			}
+		}
+	}
+	
+	
+	/*
+	 * Tagging interfaces
+	 */
+	//
+	public static interface EventInfo
+	{
+		public int [] getChromosomes ();
+		
+		public static interface Bullet extends EventInfo 
+		{
+			public default int [] getChromosomes ()
+			{
+				int [] chromosomes = new int [] {3, 4, 5, 6};
+				return chromosomes;
+			}
+		}
+		public static interface HitBullet extends EventInfo 
+		{
+			public default int [] getChromosomes ()
+			{
+				int [] chromosomes = new int [] {4};
+				return chromosomes;
+			}
+		}
+		
+		public static interface IsMyFault extends EventInfo 
+		{
+			public default int [] getChromosomes ()
+			{
+				int [] chromosomes = new int [] {7};
+				return chromosomes;
+			}
+		}
+		public static interface IsSentryRobot extends EventInfo 
+		{
+			public default int [] getChromosomes ()
+			{
+				int [] chromosomes = new int [] {10};
+				return chromosomes;
+			}
+		}
+		
+		public static interface Power extends EventInfo 
+		{
+			public default int [] getChromosomes ()
+			{
+				int [] chromosomes = new int [] {6};
+				return chromosomes;
+			}
+		}
+		public static interface Bearing extends EventInfo 
+		{
+			public default int [] getChromosomes ()
+			{
+				int [] chromosomes = new int [] {6, 7, 8, 10};
+				return chromosomes;
+			}
+		}
+		public static interface Energy extends EventInfo 
+		{
+			public default int [] getChromosomes ()
+			{
+				int [] chromosomes = new int [] {3, 7, 10};
+				return chromosomes;
+			}
+		}
+		public static interface Heading extends EventInfo 
+		{
+			public default int [] getChromosomes ()
+			{
+				int [] chromosomes = new int [] {6, 10};
+				return chromosomes;
+			}
+		}
+		public static interface Velocity extends EventInfo 
+		{
+			public default int [] getChromosomes ()
+			{
+				int [] chromosomes = new int [] {6, 10};
+				return chromosomes;
+			}
+		}
+		public static interface Distance extends EventInfo 
+		{
+			public default int [] getChromosomes ()
+			{
+				int [] chromosomes = new int [] {10};
+				return chromosomes;
+			}
+		}
+		
+		public static interface Name extends EventInfo 
+		{
+			public default int [] getChromosomes ()
+			{
+				int [] chromosomes = new int [] {};
+				return chromosomes;
+			}
+		}
+	}
 	public static interface RobotInfo {}
+	//
 	public static interface Constant {}
+	//
 	public static interface Random {}
+	//
 	public static interface Compound {}
-	public static interface Variable {}
+	//
+	public static interface Variable 
+	{
+		public void setID(int id);
+	}
 	
 	
 	
+	//
+	
+	/*
+	 * Arguments
+	 */
+	//
 	public static class ArgumentBoolean extends Argument
 	{
-		public static class ArgumentBooleanEventInfo extends ArgumentBoolean implements EventInfo
+		public static abstract class ArgumentBooleanEventInfo extends ArgumentBoolean implements EventInfo
 		{
 			public ArgumentBooleanEventInfo ()
 			{
 				value = "event.is";
 			}
 			
-			public static class EventInfoIsMyFault extends ArgumentBooleanEventInfo 
+			public static class EventInfoIsMyFault extends ArgumentBooleanEventInfo implements IsMyFault
 			{
 				public EventInfoIsMyFault ()
 				{
@@ -434,7 +780,7 @@ public class Argument implements Generatable
 				}
 			}
 			
-			public static class EventInfoIsSentryRobot extends ArgumentBooleanEventInfo 
+			public static class EventInfoIsSentryRobot extends ArgumentBooleanEventInfo implements IsSentryRobot
 			{
 				public EventInfoIsSentryRobot ()
 				{
@@ -692,12 +1038,22 @@ public class Argument implements Generatable
 		
 		public static class ArgumentBooleanVariable extends ArgumentBoolean implements Variable
 		{
+			public int id = 0;
 			
+			public ArgumentBooleanVariable ()
+			{
+				value = "booleans.get(" + id + ")";
+			}
+			
+			@Override
+			public void setID (int id) 
+			{
+				this.id = id;
+			}
 		}
 	}
-	
-	
-	
+	//
+	//
 	public static class ArgumentInteger extends ArgumentDouble
 	{
 		public static class ArgumentIntegerRobotInfo extends ArgumentInteger implements RobotInfo
@@ -998,22 +1354,32 @@ public class Argument implements Generatable
 		
 		public static class ArgumentIntegerVariable extends ArgumentInteger implements Variable
 		{
+			public int id = 0;
 			
+			public ArgumentIntegerVariable ()
+			{
+				value = "integers.get(" + id + ")";
+			}
+			
+			@Override
+			public void setID (int id) 
+			{
+				this.id = id;
+			}
 		}
 	}
-	
-	
-	
+	//
+	//
 	public static class ArgumentDouble extends Argument
 	{
-		public static class ArgumentDoubleEventInfo extends ArgumentDouble implements EventInfo
+		public static abstract class ArgumentDoubleEventInfo extends ArgumentDouble implements EventInfo
 		{
 			public ArgumentDoubleEventInfo ()
 			{
 				value = "event.get";
 			}
 			
-			public static class EventInfoPower extends ArgumentDoubleEventInfo
+			public static class EventInfoPower extends ArgumentDoubleEventInfo implements Power
 			{
 				public EventInfoPower ()
 				{
@@ -1053,7 +1419,7 @@ public class Argument implements Generatable
 				}
 			}
 			
-			public static class EventInfoDistance extends ArgumentDoubleEventInfo
+			public static class EventInfoDistance extends ArgumentDoubleEventInfo implements Distance
 			{
 				public EventInfoDistance ()
 				{
@@ -1735,13 +2101,25 @@ public class Argument implements Generatable
 		
 		public static class ArgumentDoubleVariable extends ArgumentDouble implements Variable
 		{
+			public int id = 0;
 			
+			public ArgumentDoubleVariable ()
+			{
+				value = "doubles.get(" + id + ")";
+			}
+			
+			@Override
+			public void setID (int id) 
+			{
+				this.id = id;
+			}
 		}
 	}
-	
+	//
+	//
 	public static class ArgumentString extends Argument
 	{
-		public static class ArgumentStringEventInfo extends ArgumentString implements EventInfo
+		public static abstract class ArgumentStringEventInfo extends ArgumentString implements EventInfo
 		{
 			public ArgumentStringEventInfo ()
 			{
@@ -1799,7 +2177,19 @@ public class Argument implements Generatable
 		
 		public static class ArgumentStringVariable extends ArgumentString implements Variable
 		{
+			public int id = 0;
 			
+			public ArgumentStringVariable ()
+			{
+				value = "strings.get(" + id + ")";
+			}
+			
+			@Override
+			public void setID (int id) 
+			{
+				this.id = id;
+			}
 		}
 	}
+	//
 }

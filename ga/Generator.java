@@ -96,7 +96,7 @@ public class Generator <T extends Generatable>
 	 * Returns a new Generatable according to the requirements
 	 * @param hasToBe The new Generatable must be of all specified types in this list
 	 * @param cannotBe The new Generatable cannot be of any of the specified types in this list
-	 * @return
+	 * @return A new Generatable
 	 */
 	public T generate (List<Class<?>> hasToBe, List<Class<?>> cannotBe)
 	{
