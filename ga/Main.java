@@ -1,45 +1,104 @@
 package RobocodeGeneticAlgorithm.ga;
 
-import java.util.List;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString;
 
 public class Main 
 {
-	@SuppressWarnings("unused")
 	public static void main (String [] args)
 	{
-		double averageTimeTaken = 0;
-		
-		for (int j = 0; j < 10; j++)
+		for (int cNum = 1; cNum <= 10; cNum++)
 		{
-			long startingTime = System.currentTimeMillis();
-			
-			for (int i = 0; i < 1000; i++)
+			for (int booleansNum = 0; booleansNum < 5; booleansNum++)
 			{
-				List <Class <? extends Argument> > possibilities = Argument.getAllPossibilities();
-				
-				try 
+				for (int integersNum = 0; integersNum < 5; integersNum++)
 				{
-					for (Class<? extends Argument> poss : possibilities)
+					for (int doublesNum = 0; doublesNum < 5; doublesNum++)
 					{
-						Argument newArg = poss.newInstance();
+						for (int stringsNum = 0; stringsNum < 5; stringsNum++)
+						{
+							System.out.printf("cNum: %d, booleansNum: %d, integersNum: %d, doublesNum: %d, stringsNum: %d" , 
+									cNum, 
+									booleansNum, 
+									integersNum, 
+									doublesNum, 
+									stringsNum);
+							System.out.println("Boolean argument generated: " + Argument.chromosomeGenerate(ArgumentBoolean.class, cNum, booleansNum, integersNum, doublesNum, stringsNum));
+						}
 					}
 				}
-				catch (InstantiationException e) 
-				{
-					e.printStackTrace();
-				} catch (IllegalAccessException e) 
-				{
-					e.printStackTrace();
-				}
 			}
-			
-			long endingTime = System.currentTimeMillis();
-			long timeTaken = endingTime - startingTime;
-			
-			averageTimeTaken += timeTaken;
 		}
 		
-		averageTimeTaken /= 10;
-		System.out.println("Average time taken: " + averageTimeTaken);
+		for (int cNum = 1; cNum <= 10; cNum++)
+		{
+			for (int booleansNum = 0; booleansNum < 5; booleansNum++)
+			{
+				for (int integersNum = 0; integersNum < 5; integersNum++)
+				{
+					for (int doublesNum = 0; doublesNum < 5; doublesNum++)
+					{
+						for (int stringsNum = 0; stringsNum < 5; stringsNum++)
+						{
+							System.out.printf("cNum: %d, booleansNum: %d, integersNum: %d, doublesNum: %d, stringsNum: %d" , 
+									cNum, 
+									booleansNum, 
+									integersNum, 
+									doublesNum, 
+									stringsNum);
+							System.out.println("Integer argument generated: " + Argument.chromosomeGenerate(ArgumentInteger.class, cNum, booleansNum, integersNum, doublesNum, stringsNum));
+						}
+					}
+				}
+			}
+		}
+		
+		for (int cNum = 1; cNum <= 10; cNum++)
+		{
+			for (int booleansNum = 0; booleansNum < 5; booleansNum++)
+			{
+				for (int integersNum = 0; integersNum < 5; integersNum++)
+				{
+					for (int doublesNum = 0; doublesNum < 5; doublesNum++)
+					{
+						for (int stringsNum = 0; stringsNum < 5; stringsNum++)
+						{
+							System.out.printf("cNum: %d, booleansNum: %d, integersNum: %d, doublesNum: %d, stringsNum: %d" , 
+									cNum, 
+									booleansNum, 
+									integersNum, 
+									doublesNum, 
+									stringsNum);
+							System.out.println("Double argument generated: " + Argument.chromosomeGenerate(ArgumentDouble.class, cNum, booleansNum, integersNum, doublesNum, stringsNum));
+						}
+					}
+				}
+			}
+		}
+		
+		for (int cNum = 1; cNum <= 10; cNum++)
+		{
+			for (int booleansNum = 0; booleansNum < 5; booleansNum++)
+			{
+				for (int integersNum = 0; integersNum < 5; integersNum++)
+				{
+					for (int doublesNum = 0; doublesNum < 5; doublesNum++)
+					{
+						for (int stringsNum = 0; stringsNum < 5; stringsNum++)
+						{
+							System.out.printf("cNum: %d, booleansNum: %d, integersNum: %d, doublesNum: %d, stringsNum: %d" , 
+									cNum, 
+									booleansNum, 
+									integersNum, 
+									doublesNum, 
+									stringsNum);
+							System.out.println("String argument generated: " + Argument.chromosomeGenerate(ArgumentString.class, cNum, booleansNum, integersNum, doublesNum, stringsNum));
+						}
+					}
+				}
+			}
+		}
 	}
 }
