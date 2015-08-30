@@ -1,6 +1,8 @@
 package RobocodeGeneticAlgorithm.ga;
 
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.And;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.Less;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.LessEquals;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.Or;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.Greater;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.GreaterEquals;
@@ -187,6 +189,8 @@ public class Argument implements Generatable
 				generator.add(Equals.class);
 				generator.add(Greater.class);
 				generator.add(GreaterEquals.class);
+				generator.add(Less.class);
+				generator.add(LessEquals.class);
 				generator.add(Not.class);
 			}
 			
@@ -502,8 +506,6 @@ public class Argument implements Generatable
 		
 		List <Variable> allVariableArguments = getVariableArguments(toReturn);
 		
-		System.out.println("Variable arguments: " + allVariableArguments);
-		
 		for (Variable arg : allVariableArguments)
 		{
 			if (arg instanceof ArgumentBooleanVariable)
@@ -619,10 +621,6 @@ public class Argument implements Generatable
 		}
 	}
 	
-	
-	/*
-	 * Tagging interfaces
-	 */
 	//
 	public static interface EventInfo
 	{
@@ -718,6 +716,7 @@ public class Argument implements Generatable
 			}
 		}
 	}
+	//
 	public static interface RobotInfo {}
 	//
 	public static interface Constant {}
@@ -996,6 +995,50 @@ public class Argument implements Generatable
 						this.b = b;
 						
 						value = a + " >= " + b;
+					}
+				}
+				
+				public static class Less extends BinaryBoolean
+				{
+					public Less ()
+					{
+						this(null, null);
+					}
+					
+					public Less (ArgumentDouble a, ArgumentDouble b)
+					{
+						if (a == null || b == null)
+						{
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
+							b = (ArgumentDouble) generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
+						value = a + " < " + b;
+					}
+				}
+				
+				public static class LessEquals extends BinaryBoolean
+				{
+					public LessEquals ()
+					{
+						this(null, null);
+					}
+					
+					public LessEquals (ArgumentDouble a, ArgumentDouble b)
+					{
+						if (a == null || b == null)
+						{
+							a = (ArgumentDouble) generate(ArgumentDouble.class);
+							b = (ArgumentDouble) generate(ArgumentDouble.class);
+						}
+						
+						this.a = a;
+						this.b = b;
+						
+						value = a + " <= " + b;
 					}
 				}
 			}
