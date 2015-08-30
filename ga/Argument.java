@@ -1,10 +1,10 @@
 package RobocodeGeneticAlgorithm.ga;
 
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.And;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.Or;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.Greater;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.GreaterEquals;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Binary.Equals;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.And;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.Or;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.Greater;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.GreaterEquals;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.Equals;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.Not;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanConstant.False;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanConstant.True;
@@ -17,18 +17,18 @@ import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRobot
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRobotInfo.RobotInfoAdjustRadarForGunTurn;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRobotInfo.RobotInfoAdjustRadarForRobotTurn;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Division;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Hypotenuse;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Maximum;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Minimum;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Binary.Power;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Cosine;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.CubeRoot;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Exponent;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Logarithm;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Sine;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.SquareRoot;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.Unary.Tangent;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.BinaryDouble.Division;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.BinaryDouble.Hypotenuse;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.BinaryDouble.Maximum;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.BinaryDouble.Minimum;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.BinaryDouble.Power;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.UnaryDouble.Cosine;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.UnaryDouble.CubeRoot;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.UnaryDouble.Exponent;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.UnaryDouble.Logarithm;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.UnaryDouble.Sine;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.UnaryDouble.SquareRoot;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleCompound.UnaryDouble.Tangent;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleConstant;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleConstant.E;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleConstant.PI;
@@ -69,7 +69,7 @@ import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotIn
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleRobotInfo.RobotInfoY;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentDouble.ArgumentDoubleVariable;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerCompound;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerCompound.Binary.Modulu;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerCompound.BinaryInteger.Modulu;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerConstant;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerConstant.NegativeOne;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerConstant.One;
@@ -243,9 +243,9 @@ public class Argument implements Generatable
 			 * Compound
 			 */
 			{
-				generator.add(ArgumentIntegerCompound.Binary.Addition.class);
-				generator.add(ArgumentIntegerCompound.Binary.Subtraction.class);
-				generator.add(ArgumentIntegerCompound.Binary.Multiplication.class);
+				generator.add(ArgumentIntegerCompound.BinaryInteger.Addition.class);
+				generator.add(ArgumentIntegerCompound.BinaryInteger.Subtraction.class);
+				generator.add(ArgumentIntegerCompound.BinaryInteger.Multiplication.class);
 				generator.add(Modulu.class);
 				
 				generator.add(ArgumentIntegerCompound.Absolute.class);
@@ -333,9 +333,9 @@ public class Argument implements Generatable
 			 * Compound
 			 */
 			{
-				generator.add(ArgumentDoubleCompound.Binary.Addition.class);
-				generator.add(ArgumentDoubleCompound.Binary.Subtraction.class);
-				generator.add(ArgumentDoubleCompound.Binary.Multiplication.class);
+				generator.add(ArgumentDoubleCompound.BinaryDouble.Addition.class);
+				generator.add(ArgumentDoubleCompound.BinaryDouble.Subtraction.class);
+				generator.add(ArgumentDoubleCompound.BinaryDouble.Multiplication.class);
 				generator.add(Division.class);
 				generator.add(Power.class);
 				generator.add(Minimum.class);
@@ -349,7 +349,7 @@ public class Argument implements Generatable
 				generator.add(CubeRoot.class);
 				generator.add(Logarithm.class);
 				generator.add(Exponent.class);
-				generator.add(ArgumentDoubleCompound.Unary.Absolute.class);
+				generator.add(ArgumentDoubleCompound.UnaryDouble.Absolute.class);
 			}
 			
 			/*
@@ -433,7 +433,7 @@ public class Argument implements Generatable
 				cannotBe.add(HitBullet.class);
 				cannotBe.add(IsMyFault.class);
 				cannotBe.add(IsSentryRobot.class);
-				cannotBe.add(Power.class);
+				cannotBe.add(EventInfo.Power.class);
 				cannotBe.add(Bearing.class);
 				cannotBe.add(Energy.class);
 				cannotBe.add(Heading.class);
@@ -448,6 +448,7 @@ public class Argument implements Generatable
 					try 
 					{
 						Method getChromosomes = next.getMethod("getChromosomes");
+						
 						int [] chromosomes = (int[]) getChromosomes.invoke(null);
 						
 						for (int i = 0; i < chromosomes.length; i++)
@@ -459,7 +460,7 @@ public class Argument implements Generatable
 							}
 						}
 					} 
-					catch (	NoSuchMethodException | 
+					catch (NoSuchMethodException | 
 							SecurityException | 
 							IllegalAccessException | 
 							IllegalArgumentException | 
@@ -467,14 +468,13 @@ public class Argument implements Generatable
 					{
 						e.printStackTrace();
 					}
-							
 				}
 				
 				break;
 		}
 		
 		/*
-		 * This block adds to the cannotBe list variable arguments if the corresponding arguments do not exist
+		 * Adds to the cannotBe list variable arguments if the corresponding arguments do not exist
 		 */
 		if (booleansNum <= 0)
 		{
@@ -588,7 +588,11 @@ public class Argument implements Generatable
 		return generator.getAllPossibilities();
 	}
 	
-	
+	/**
+	 * Returns all the variable arguments contained in the parameter argument
+	 * @param a The parameter argument
+	 * @return A list of all of the variable arguments
+	 */
 	public static List <Variable> getVariableArguments (Argument a)
 	{
 		List <Variable> toReturn = new ArrayList<>();
@@ -606,10 +610,10 @@ public class Argument implements Generatable
 		}
 		else if (a instanceof Compound)
 		{
-			if (a instanceof ArgumentBooleanCompound.Binary)
+			if (a instanceof ArgumentBooleanCompound.BinaryBoolean)
 			{
-				addVariablesToList(l, ((ArgumentBooleanCompound.Binary) a).a);
-				addVariablesToList(l, ((ArgumentBooleanCompound.Binary) a).b);
+				addVariablesToList(l, ((ArgumentBooleanCompound.BinaryBoolean) a).a);
+				addVariablesToList(l, ((ArgumentBooleanCompound.BinaryBoolean) a).b);
 			}
 			
 			if (a instanceof ArgumentBooleanCompound.Not)
@@ -617,10 +621,10 @@ public class Argument implements Generatable
 				addVariablesToList(l, ((ArgumentBooleanCompound.Not) a).a);
 			}
 			
-			if (a instanceof ArgumentIntegerCompound.Binary)
+			if (a instanceof ArgumentIntegerCompound.BinaryInteger)
 			{
-				addVariablesToList(l, ((ArgumentIntegerCompound.Binary) a).a);
-				addVariablesToList(l, ((ArgumentIntegerCompound.Binary) a).b);
+				addVariablesToList(l, ((ArgumentIntegerCompound.BinaryInteger) a).a);
+				addVariablesToList(l, ((ArgumentIntegerCompound.BinaryInteger) a).b);
 			}
 			
 			if (a instanceof ArgumentIntegerCompound.Absolute)
@@ -628,15 +632,15 @@ public class Argument implements Generatable
 				addVariablesToList(l, ((ArgumentIntegerCompound.Absolute) a).a);
 			}
 			
-			if (a instanceof ArgumentDoubleCompound.Binary)
+			if (a instanceof ArgumentDoubleCompound.BinaryDouble)
 			{
-				addVariablesToList(l, ((ArgumentDoubleCompound.Binary) a).a);
-				addVariablesToList(l, ((ArgumentDoubleCompound.Binary) a).b);
+				addVariablesToList(l, ((ArgumentDoubleCompound.BinaryDouble) a).a);
+				addVariablesToList(l, ((ArgumentDoubleCompound.BinaryDouble) a).b);
 			}
 			
-			if (a instanceof ArgumentDoubleCompound.Unary)
+			if (a instanceof ArgumentDoubleCompound.UnaryDouble)
 			{
-				addVariablesToList(l, ((ArgumentDoubleCompound.Unary) a).a);
+				addVariablesToList(l, ((ArgumentDoubleCompound.UnaryDouble) a).a);
 			}
 		}
 	}
@@ -648,11 +652,9 @@ public class Argument implements Generatable
 	//
 	public static interface EventInfo
 	{
-		public int [] getChromosomes ();
-		
 		public static interface Bullet extends EventInfo 
 		{
-			public default int [] getChromosomes ()
+			static int [] getChromosomes ()
 			{
 				int [] chromosomes = new int [] {3, 4, 5, 6};
 				return chromosomes;
@@ -660,7 +662,7 @@ public class Argument implements Generatable
 		}
 		public static interface HitBullet extends EventInfo 
 		{
-			public default int [] getChromosomes ()
+			static int [] getChromosomes ()
 			{
 				int [] chromosomes = new int [] {4};
 				return chromosomes;
@@ -669,7 +671,7 @@ public class Argument implements Generatable
 		
 		public static interface IsMyFault extends EventInfo 
 		{
-			public default int [] getChromosomes ()
+			static int [] getChromosomes ()
 			{
 				int [] chromosomes = new int [] {7};
 				return chromosomes;
@@ -677,7 +679,7 @@ public class Argument implements Generatable
 		}
 		public static interface IsSentryRobot extends EventInfo 
 		{
-			public default int [] getChromosomes ()
+			static int [] getChromosomes ()
 			{
 				int [] chromosomes = new int [] {10};
 				return chromosomes;
@@ -686,7 +688,7 @@ public class Argument implements Generatable
 		
 		public static interface Power extends EventInfo 
 		{
-			public default int [] getChromosomes ()
+			static int [] getChromosomes ()
 			{
 				int [] chromosomes = new int [] {6};
 				return chromosomes;
@@ -694,7 +696,7 @@ public class Argument implements Generatable
 		}
 		public static interface Bearing extends EventInfo 
 		{
-			public default int [] getChromosomes ()
+			static int [] getChromosomes ()
 			{
 				int [] chromosomes = new int [] {6, 7, 8, 10};
 				return chromosomes;
@@ -702,7 +704,7 @@ public class Argument implements Generatable
 		}
 		public static interface Energy extends EventInfo 
 		{
-			public default int [] getChromosomes ()
+			static int [] getChromosomes ()
 			{
 				int [] chromosomes = new int [] {3, 7, 10};
 				return chromosomes;
@@ -710,7 +712,7 @@ public class Argument implements Generatable
 		}
 		public static interface Heading extends EventInfo 
 		{
-			public default int [] getChromosomes ()
+			static int [] getChromosomes ()
 			{
 				int [] chromosomes = new int [] {6, 10};
 				return chromosomes;
@@ -718,7 +720,7 @@ public class Argument implements Generatable
 		}
 		public static interface Velocity extends EventInfo 
 		{
-			public default int [] getChromosomes ()
+			static int [] getChromosomes ()
 			{
 				int [] chromosomes = new int [] {6, 10};
 				return chromosomes;
@@ -726,7 +728,7 @@ public class Argument implements Generatable
 		}
 		public static interface Distance extends EventInfo 
 		{
-			public default int [] getChromosomes ()
+			static int [] getChromosomes ()
 			{
 				int [] chromosomes = new int [] {10};
 				return chromosomes;
@@ -735,9 +737,9 @@ public class Argument implements Generatable
 		
 		public static interface Name extends EventInfo 
 		{
-			public default int [] getChromosomes ()
+			static int [] getChromosomes ()
 			{
-				int [] chromosomes = new int [] {};
+				int [] chromosomes = new int [] {3, 6, 7, 9, 10};
 				return chromosomes;
 			}
 		}
@@ -748,7 +750,18 @@ public class Argument implements Generatable
 	//
 	public static interface Random {}
 	//
-	public static interface Compound {}
+	public static interface Compound 
+	{
+		public static interface Unary extends Compound
+		{
+			Argument getA();
+		}
+		
+		public static interface Binary extends Unary
+		{
+			Argument getB();
+		}
+	}
 	//
 	public static interface Variable 
 	{
@@ -855,13 +868,13 @@ public class Argument implements Generatable
 		
 		public static class ArgumentBooleanCompound extends ArgumentBoolean implements Compound
 		{
-			public static class Binary extends ArgumentBooleanCompound
+			public static class BinaryBoolean extends ArgumentBooleanCompound implements Binary
 			{
 				Argument a, b;
 				
 				public int complexity ()
 				{
-					return 1 + a.complexity() + b.complexity();
+					return super.complexity() + a.complexity() + b.complexity();
 				}
 				
 				public boolean containsArgumentType (Class<?> type)
@@ -869,7 +882,17 @@ public class Argument implements Generatable
 					return super.containsArgumentType(type) || a.containsArgumentType(type) || b.containsArgumentType(type);
 				}
 				
-				public static class And extends Binary
+				public Argument getA()
+				{
+					return a;
+				}
+
+				public Argument getB()
+				{
+					return b;
+				}
+				
+				public static class And extends BinaryBoolean
 				{
 					public And ()
 					{
@@ -891,7 +914,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Or extends Binary
+				public static class Or extends BinaryBoolean
 				{
 					public Or ()
 					{
@@ -913,7 +936,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Equals extends Binary
+				public static class Equals extends BinaryBoolean
 				{
 					public Equals ()
 					{
@@ -958,7 +981,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Greater extends Binary
+				public static class Greater extends BinaryBoolean
 				{
 					public Greater ()
 					{
@@ -980,7 +1003,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class GreaterEquals extends Binary
+				public static class GreaterEquals extends BinaryBoolean
 				{
 					public GreaterEquals ()
 					{
@@ -1003,7 +1026,7 @@ public class Argument implements Generatable
 				}
 			}
 				
-			public static class Not extends ArgumentBooleanCompound
+			public static class Not extends ArgumentBooleanCompound implements Unary
 			{
 				Argument a;
 				
@@ -1026,22 +1049,28 @@ public class Argument implements Generatable
 				
 				public int complexity ()
 				{
-					return 1 + a.complexity();
+					return super.complexity() + a.complexity();
 				}
 				
 				public boolean containsArgumentType (Class<?> type)
 				{
 					return super.containsArgumentType(type) || a.containsArgumentType(type);
 				}
+				
+				public Argument getA() 
+				{
+					return a;
+				}
 			}
 		}
 		
 		public static class ArgumentBooleanVariable extends ArgumentBoolean implements Variable
 		{
-			public int id = 0;
+			public int id;
 			
 			public ArgumentBooleanVariable ()
 			{
+				id = 0;
 				value = "booleans.get(" + id + ")";
 			}
 			
@@ -1049,6 +1078,7 @@ public class Argument implements Generatable
 			public void setID (int id) 
 			{
 				this.id = id;
+				value = "booleans.get(" + id + ")";
 			}
 		}
 	}
@@ -1187,8 +1217,10 @@ public class Argument implements Generatable
 				}
 			}
 			
-			public static class IntegerRandomRange extends ArgumentIntegerRandom
+			public static class IntegerRandomRange extends ArgumentIntegerRandom implements Compound.Unary
 			{
+				ArgumentInteger range;
+				
 				public IntegerRandomRange ()
 				{
 					this((ArgumentInteger)generate(ArgumentInteger.class));
@@ -1196,12 +1228,21 @@ public class Argument implements Generatable
 				
 				public IntegerRandomRange (ArgumentInteger range)
 				{
-					value = "random.nextInt(" + range + ")";
+					this.range = range;
+					
+					value = "random.nextInt(" + this.range + ")";
+				}
+
+				public Argument getA() 
+				{
+					return range;
 				}
 			}
 			
-			public static class IntegerRandomOriginRange extends ArgumentIntegerRandom
+			public static class IntegerRandomOriginRange extends ArgumentIntegerRandom implements Compound.Binary
 			{
+				ArgumentInteger origin, range;
+				
 				public IntegerRandomOriginRange ()
 				{
 					this((ArgumentInteger)generate(ArgumentInteger.class),
@@ -1210,20 +1251,33 @@ public class Argument implements Generatable
 				
 				public IntegerRandomOriginRange (ArgumentInteger origin, ArgumentInteger range)
 				{
-					value = "(" + origin + " + random.nextInt(" + range + "))";
+					this.origin = origin;
+					this.range = range;
+					
+					value = "(" + this.origin + " + random.nextInt(" + this.range + "))";
+				}
+
+				public Argument getA() 
+				{
+					return origin;
+				}
+
+				public Argument getB() 
+				{
+					return range;
 				}
 			}
 		}
 		
 		public static class ArgumentIntegerCompound extends ArgumentInteger implements Compound
 		{
-			public static class Binary extends ArgumentIntegerCompound
+			public static class BinaryInteger extends ArgumentIntegerCompound implements Binary
 			{
 				ArgumentInteger a, b;
 				
 				public int complexity ()
 				{
-					return 1 + a.complexity() + b.complexity();
+					return super.complexity() + a.complexity() + b.complexity();
 				}
 				
 				public boolean containsArgumentType (Class<?> type)
@@ -1231,7 +1285,17 @@ public class Argument implements Generatable
 					return super.containsArgumentType(type) || a.containsArgumentType(type) || b.containsArgumentType(type);
 				}
 				
-				public static class Addition extends Binary
+				public Argument getA() 
+				{
+					return a;
+				}
+				
+				public Argument getB() 
+				{
+					return b;
+				}
+				
+				public static class Addition extends BinaryInteger
 				{
 					public Addition ()
 					{
@@ -1253,7 +1317,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Subtraction extends Binary
+				public static class Subtraction extends BinaryInteger
 				{
 					public Subtraction ()
 					{
@@ -1275,7 +1339,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Multiplication extends Binary
+				public static class Multiplication extends BinaryInteger
 				{
 					public Multiplication ()
 					{
@@ -1297,7 +1361,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Modulu extends Binary
+				public static class Modulu extends BinaryInteger
 				{
 					public Modulu ()
 					{
@@ -1322,7 +1386,7 @@ public class Argument implements Generatable
 				}
 			}
 			
-			public static class Absolute extends ArgumentIntegerCompound
+			public static class Absolute extends ArgumentIntegerCompound implements Unary
 			{
 				ArgumentInteger a;
 				
@@ -1342,22 +1406,28 @@ public class Argument implements Generatable
 				
 				public int complexity ()
 				{
-					return 1 + a.complexity();
+					return super.complexity() + a.complexity();
 				}
 				
 				public boolean containsArgumentType (Class<?> type)
 				{
 					return super.containsArgumentType(type) || a.containsArgumentType(type);
 				}
+
+				public Argument getA() 
+				{
+					return a;
+				}
 			}
 		}
 		
 		public static class ArgumentIntegerVariable extends ArgumentInteger implements Variable
 		{
-			public int id = 0;
+			public int id;
 			
 			public ArgumentIntegerVariable ()
 			{
+				id = 0;
 				value = "integers.get(" + id + ")";
 			}
 			
@@ -1702,8 +1772,10 @@ public class Argument implements Generatable
 				}
 			}
 			
-			public static class DoubleRandomBound extends ArgumentDoubleRandom
+			public static class DoubleRandomBound extends ArgumentDoubleRandom implements Compound.Unary
 			{
+				ArgumentDouble scale;
+				
 				public DoubleRandomBound ()
 				{
 					this((ArgumentDouble)generate(ArgumentDouble.class));
@@ -1711,12 +1783,26 @@ public class Argument implements Generatable
 				
 				public DoubleRandomBound (ArgumentDouble scale)
 				{
+					this.scale = scale;
+					
 					value = "(random.nextDouble() * " + scale + ")";
+				}
+				
+				public int complexity ()
+				{
+					return super.complexity() + scale.complexity();
+				}
+
+				public Argument getA() 
+				{
+					return scale;
 				}
 			}
 			
-			public static class DoubleRandomOriginBound extends ArgumentDoubleRandom
+			public static class DoubleRandomOriginBound extends ArgumentDoubleRandom implements Compound.Binary
 			{
+				ArgumentDouble origin, scale;
+				
 				public DoubleRandomOriginBound ()
 				{
 					this((ArgumentDouble)generate(ArgumentDouble.class),
@@ -1725,20 +1811,38 @@ public class Argument implements Generatable
 				
 				public DoubleRandomOriginBound (ArgumentDouble origin, ArgumentDouble scale)
 				{
+					this.origin = origin;
+					this.scale = scale;
+					
 					value = "(" + origin + " + random.nextDouble() * " + scale + ")";
+				}
+				
+				public int complexity ()
+				{
+					return super.complexity() + origin.complexity() + scale.complexity();
+				}
+
+				public Argument getA() 
+				{
+					return origin;
+				}
+
+				public Argument getB() 
+				{
+					return scale;
 				}
 			}
 		}
 		
 		public static class ArgumentDoubleCompound extends ArgumentDouble implements Compound
 		{
-			public static class Binary extends ArgumentDoubleCompound
+			public static class BinaryDouble extends ArgumentDoubleCompound implements Binary
 			{
 				ArgumentDouble a, b;
 				
 				public int complexity ()
 				{
-					return 1 + a.complexity() + b.complexity();
+					return super.complexity() + a.complexity() + b.complexity();
 				}
 				
 				public boolean containsArgumentType (Class<?> type)
@@ -1746,7 +1850,17 @@ public class Argument implements Generatable
 					return super.containsArgumentType(type) || a.containsArgumentType(type) || b.containsArgumentType(type);
 				}
 				
-				public static class Addition extends Binary
+				public Argument getA ()
+				{
+					return a;
+				}
+				
+				public Argument getB ()
+				{
+					return b;
+				}
+				
+				public static class Addition extends BinaryDouble
 				{
 					public Addition ()
 					{
@@ -1768,7 +1882,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Subtraction extends Binary
+				public static class Subtraction extends BinaryDouble
 				{
 					public Subtraction ()
 					{
@@ -1790,7 +1904,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Multiplication extends Binary
+				public static class Multiplication extends BinaryDouble
 				{
 					public Multiplication ()
 					{
@@ -1812,7 +1926,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Division extends Binary
+				public static class Division extends BinaryDouble
 				{
 					public Division ()
 					{
@@ -1834,7 +1948,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Power extends Binary
+				public static class Power extends BinaryDouble
 				{
 					public Power ()
 					{
@@ -1856,7 +1970,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Minimum extends Binary
+				public static class Minimum extends BinaryDouble
 				{
 					public Minimum ()
 					{
@@ -1878,7 +1992,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Maximum extends Binary
+				public static class Maximum extends BinaryDouble
 				{
 					public Maximum ()
 					{
@@ -1900,7 +2014,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Hypotenuse extends Binary
+				public static class Hypotenuse extends BinaryDouble
 				{
 					public Hypotenuse ()
 					{
@@ -1923,13 +2037,13 @@ public class Argument implements Generatable
 				}
 			}
 			
-			public static class Unary extends ArgumentDoubleCompound
+			public static class UnaryDouble extends ArgumentDoubleCompound implements Unary
 			{
 				ArgumentDouble a;
 				
 				public int complexity ()
 				{
-					return 1 + a.complexity();
+					return super.complexity() + a.complexity();
 				}
 				
 				public boolean containsArgumentType (Class<?> type)
@@ -1937,7 +2051,12 @@ public class Argument implements Generatable
 					return super.containsArgumentType(type) || a.containsArgumentType(type);
 				}
 				
-				public static class Sine extends Unary
+				public Argument getA ()
+				{
+					return a;
+				}
+				
+				public static class Sine extends UnaryDouble
 				{
 					public Sine ()
 					{
@@ -1957,7 +2076,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Cosine extends Unary
+				public static class Cosine extends UnaryDouble
 				{
 					public Cosine ()
 					{
@@ -1977,7 +2096,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Tangent extends Unary
+				public static class Tangent extends UnaryDouble
 				{
 					public Tangent ()
 					{
@@ -1997,7 +2116,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class SquareRoot extends Unary
+				public static class SquareRoot extends UnaryDouble
 				{
 					public SquareRoot ()
 					{
@@ -2017,7 +2136,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class CubeRoot extends Unary
+				public static class CubeRoot extends UnaryDouble
 				{
 					public CubeRoot ()
 					{
@@ -2037,7 +2156,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Logarithm extends Unary
+				public static class Logarithm extends UnaryDouble
 				{
 					public Logarithm ()
 					{
@@ -2057,7 +2176,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Exponent extends Unary
+				public static class Exponent extends UnaryDouble
 				{
 					public Exponent ()
 					{
@@ -2077,7 +2196,7 @@ public class Argument implements Generatable
 					}
 				}
 				
-				public static class Absolute extends Unary
+				public static class Absolute extends UnaryDouble
 				{
 					public Absolute ()
 					{
@@ -2101,10 +2220,11 @@ public class Argument implements Generatable
 		
 		public static class ArgumentDoubleVariable extends ArgumentDouble implements Variable
 		{
-			public int id = 0;
+			public int id;
 			
 			public ArgumentDoubleVariable ()
 			{
+				id = 0;
 				value = "doubles.get(" + id + ")";
 			}
 			
@@ -2112,6 +2232,7 @@ public class Argument implements Generatable
 			public void setID (int id) 
 			{
 				this.id = id;
+				value = "doubles.get(" + id + ")";
 			}
 		}
 	}
@@ -2177,10 +2298,11 @@ public class Argument implements Generatable
 		
 		public static class ArgumentStringVariable extends ArgumentString implements Variable
 		{
-			public int id = 0;
+			public int id;
 			
 			public ArgumentStringVariable ()
 			{
+				id = 0;
 				value = "strings.get(" + id + ")";
 			}
 			
@@ -2188,6 +2310,7 @@ public class Argument implements Generatable
 			public void setID (int id) 
 			{
 				this.id = id;
+				value = "strings.get(" + id + ")";
 			}
 		}
 	}

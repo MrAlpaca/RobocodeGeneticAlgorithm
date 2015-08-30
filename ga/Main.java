@@ -19,7 +19,7 @@ public class Main
 					{
 						for (int stringsNum = 0; stringsNum < 5; stringsNum++)
 						{
-							System.out.printf("cNum: %d, booleansNum: %d, integersNum: %d, doublesNum: %d, stringsNum: %d" , 
+							System.out.printf("cNum: %d, booleansNum: %d, integersNum: %d, doublesNum: %d, stringsNum: %d\n" , 
 									cNum, 
 									booleansNum, 
 									integersNum, 

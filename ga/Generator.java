@@ -121,7 +121,7 @@ public class Generator <T extends Generatable>
 				Iterator< Class <?> > cnbIterator = cannotBe.iterator();
 				
 				Class<? extends T> poss = possibilitiesIterator.next();
-				
+				/*
 				while (htbIterator.hasNext() && !removed)
 				{
 					Class<?> type = htbIterator.next();
@@ -133,7 +133,7 @@ public class Generator <T extends Generatable>
 						removed = true;
 					}
 				}
-				
+				*/
 				while (cnbIterator.hasNext() && !removed)
 				{
 					Class<?> type = cnbIterator.next();
