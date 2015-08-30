@@ -10,7 +10,6 @@ import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanConst
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanConstant.True;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanEventInfo.EventInfoIsMyFault;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanEventInfo.EventInfoIsSentryRobot;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRandom;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanVariable;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanRobotInfo.RobotInfoAdjustGunForRobotTurn;
@@ -90,7 +89,7 @@ import RobocodeGeneticAlgorithm.ga.Argument.ArgumentInteger.ArgumentIntegerVaria
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringEventInfo.BulletName;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringEventInfo.EventInfoName;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringEventInfo.HitBulletName;
-import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringRobotInfo.RobotInfoName;
+import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.RobotInfoName;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringVariable;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.Null;
 import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Bearing;
@@ -503,6 +502,8 @@ public class Argument implements Generatable
 		
 		List <Variable> allVariableArguments = getVariableArguments(toReturn);
 		
+		System.out.println("Variable arguments: " + allVariableArguments);
+		
 		for (Variable arg : allVariableArguments)
 		{
 			if (arg instanceof ArgumentBooleanVariable)
@@ -601,47 +602,20 @@ public class Argument implements Generatable
 		return toReturn;
 	}
 	
-	
 	private static void addVariablesToList (List <Variable> l, Argument a)
 	{
 		if (a instanceof Variable)
 		{
 			l.add((Variable)a);
 		}
-		else if (a instanceof Compound)
+		else if (a instanceof Compound.Binary)
 		{
-			if (a instanceof ArgumentBooleanCompound.BinaryBoolean)
-			{
-				addVariablesToList(l, ((ArgumentBooleanCompound.BinaryBoolean) a).a);
-				addVariablesToList(l, ((ArgumentBooleanCompound.BinaryBoolean) a).b);
-			}
-			
-			if (a instanceof ArgumentBooleanCompound.Not)
-			{
-				addVariablesToList(l, ((ArgumentBooleanCompound.Not) a).a);
-			}
-			
-			if (a instanceof ArgumentIntegerCompound.BinaryInteger)
-			{
-				addVariablesToList(l, ((ArgumentIntegerCompound.BinaryInteger) a).a);
-				addVariablesToList(l, ((ArgumentIntegerCompound.BinaryInteger) a).b);
-			}
-			
-			if (a instanceof ArgumentIntegerCompound.Absolute)
-			{
-				addVariablesToList(l, ((ArgumentIntegerCompound.Absolute) a).a);
-			}
-			
-			if (a instanceof ArgumentDoubleCompound.BinaryDouble)
-			{
-				addVariablesToList(l, ((ArgumentDoubleCompound.BinaryDouble) a).a);
-				addVariablesToList(l, ((ArgumentDoubleCompound.BinaryDouble) a).b);
-			}
-			
-			if (a instanceof ArgumentDoubleCompound.UnaryDouble)
-			{
-				addVariablesToList(l, ((ArgumentDoubleCompound.UnaryDouble) a).a);
-			}
+			addVariablesToList(l, ((Compound.Binary) a).getA());
+			addVariablesToList(l, ((Compound.Binary) a).getB());
+		}
+		else if (a instanceof Compound.Unary)
+		{
+			addVariablesToList(l, ((Compound.Unary) a).getA());
 		}
 	}
 	
@@ -2272,19 +2246,11 @@ public class Argument implements Generatable
 			}
 		}
 		
-		public static class ArgumentStringRobotInfo extends Argument implements RobotInfo
+		public static class RobotInfoName extends ArgumentString implements RobotInfo
 		{
-			public ArgumentStringRobotInfo ()
+			public RobotInfoName ()
 			{
-				value = "this.get";
-			}
-			
-			public static class RobotInfoName extends ArgumentStringRobotInfo
-			{
-				public RobotInfoName ()
-				{
-					value += "Name()";
-				}
+				value += "this.getName()";
 			}
 		}
 		

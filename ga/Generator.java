@@ -117,23 +117,10 @@ public class Generator <T extends Generatable>
 			{
 				boolean removed = false;
 				
-				Iterator< Class <?> > htbIterator = hasToBe.iterator();
 				Iterator< Class <?> > cnbIterator = cannotBe.iterator();
 				
 				Class<? extends T> poss = possibilitiesIterator.next();
-				/*
-				while (htbIterator.hasNext() && !removed)
-				{
-					Class<?> type = htbIterator.next();
-					if (!type.isAssignableFrom(poss))
-					{
-						excludedPossibilities.add(poss);
-						possibilitiesIterator.remove();
-						
-						removed = true;
-					}
-				}
-				*/
+				
 				while (cnbIterator.hasNext() && !removed)
 				{
 					Class<?> type = cnbIterator.next();
@@ -212,11 +199,6 @@ public class Generator <T extends Generatable>
 	
 	protected T getRandomPossibility (List <Class <?> > hasToBe, List <Class <?> > cannotBe)
 	{
-		System.out.println("Generating random possibility!");
-		System.out.println("Has to be: " + hasToBe);
-		System.out.println("Cannot be: " + cannotBe);
-		System.out.println("Possibilities size before: " + possibilities.size());
-		
 		ArrayList <Class <? extends T> > excludedPossibilities = new ArrayList<>();
 		
 		Iterator< Class <? extends T> > possibilitiesIterator = possibilities.iterator();
@@ -255,13 +237,9 @@ public class Generator <T extends Generatable>
 			}
 		}
 		
-		System.out.println("Possibilities size after: " + possibilities.size());
-		System.out.println("Excluded possibilities size after: " + excludedPossibilities.size());
-		
 		int randomPos = rnd.nextInt(possibilities.size());
 		Class<? extends T> chosen = possibilities.get(randomPos);
 		
-		System.out.println("Type chosen: " + chosen.getSimpleName());
 		T toReturn = null;
 		
 		try 

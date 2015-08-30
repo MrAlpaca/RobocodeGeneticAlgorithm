@@ -9,7 +9,8 @@ public class Main
 {
 	public static void main (String [] args)
 	{
-		for (int cNum = 1; cNum <= 10; cNum++)
+		System.out.println("Testing Boolean Arguments");
+		for (int cNum = 1; cNum <= 4; cNum++)
 		{
 			for (int booleansNum = 0; booleansNum < 5; booleansNum++)
 			{
@@ -32,7 +33,8 @@ public class Main
 			}
 		}
 		
-		for (int cNum = 1; cNum <= 10; cNum++)
+		System.out.println("Testing Integer Arguments");
+		for (int cNum = 1; cNum <= 4; cNum++)
 		{
 			for (int booleansNum = 0; booleansNum < 5; booleansNum++)
 			{
@@ -42,7 +44,7 @@ public class Main
 					{
 						for (int stringsNum = 0; stringsNum < 5; stringsNum++)
 						{
-							System.out.printf("cNum: %d, booleansNum: %d, integersNum: %d, doublesNum: %d, stringsNum: %d" , 
+							System.out.printf("cNum: %d, booleansNum: %d, integersNum: %d, doublesNum: %d, stringsNum: %d\n" , 
 									cNum, 
 									booleansNum, 
 									integersNum, 
@@ -55,7 +57,8 @@ public class Main
 			}
 		}
 		
-		for (int cNum = 1; cNum <= 10; cNum++)
+		System.out.println("Testing Double Arguments");
+		for (int cNum = 1; cNum <= 4; cNum++)
 		{
 			for (int booleansNum = 0; booleansNum < 5; booleansNum++)
 			{
@@ -65,7 +68,7 @@ public class Main
 					{
 						for (int stringsNum = 0; stringsNum < 5; stringsNum++)
 						{
-							System.out.printf("cNum: %d, booleansNum: %d, integersNum: %d, doublesNum: %d, stringsNum: %d" , 
+							System.out.printf("cNum: %d, booleansNum: %d, integersNum: %d, doublesNum: %d, stringsNum: %d\n" , 
 									cNum, 
 									booleansNum, 
 									integersNum, 
@@ -78,7 +81,8 @@ public class Main
 			}
 		}
 		
-		for (int cNum = 1; cNum <= 10; cNum++)
+		System.out.println("Testing String Arguments");
+		for (int cNum = 1; cNum <= 4; cNum++)
 		{
 			for (int booleansNum = 0; booleansNum < 5; booleansNum++)
 			{
@@ -88,7 +92,7 @@ public class Main
 					{
 						for (int stringsNum = 0; stringsNum < 5; stringsNum++)
 						{
-							System.out.printf("cNum: %d, booleansNum: %d, integersNum: %d, doublesNum: %d, stringsNum: %d" , 
+							System.out.printf("cNum: %d, booleansNum: %d, integersNum: %d, doublesNum: %d, stringsNum: %d\n" , 
 									cNum, 
 									booleansNum, 
 									integersNum, 
