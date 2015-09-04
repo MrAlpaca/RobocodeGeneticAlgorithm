@@ -1,6 +1,6 @@
 package RobocodeGeneticAlgorithm.ga;
 
-public abstract class Mutatable 
+public abstract interface Mutatable 
 {
-	public abstract void mutate();
+	public abstract void mutate (double probability);
 }
