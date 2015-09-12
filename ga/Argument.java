@@ -1,4 +1,6 @@
+
 package RobocodeGeneticAlgorithm.ga;
+
 
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.And;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentBoolean.ArgumentBooleanCompound.BinaryBoolean.Less;
@@ -115,52 +117,54 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
 public class Argument implements Generatable, Mutatable
 {
-	public boolean containsArgumentType (Class<?> type)
+	public boolean containsArgumentType ( Class < ? > type )
 	{
-		return (type.isInstance(this));
+		return ( type.isInstance(this) );
 	}
-	
-	public boolean isArgumentType (Class<?> type)
+
+	public boolean isArgumentType ( Class < ? > type )
 	{
-		return (type.isInstance(this));
+		return ( type.isInstance(this) );
 	}
-	
+
 	public String toString ()
 	{
 		return "";
 	}
-	
+
 	public int complexity ()
 	{
 		return 1;
 	}
-	
-	public void mutate (double probability) 
+
+	public void mutate ( double probability )
 	{
-		if (this instanceof Unary)
+		if ( this instanceof Unary )
 		{
-			((Unary)this).getA().mutate(probability);
-			
-			if (this instanceof Binary)
+			( (Unary) this ).getA().mutate(probability);
+
+			if ( this instanceof Binary )
 			{
-				((Binary)this).getB().mutate(probability);
+				( (Binary) this ).getB().mutate(probability);
 			}
 		}
-		if (rnd.nextDouble() < probability)
+		if ( rnd.nextDouble() < probability )
 		{
 			mutateArgument(this);
 		}
 	}
-	
-	private static Generator <Argument> generator;
+
+	private static Generator < Argument > generator;
+
 	private static java.util.Random rnd = new java.util.Random();
-	
+
 	static
 	{
-		generator = new Generator<>();
-		
+		generator = new Generator <>();
+
 		/*
 		 * Boolean Arguments
 		 */
@@ -172,7 +176,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(EventInfoIsMyFault.class);
 				generator.add(EventInfoIsSentryRobot.class);
 			}
-			
+
 			/*
 			 * Robot Info
 			 */
@@ -181,7 +185,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(RobotInfoAdjustRadarForGunTurn.class);
 				generator.add(RobotInfoAdjustRadarForRobotTurn.class);
 			}
-			
+
 			/*
 			 * Constants
 			 */
@@ -189,14 +193,14 @@ public class Argument implements Generatable, Mutatable
 				generator.add(True.class);
 				generator.add(False.class);
 			}
-			
+
 			/*
 			 * Random
 			 */
 			{
 				generator.add(ArgumentBooleanRandom.class);
 			}
-			
+
 			/*
 			 * Compound
 			 */
@@ -210,7 +214,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(LessEquals.class);
 				generator.add(Not.class);
 			}
-			
+
 			/*
 			 * Variable
 			 */
@@ -218,9 +222,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(ArgumentBooleanVariable.class);
 			}
 		}
-		
-		
-		
+
 		/*
 		 * Integer Arguments
 		 */
@@ -235,7 +237,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(RobotInfoRoundNum.class);
 				generator.add(RobotInfoTime.class);
 			}
-			
+
 			/*
 			 * Constants
 			 */
@@ -251,7 +253,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(ThreeHundredAndSixty.class);
 				generator.add(ArgumentIntegerConstant.RandomConstant.class);
 			}
-			
+
 			/*
 			 * Random
 			 */
@@ -260,7 +262,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(IntegerRandomRange.class);
 				generator.add(IntegerRandomOriginRange.class);
 			}
-			
+
 			/*
 			 * Compound
 			 */
@@ -269,10 +271,10 @@ public class Argument implements Generatable, Mutatable
 				generator.add(ArgumentIntegerCompound.BinaryInteger.Subtraction.class);
 				generator.add(ArgumentIntegerCompound.BinaryInteger.Multiplication.class);
 				generator.add(Modulu.class);
-				
+
 				generator.add(ArgumentIntegerCompound.Absolute.class);
 			}
-			
+
 			/*
 			 * Variable
 			 */
@@ -280,8 +282,6 @@ public class Argument implements Generatable, Mutatable
 				generator.add(ArgumentIntegerVariable.class);
 			}
 		}
-		
-
 
 		/*
 		 * Double Arguments
@@ -297,20 +297,20 @@ public class Argument implements Generatable, Mutatable
 				generator.add(EventInfoHeading.class);
 				generator.add(EventInfoVelocity.class);
 				generator.add(EventInfoDistance.class);
-				
+
 				generator.add(BulletPower.class);
 				generator.add(BulletHeading.class);
 				generator.add(BulletVelocity.class);
 				generator.add(BulletX.class);
 				generator.add(BulletY.class);
-				
+
 				generator.add(HitBulletPower.class);
 				generator.add(HitBulletHeading.class);
 				generator.add(HitBulletVelocity.class);
 				generator.add(HitBulletX.class);
 				generator.add(HitBulletY.class);
 			}
-			
+
 			/*
 			 * Robot Info
 			 */
@@ -331,7 +331,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(RobotInfoGunTurnRemaining.class);
 				generator.add(RobotInfoRadarTurnRemaining.class);
 			}
-			
+
 			/*
 			 * Constants
 			 */
@@ -341,7 +341,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(SQRT2.class);
 				generator.add(ArgumentDoubleConstant.RandomConstant.class);
 			}
-			
+
 			/*
 			 * Random
 			 */
@@ -350,7 +350,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(DoubleRandomBound.class);
 				generator.add(DoubleRandomOriginBound.class);
 			}
-			
+
 			/*
 			 * Compound
 			 */
@@ -363,7 +363,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(Minimum.class);
 				generator.add(Maximum.class);
 				generator.add(Hypotenuse.class);
-				
+
 				generator.add(Sine.class);
 				generator.add(Cosine.class);
 				generator.add(Tangent.class);
@@ -373,7 +373,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(Exponent.class);
 				generator.add(ArgumentDoubleCompound.UnaryDouble.Absolute.class);
 			}
-			
+
 			/*
 			 * Variable
 			 */
@@ -381,9 +381,7 @@ public class Argument implements Generatable, Mutatable
 				generator.add(ArgumentDoubleVariable.class);
 			}
 		}
-		
-		
-		
+
 		/*
 		 * String Arguments
 		 */
@@ -396,21 +394,21 @@ public class Argument implements Generatable, Mutatable
 				generator.add(BulletName.class);
 				generator.add(HitBulletName.class);
 			}
-			
+
 			/*
 			 * Robot Info
 			 */
 			{
 				generator.add(RobotInfoName.class);
 			}
-			
+
 			/*
 			 * Constant
 			 */
 			{
 				generator.add(Null.class);
 			}
-			
+
 			/*
 			 * Variable
 			 */
@@ -419,37 +417,49 @@ public class Argument implements Generatable, Mutatable
 			}
 		}
 	}
-	
+
 	/**
 	 * Generates an argument for a certain chromosome of a certain robot
-	 * @param argType The argument type (should be ArgumentBoolean, ArgumentInteger, ArgumentDouble or ArgumentString)
-	 * @param cNum The chromosome number this argument will be placed in
-	 * @param booleansNum The number of boolean variables this robot has
-	 * @param integersNum The number of integer variables this robot has
-	 * @param doublesNum The number of double variables this robot has
-	 * @param stringsNum The number of string variables this robot has
+	 * 
+	 * @param argType
+	 *            The argument type (should be ArgumentBoolean, ArgumentInteger,
+	 *            ArgumentDouble or ArgumentString)
+	 * @param cNum
+	 *            The chromosome number this argument will be placed in
+	 * @param booleansNum
+	 *            The number of boolean variables this robot has
+	 * @param integersNum
+	 *            The number of integer variables this robot has
+	 * @param doublesNum
+	 *            The number of double variables this robot has
+	 * @param stringsNum
+	 *            The number of string variables this robot has
 	 * @return A new argument that holds up to all requirements
 	 */
-	public static Argument chromosomeGenerate (Class <? extends Argument> argType, int cNum, int booleansNum, int integersNum, int doublesNum, int stringsNum)
+	public static Argument chromosomeGenerate ( Class < ? extends Argument > argType,
+												int cNum, int booleansNum,
+												int integersNum,
+												int doublesNum, int stringsNum )
 	{
 		/*
 		 * Adds to the hasToBe list the required argument type
 		 */
-		List < Class <?> > hasToBe = new ArrayList<>();
+		List < Class < ? > > hasToBe = new ArrayList <>();
 		hasToBe.add(argType);
-		
-		List < Class <?> > cannotBe = new ArrayList<>();
-		
+
+		List < Class < ? > > cannotBe = new ArrayList <>();
+
 		/*
-		 * This block adds to the cannotBe list any event info's that are not allowable in the particular chromosome
+		 * This block adds to the cannotBe list any event info's that are not
+		 * allowable in the particular chromosome
 		 */
-		switch (cNum) 
+		switch ( cNum )
 		{
 			case 1:
 			case 2:
 				cannotBe.add(EventInfo.class);
 				break;
-			
+
 			default:
 				cannotBe.add(Bullet.class);
 				cannotBe.add(HitBullet.class);
@@ -462,351 +472,382 @@ public class Argument implements Generatable, Mutatable
 				cannotBe.add(Velocity.class);
 				cannotBe.add(Distance.class);
 				cannotBe.add(Name.class);
-				
-				Iterator < Class <?> > iter = cannotBe.iterator();
-				while (iter.hasNext())
+
+				Iterator < Class < ? > > iter = cannotBe.iterator();
+				while ( iter.hasNext() )
 				{
-					Class <? extends EventInfo> next = iter.next().asSubclass(EventInfo.class);
-					try 
+					Class < ? extends EventInfo > next = iter.next()
+																.asSubclass(EventInfo.class);
+					try
 					{
 						Method getChromosomes = next.getMethod("getChromosomes");
-						
-						int [] chromosomes = (int[]) getChromosomes.invoke(null);
-						
-						for (int i = 0; i < chromosomes.length; i++)
+
+						int [] chromosomes = (int []) getChromosomes.invoke(null);
+
+						for ( int i = 0; i < chromosomes.length; i++ )
 						{
-							if (chromosomes[i] == cNum)
+							if ( chromosomes[i] == cNum )
 							{
 								iter.remove();
 								break;
 							}
 						}
-					} 
-					catch (NoSuchMethodException | 
-							SecurityException | 
-							IllegalAccessException | 
-							IllegalArgumentException | 
-							InvocationTargetException e) 
+					}
+					catch ( NoSuchMethodException | SecurityException
+							| IllegalAccessException | IllegalArgumentException
+							| InvocationTargetException e )
 					{
 						e.printStackTrace();
 					}
 				}
-				
+
 				break;
 		}
-		
+
 		/*
-		 * Adds to the cannotBe list variable arguments if the corresponding arguments do not exist
+		 * Adds to the cannotBe list variable arguments if the corresponding
+		 * arguments do not exist
 		 */
-		if (booleansNum <= 0)
+		if ( booleansNum <= 0 )
 		{
 			cannotBe.add(ArgumentBooleanVariable.class);
 		}
-		
-		if (integersNum <= 0)
+
+		if ( integersNum <= 0 )
 		{
 			cannotBe.add(ArgumentIntegerVariable.class);
 		}
-		
-		if (doublesNum <= 0)
+
+		if ( doublesNum <= 0 )
 		{
 			cannotBe.add(ArgumentDoubleVariable.class);
 		}
-		
-		if (stringsNum <= 0)
+
+		if ( stringsNum <= 0 )
 		{
 			cannotBe.add(ArgumentStringVariable.class);
 		}
-		
+
 		/*
 		 * Generates an argument and sets the id of all variable arguments
 		 */
 		Argument toReturn = generate(hasToBe, cannotBe);
-		
-		List <Variable> allVariableArguments = getVariableArguments(toReturn);
-		
-		for (Variable arg : allVariableArguments)
+
+		List < Variable > allVariableArguments = getVariableArguments(toReturn);
+
+		for ( Variable arg : allVariableArguments )
 		{
-			if (arg instanceof ArgumentBooleanVariable)
+			if ( arg instanceof ArgumentBooleanVariable )
 			{
 				arg.setID(rnd.nextInt(booleansNum));
 			}
-			
-			if (arg instanceof ArgumentIntegerVariable)
+
+			if ( arg instanceof ArgumentIntegerVariable )
 			{
 				arg.setID(rnd.nextInt(integersNum));
 			}
-			
-			if (arg instanceof ArgumentDoubleVariable)
+
+			if ( arg instanceof ArgumentDoubleVariable )
 			{
 				arg.setID(rnd.nextInt(doublesNum));
 			}
-			
-			if (arg instanceof ArgumentStringVariable)
+
+			if ( arg instanceof ArgumentStringVariable )
 			{
 				arg.setID(rnd.nextInt(stringsNum));
 			}
 		}
-		
+
 		return toReturn;
 	}
-	//
-	
+
 	/**
-	 *  Returns a random Argument
+	 * Returns a random Argument
+	 * 
 	 * @return A new Argument chosen randomly from all possibilities
 	 */
 	public static Argument generate ()
 	{
 		return generator.generate();
 	}
-	
-	
-	//
-	
+
 	/**
 	 * Returns a new Argument according to the requirements
-	 * @param hasToBe The new Argument must be of this type
+	 * 
+	 * @param hasToBe
+	 *            The new Argument must be of this type
 	 * @return A new Argument
 	 */
-	public static Argument generate (Class <?> hasToBe)
+	public static Argument generate ( Class < ? > hasToBe )
 	{
 		return generator.generate(hasToBe);
 	}
-	//
-	
-	
-	
+
 	/**
 	 * Returns a new Argument according to the requirements
-	 * @param hasToBe The new Argument must be of this type
-	 * @param cannotBe The new Argument cannot be of this type
+	 * 
+	 * @param hasToBe
+	 *            The new Argument must be of this type
+	 * @param cannotBe
+	 *            The new Argument cannot be of this type
 	 * @return A new Argument
 	 */
-	public static Argument generate (Class <?> hasToBe, Class <?> cannotBe)
+	public static Argument generate ( Class < ? > hasToBe, Class < ? > cannotBe )
 	{
 		return generator.generate(hasToBe, cannotBe);
 	}
-	//
-	
-	
-	
+
 	/**
 	 * Returns a new Argument according to the requirements
-	 * @param hasToBe The new Argument must be of all specified types in this list
-	 * @param cannotBe The new Argument cannot be of any of the specified types in this list
+	 * 
+	 * @param hasToBe
+	 *            The new Argument must be of all specified types in this list
+	 * @param cannotBe
+	 *            The new Argument cannot be of any of the specified types in
+	 *            this list
 	 * @return A new Argument
 	 */
-	public static Argument generate (List<Class<?>> hasToBe, List<Class<?>> cannotBe)
+	public static Argument generate ( List < Class < ? >> hasToBe,
+										List < Class < ? >> cannotBe )
 	{
 		return generator.generate(hasToBe, cannotBe);
 	}
-	//
-	
-	
-	
-	public static List < Class <? extends Argument> > getAllPossibilities ()
+
+	public static List < Class < ? extends Argument > > getAllPossibilities ()
 	{
 		return generator.getAllPossibilities();
 	}
-	
+
 	/**
 	 * Returns all the variable arguments contained in the parameter argument
-	 * @param a The parameter argument
+	 * 
+	 * @param a
+	 *            The parameter argument
 	 * @return A list of all of the variable arguments
 	 */
-	public static List <Variable> getVariableArguments (Argument a)
+	public static List < Variable > getVariableArguments ( Argument a )
 	{
-		List <Variable> toReturn = new ArrayList<>();
+		List < Variable > toReturn = new ArrayList <>();
 		addVariablesToList(toReturn, a);
-		
+
 		return toReturn;
 	}
-	
-	private static void addVariablesToList (List <Variable> l, Argument a)
+
+	private static void addVariablesToList ( List < Variable > l, Argument a )
 	{
-		if (a instanceof Variable)
+		if ( a instanceof Variable )
 		{
-			l.add((Variable)a);
+			l.add((Variable) a);
 		}
-		else if (a instanceof Compound.Binary)
+		else if ( a instanceof Compound.Binary )
 		{
-			addVariablesToList(l, ((Compound.Binary) a).getA());
-			addVariablesToList(l, ((Compound.Binary) a).getB());
+			addVariablesToList(l, ( (Compound.Binary) a ).getA());
+			addVariablesToList(l, ( (Compound.Binary) a ).getB());
 		}
-		else if (a instanceof Compound.Unary)
+		else if ( a instanceof Compound.Unary )
 		{
-			addVariablesToList(l, ((Compound.Unary) a).getA());
+			addVariablesToList(l, ( (Compound.Unary) a ).getA());
 		}
 	}
-	
-	public static void mutateArgument (Argument a)
+
+	public static void mutateArgument ( Argument a )
 	{
-		if (a instanceof ArgumentBoolean)
+		if ( a instanceof ArgumentBoolean )
 		{
 			a = generate(ArgumentBoolean.class);
 		}
-		
-		else if (a instanceof ArgumentInteger)
+
+		else if ( a instanceof ArgumentInteger )
 		{
 			a = generate(ArgumentInteger.class);
 		}
-		
-		else if (a instanceof ArgumentDouble)
+
+		else if ( a instanceof ArgumentDouble )
 		{
 			a = generate(ArgumentDouble.class);
 		}
-		
-		else if (a instanceof ArgumentString)
+
+		else if ( a instanceof ArgumentString )
 		{
 			a = generate(ArgumentString.class);
 		}
-		
+
 	}
-	
-	//
+
 	public static interface EventInfo
 	{
-		public static interface Bullet extends EventInfo 
+		public static interface Bullet extends EventInfo
 		{
 			static int [] getChromosomes ()
 			{
-				int [] chromosomes = new int [] {3, 4, 5, 6};
+				int [] chromosomes = new int []
+				{ 3, 4, 5, 6 };
 				return chromosomes;
 			}
 		}
-		public static interface HitBullet extends EventInfo 
+
+		public static interface HitBullet extends EventInfo
 		{
 			static int [] getChromosomes ()
 			{
-				int [] chromosomes = new int [] {4};
+				int [] chromosomes = new int []
+				{ 4 };
 				return chromosomes;
 			}
 		}
-		
-		public static interface IsMyFault extends EventInfo 
+
+		public static interface IsMyFault extends EventInfo
 		{
 			static int [] getChromosomes ()
 			{
-				int [] chromosomes = new int [] {7};
+				int [] chromosomes = new int []
+				{ 7 };
 				return chromosomes;
 			}
 		}
-		public static interface IsSentryRobot extends EventInfo 
+
+		public static interface IsSentryRobot extends EventInfo
 		{
 			static int [] getChromosomes ()
 			{
-				int [] chromosomes = new int [] {10};
+				int [] chromosomes = new int []
+				{ 10 };
 				return chromosomes;
 			}
 		}
-		
-		public static interface Power extends EventInfo 
+
+		public static interface Power extends EventInfo
 		{
 			static int [] getChromosomes ()
 			{
-				int [] chromosomes = new int [] {6};
+				int [] chromosomes = new int []
+				{ 6 };
 				return chromosomes;
 			}
 		}
-		public static interface Bearing extends EventInfo 
+
+		public static interface Bearing extends EventInfo
 		{
 			static int [] getChromosomes ()
 			{
-				int [] chromosomes = new int [] {6, 7, 8, 10};
+				int [] chromosomes = new int []
+				{ 6, 7, 8, 10 };
 				return chromosomes;
 			}
 		}
-		public static interface Energy extends EventInfo 
+
+		public static interface Energy extends EventInfo
 		{
 			static int [] getChromosomes ()
 			{
-				int [] chromosomes = new int [] {3, 7, 10};
+				int [] chromosomes = new int []
+				{ 3, 7, 10 };
 				return chromosomes;
 			}
 		}
-		public static interface Heading extends EventInfo 
+
+		public static interface Heading extends EventInfo
 		{
 			static int [] getChromosomes ()
 			{
-				int [] chromosomes = new int [] {6, 10};
+				int [] chromosomes = new int []
+				{ 6, 10 };
 				return chromosomes;
 			}
 		}
-		public static interface Velocity extends EventInfo 
+
+		public static interface Velocity extends EventInfo
 		{
 			static int [] getChromosomes ()
 			{
-				int [] chromosomes = new int [] {6, 10};
+				int [] chromosomes = new int []
+				{ 6, 10 };
 				return chromosomes;
 			}
 		}
-		public static interface Distance extends EventInfo 
+
+		public static interface Distance extends EventInfo
 		{
 			static int [] getChromosomes ()
 			{
-				int [] chromosomes = new int [] {10};
+				int [] chromosomes = new int []
+				{ 10 };
 				return chromosomes;
 			}
 		}
-		
-		public static interface Name extends EventInfo 
+
+		public static interface Name extends EventInfo
 		{
 			static int [] getChromosomes ()
 			{
-				int [] chromosomes = new int [] {3, 6, 7, 9, 10};
+				int [] chromosomes = new int []
+				{ 3, 6, 7, 9, 10 };
 				return chromosomes;
 			}
 		}
 	}
-	//
-	public static interface RobotInfo {}
-	//
-	public static interface Constant {}
-	//
-	public static interface Random {}
-	//
-	public static interface Compound 
+
+	public static interface RobotInfo
+	{
+	}
+
+	public static interface Constant
+	{
+	}
+
+	public static interface Random
+	{
+	}
+
+	public static interface Compound
 	{
 		public static interface Unary extends Compound
 		{
-			Argument getA();
+			Argument getA ();
 		}
-		
+
 		public static interface Binary extends Unary
 		{
-			Argument getB();
+			Argument getB ();
 		}
 	}
-	//
-	public static interface Variable 
+
+	public static interface Variable
 	{
-		public void setID(int id);
+		public void setID ( int id );
 	}
-	
-	
+
 	/*
 	 * Arguments
 	 */
-	//
+
 	public static class ArgumentBoolean extends Argument
 	{
-		public static abstract class ArgumentBooleanEventInfo extends ArgumentBoolean implements EventInfo
+		public static abstract class ArgumentBooleanEventInfo extends
+																ArgumentBoolean
+																				implements
+																				EventInfo
 		{
 			public String toString ()
 			{
 				return "event.is";
 			}
-			
-			public static class EventInfoIsMyFault extends ArgumentBooleanEventInfo implements IsMyFault
+
+			public static class EventInfoIsMyFault extends
+													ArgumentBooleanEventInfo
+																			implements
+																			IsMyFault
 			{
 				public String toString ()
 				{
 					return super.toString() + "MyFault()";
 				}
 			}
-			
-			public static class EventInfoIsSentryRobot extends ArgumentBooleanEventInfo implements IsSentryRobot
+
+			public static class EventInfoIsSentryRobot extends
+														ArgumentBooleanEventInfo
+																				implements
+																				IsSentryRobot
 			{
 				public String toString ()
 				{
@@ -814,31 +855,36 @@ public class Argument implements Generatable, Mutatable
 				}
 			}
 		}
-		
-		public static class ArgumentBooleanRobotInfo extends ArgumentBoolean implements RobotInfo
+
+		public static class ArgumentBooleanRobotInfo extends ArgumentBoolean
+																			implements
+																			RobotInfo
 		{
 			public String toString ()
 			{
 				return "this.get";
 			}
-			
-			public static class RobotInfoAdjustGunForRobotTurn extends ArgumentBooleanRobotInfo
+
+			public static class RobotInfoAdjustGunForRobotTurn extends
+																ArgumentBooleanRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "AdjustGunForRobotTurn()";
 				}
 			}
-			
-			public static class RobotInfoAdjustRadarForGunTurn extends ArgumentBooleanRobotInfo
+
+			public static class RobotInfoAdjustRadarForGunTurn extends
+																ArgumentBooleanRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "AdjustRadarForGunTurn()";
 				}
 			}
-			
-			public static class RobotInfoAdjustRadarForRobotTurn extends ArgumentBooleanRobotInfo
+
+			public static class RobotInfoAdjustRadarForRobotTurn extends
+																ArgumentBooleanRobotInfo
 			{
 				public String toString ()
 				{
@@ -846,8 +892,10 @@ public class Argument implements Generatable, Mutatable
 				}
 			}
 		}
-		
-		public static class ArgumentBooleanConstant extends ArgumentBoolean implements Constant
+
+		public static class ArgumentBooleanConstant extends ArgumentBoolean
+																			implements
+																			Constant
 		{
 			public static class True extends ArgumentBooleanConstant
 			{
@@ -856,7 +904,7 @@ public class Argument implements Generatable, Mutatable
 					return "true";
 				}
 			}
-			
+
 			public static class False extends ArgumentBooleanConstant
 			{
 				public String toString ()
@@ -865,113 +913,121 @@ public class Argument implements Generatable, Mutatable
 				}
 			}
 		}
-		
-		public static class ArgumentBooleanRandom extends ArgumentBoolean implements Random
+
+		public static class ArgumentBooleanRandom extends ArgumentBoolean
+																			implements
+																			Random
 		{
 			public String toString ()
 			{
 				return "(Math.random() > 0.5)";
 			}
 		}
-		
-		public static class ArgumentBooleanCompound extends ArgumentBoolean implements Compound
+
+		public static class ArgumentBooleanCompound extends ArgumentBoolean
+																			implements
+																			Compound
 		{
-			public static class BinaryBoolean extends ArgumentBooleanCompound implements Binary
+			public static class BinaryBoolean extends ArgumentBooleanCompound
+																				implements
+																				Binary
 			{
 				Argument a, b;
-				
+
 				public int complexity ()
 				{
 					return super.complexity() + a.complexity() + b.complexity();
 				}
-				
-				public boolean containsArgumentType (Class<?> type)
+
+				public boolean containsArgumentType ( Class < ? > type )
 				{
-					return super.containsArgumentType(type) || a.containsArgumentType(type) || b.containsArgumentType(type);
+					return super.containsArgumentType(type)
+							|| a.containsArgumentType(type)
+							|| b.containsArgumentType(type);
 				}
-				
-				public Argument getA()
+
+				public Argument getA ()
 				{
 					return a;
 				}
 
-				public Argument getB()
+				public Argument getB ()
 				{
 					return b;
 				}
-				
+
 				public static class And extends BinaryBoolean
 				{
 					public And ()
 					{
 						this(null, null);
 					}
-					
-					public And (ArgumentBoolean a, ArgumentBoolean b)
+
+					public And ( ArgumentBoolean a, ArgumentBoolean b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentBoolean) generate(ArgumentBoolean.class);
 							b = (ArgumentBoolean) generate(ArgumentBoolean.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "(" + a + " && " + b + ")";
 					}
 				}
-				
+
 				public static class Or extends BinaryBoolean
 				{
 					public Or ()
 					{
 						this(null, null);
 					}
-					
-					public Or (ArgumentBoolean a, ArgumentBoolean b)
+
+					public Or ( ArgumentBoolean a, ArgumentBoolean b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentBoolean) generate(ArgumentBoolean.class);
 							b = (ArgumentBoolean) generate(ArgumentBoolean.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "(" + a + " || " + b + ")";
 					}
 				}
-				
+
 				public static class Equals extends BinaryBoolean
 				{
 					public Equals ()
 					{
 						this(null, null);
 					}
-					
-					public Equals (Argument a, Argument b)
+
+					public Equals ( Argument a, Argument b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = generate();
-							
-							if (a instanceof ArgumentBoolean)
+
+							if ( a instanceof ArgumentBoolean )
 							{
 								b = generate(ArgumentBoolean.class);
 							}
-							else if (a instanceof ArgumentInteger)
+							else if ( a instanceof ArgumentInteger )
 							{
 								b = generate(ArgumentInteger.class);
 							}
-							else if (a instanceof ArgumentDouble)
+							else if ( a instanceof ArgumentDouble )
 							{
 								b = generate(ArgumentDouble.class);
 							}
@@ -980,14 +1036,14 @@ public class Argument implements Generatable, Mutatable
 								b = generate(ArgumentString.class);
 							}
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
-						if (a instanceof ArgumentString)
+						if ( a instanceof ArgumentString )
 						{
 							return super.toString() + a + ".equals(" + b + ")";
 						}
@@ -997,212 +1053,221 @@ public class Argument implements Generatable, Mutatable
 						}
 					}
 				}
-				
+
 				public static class Greater extends BinaryBoolean
 				{
 					public Greater ()
 					{
 						this(null, null);
 					}
-					
-					public Greater (ArgumentDouble a, ArgumentDouble b)
+
+					public Greater ( ArgumentDouble a, ArgumentDouble b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
-						return "(" +  a + " > " + b + ")";
+						return "(" + a + " > " + b + ")";
 					}
 				}
-				
+
 				public static class GreaterEquals extends BinaryBoolean
 				{
 					public GreaterEquals ()
 					{
 						this(null, null);
 					}
-					
-					public GreaterEquals (ArgumentDouble a, ArgumentDouble b)
+
+					public GreaterEquals ( ArgumentDouble a, ArgumentDouble b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
-						return "(" +  a + " >= " + b + ")";
+						return "(" + a + " >= " + b + ")";
 					}
 				}
-				
+
 				public static class Less extends BinaryBoolean
 				{
 					public Less ()
 					{
 						this(null, null);
 					}
-					
-					public Less (ArgumentDouble a, ArgumentDouble b)
+
+					public Less ( ArgumentDouble a, ArgumentDouble b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
-						return "(" +  a + " < " + b + ")";
+						return "(" + a + " < " + b + ")";
 					}
 				}
-				
+
 				public static class LessEquals extends BinaryBoolean
 				{
 					public LessEquals ()
 					{
 						this(null, null);
 					}
-					
-					public LessEquals (ArgumentDouble a, ArgumentDouble b)
+
+					public LessEquals ( ArgumentDouble a, ArgumentDouble b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
-						return "(" +  a + " <= " + b + ")";
+						return "(" + a + " <= " + b + ")";
 					}
 				}
 			}
-				
-			public static class Not extends ArgumentBooleanCompound implements Unary
+
+			public static class Not extends ArgumentBooleanCompound implements
+																	Unary
 			{
 				Argument a;
-				
+
 				public Not ()
 				{
 					this(null);
 				}
-				
-				public Not (ArgumentBoolean a)
+
+				public Not ( ArgumentBoolean a )
 				{
-					if (a == null)
+					if ( a == null )
 					{
 						a = (ArgumentBoolean) generate(ArgumentBoolean.class);
 					}
-					
+
 					this.a = a;
 				}
-				
+
 				public String toString ()
 				{
 					return "!(" + a + ")";
 				}
-				
+
 				public int complexity ()
 				{
 					return super.complexity() + a.complexity();
 				}
-				
-				public boolean containsArgumentType (Class<?> type)
+
+				public boolean containsArgumentType ( Class < ? > type )
 				{
-					return super.containsArgumentType(type) || a.containsArgumentType(type);
+					return super.containsArgumentType(type)
+							|| a.containsArgumentType(type);
 				}
-				
-				public Argument getA() 
+
+				public Argument getA ()
 				{
 					return a;
 				}
 			}
 		}
-		
-		public static class ArgumentBooleanVariable extends ArgumentBoolean implements Variable
+
+		public static class ArgumentBooleanVariable extends ArgumentBoolean
+																			implements
+																			Variable
 		{
 			public int id;
-			
+
 			public ArgumentBooleanVariable ()
 			{
 				id = 0;
 			}
-			
+
 			public String toString ()
 			{
 				return "booleans.get(" + id + ")";
 			}
-			
-			public void setID (int id) 
+
+			public void setID ( int id )
 			{
 				this.id = id;
 			}
 		}
 	}
-	//
-	//
+
 	public static class ArgumentInteger extends ArgumentDouble
 	{
-		public static class ArgumentIntegerRobotInfo extends ArgumentInteger implements RobotInfo
+		public static class ArgumentIntegerRobotInfo extends ArgumentInteger
+																			implements
+																			RobotInfo
 		{
 			public String toString ()
 			{
 				return "this.get";
 			}
-			
-			public static class RobotInfoNumRounds extends ArgumentIntegerRobotInfo
+
+			public static class RobotInfoNumRounds extends
+													ArgumentIntegerRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "NumRounds()";
 				}
 			}
-			
-			public static class RobotInfoNumSentries extends ArgumentIntegerRobotInfo
+
+			public static class RobotInfoNumSentries extends
+													ArgumentIntegerRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "NumSentries()";
 				}
 			}
-			
-			public static class RobotInfoOthers extends ArgumentIntegerRobotInfo
+
+			public static class RobotInfoOthers extends
+												ArgumentIntegerRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "Others()";
 				}
 			}
-			
-			public static class RobotInfoRoundNum extends ArgumentIntegerRobotInfo
+
+			public static class RobotInfoRoundNum extends
+													ArgumentIntegerRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "RoundNum()";
 				}
 			}
-			
+
 			public static class RobotInfoTime extends ArgumentIntegerRobotInfo
 			{
 				public String toString ()
@@ -1211,8 +1276,10 @@ public class Argument implements Generatable, Mutatable
 				}
 			}
 		}
-		
-		public static class ArgumentIntegerConstant extends ArgumentInteger implements Constant
+
+		public static class ArgumentIntegerConstant extends ArgumentInteger
+																			implements
+																			Constant
 		{
 			public static class One extends ArgumentIntegerConstant
 			{
@@ -1221,7 +1288,7 @@ public class Argument implements Generatable, Mutatable
 					return "1";
 				}
 			}
-			
+
 			public static class Zero extends ArgumentIntegerConstant
 			{
 				public String toString ()
@@ -1229,7 +1296,7 @@ public class Argument implements Generatable, Mutatable
 					return "0";
 				}
 			}
-			
+
 			public static class NegativeOne extends ArgumentIntegerConstant
 			{
 				public String toString ()
@@ -1237,7 +1304,7 @@ public class Argument implements Generatable, Mutatable
 					return "-1";
 				}
 			}
-			
+
 			public static class Two extends ArgumentIntegerConstant
 			{
 				public String toString ()
@@ -1245,7 +1312,7 @@ public class Argument implements Generatable, Mutatable
 					return "2";
 				}
 			}
-			
+
 			public static class Ten extends ArgumentIntegerConstant
 			{
 				public String toString ()
@@ -1253,7 +1320,7 @@ public class Argument implements Generatable, Mutatable
 					return "10";
 				}
 			}
-			
+
 			public static class Twenty extends ArgumentIntegerConstant
 			{
 				public String toString ()
@@ -1261,7 +1328,7 @@ public class Argument implements Generatable, Mutatable
 					return "20";
 				}
 			}
-			
+
 			public static class Fifty extends ArgumentIntegerConstant
 			{
 				public String toString ()
@@ -1269,7 +1336,7 @@ public class Argument implements Generatable, Mutatable
 					return "50";
 				}
 			}
-			
+
 			public static class OneHundred extends ArgumentIntegerConstant
 			{
 				public String toString ()
@@ -1277,15 +1344,16 @@ public class Argument implements Generatable, Mutatable
 					return "100";
 				}
 			}
-			
-			public static class ThreeHundredAndSixty extends ArgumentIntegerConstant
+
+			public static class ThreeHundredAndSixty extends
+													ArgumentIntegerConstant
 			{
 				public String toString ()
 				{
 					return "360";
 				}
 			}
-			
+
 			public static class RandomConstant extends ArgumentIntegerConstant
 			{
 				int num = rnd.nextInt(401) - 200;
@@ -1296,338 +1364,380 @@ public class Argument implements Generatable, Mutatable
 				}
 			}
 		}
-		
-		public static class ArgumentIntegerRandom extends ArgumentInteger implements Random
+
+		public static class ArgumentIntegerRandom extends ArgumentInteger
+																			implements
+																			Random
 		{
-			public static class IntegerRandomNoArguments extends ArgumentIntegerRandom
+			public static class IntegerRandomNoArguments extends
+														ArgumentIntegerRandom
 			{
 				public String toString ()
 				{
 					return "random.nextInt(201)";
 				}
 			}
-			
-			public static class IntegerRandomRange extends ArgumentIntegerRandom implements Compound.Unary
+
+			public static class IntegerRandomRange extends
+													ArgumentIntegerRandom
+																			implements
+																			Compound.Unary
 			{
 				ArgumentInteger range;
-				
+
 				public IntegerRandomRange ()
 				{
-					this((ArgumentInteger)generate(ArgumentInteger.class));
+					this((ArgumentInteger) generate(ArgumentInteger.class));
 				}
-				
-				public IntegerRandomRange (ArgumentInteger range)
+
+				public IntegerRandomRange ( ArgumentInteger range )
 				{
 					this.range = range;
 				}
-				
+
 				public String toString ()
 				{
 					return "random.nextInt(" + this.range + ")";
 				}
 
-				public Argument getA() 
+				public Argument getA ()
 				{
 					return range;
 				}
-				
+
 				public int complexity ()
 				{
 					return super.complexity() + range.complexity();
 				}
 			}
-			
-			public static class IntegerRandomOriginRange extends ArgumentIntegerRandom implements Compound.Binary
+
+			public static class IntegerRandomOriginRange extends
+														ArgumentIntegerRandom
+																				implements
+																				Compound.Binary
 			{
 				ArgumentInteger origin, range;
-				
+
 				public IntegerRandomOriginRange ()
 				{
-					this((ArgumentInteger)generate(ArgumentInteger.class),
-							(ArgumentInteger)generate(ArgumentInteger.class));
+					this((ArgumentInteger) generate(ArgumentInteger.class),
+							(ArgumentInteger) generate(ArgumentInteger.class));
 				}
-				
-				public IntegerRandomOriginRange (ArgumentInteger origin, ArgumentInteger range)
+
+				public IntegerRandomOriginRange ( ArgumentInteger origin,
+													ArgumentInteger range )
 				{
 					this.origin = origin;
 					this.range = range;
 				}
-				
+
 				public String toString ()
 				{
-					return "(" + this.origin + " + random.nextInt(" + this.range + "))";
+					return "(" + this.origin + " + random.nextInt("
+							+ this.range + "))";
 				}
 
-				public Argument getA() 
+				public Argument getA ()
 				{
 					return origin;
 				}
 
-				public Argument getB() 
+				public Argument getB ()
 				{
 					return range;
 				}
-				
+
 				public int complexity ()
 				{
-					return super.complexity() + range.complexity() + origin.complexity();
+					return super.complexity() + range.complexity()
+							+ origin.complexity();
 				}
 			}
 		}
-		
-		public static class ArgumentIntegerCompound extends ArgumentInteger implements Compound
+
+		public static class ArgumentIntegerCompound extends ArgumentInteger
+																			implements
+																			Compound
 		{
-			public static class BinaryInteger extends ArgumentIntegerCompound implements Binary
+			public static class BinaryInteger extends ArgumentIntegerCompound
+																				implements
+																				Binary
 			{
 				ArgumentInteger a, b;
-				
+
 				public int complexity ()
 				{
 					return super.complexity() + a.complexity() + b.complexity();
 				}
-				
-				public boolean containsArgumentType (Class<?> type)
+
+				public boolean containsArgumentType ( Class < ? > type )
 				{
-					return super.containsArgumentType(type) || a.containsArgumentType(type) || b.containsArgumentType(type);
+					return super.containsArgumentType(type)
+							|| a.containsArgumentType(type)
+							|| b.containsArgumentType(type);
 				}
-				
-				public Argument getA() 
+
+				public Argument getA ()
 				{
 					return a;
 				}
-				
-				public Argument getB() 
+
+				public Argument getB ()
 				{
 					return b;
 				}
-				
+
 				public static class Addition extends BinaryInteger
 				{
 					public Addition ()
 					{
 						this(null, null);
 					}
-					
-					public Addition (ArgumentInteger a, ArgumentInteger b)
+
+					public Addition ( ArgumentInteger a, ArgumentInteger b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentInteger) generate(ArgumentInteger.class);
 							b = (ArgumentInteger) generate(ArgumentInteger.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "(" + a + " + " + b + ")";
 					}
 				}
-				
+
 				public static class Subtraction extends BinaryInteger
 				{
 					public Subtraction ()
 					{
 						this(null, null);
 					}
-					
-					public Subtraction (ArgumentInteger a, ArgumentInteger b)
+
+					public Subtraction ( ArgumentInteger a, ArgumentInteger b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentInteger) generate(ArgumentInteger.class);
 							b = (ArgumentInteger) generate(ArgumentInteger.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "(" + a + " - " + b + ")";
 					}
 				}
-				
+
 				public static class Multiplication extends BinaryInteger
 				{
 					public Multiplication ()
 					{
 						this(null, null);
 					}
-					
-					public Multiplication (ArgumentInteger a, ArgumentInteger b)
+
+					public Multiplication ( ArgumentInteger a, ArgumentInteger b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentInteger) generate(ArgumentInteger.class);
 							b = (ArgumentInteger) generate(ArgumentInteger.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "(" + a + " * " + b + ")";
 					}
 				}
-				
+
 				public static class Modulu extends BinaryInteger
 				{
 					public Modulu ()
 					{
 						this(null, null);
 					}
-					
-					public Modulu (ArgumentInteger a, ArgumentInteger b)
+
+					public Modulu ( ArgumentInteger a, ArgumentInteger b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentInteger) generate(ArgumentInteger.class);
 							b = (ArgumentInteger) generate(ArgumentInteger.class);
-							
-							
+
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "(" + a + " % " + b + ")";
 					}
 				}
 			}
-			
-			public static class Absolute extends ArgumentIntegerCompound implements Unary
+
+			public static class Absolute extends ArgumentIntegerCompound
+																		implements
+																		Unary
 			{
 				ArgumentInteger a;
-				
+
 				public Absolute ()
 				{
 					this(null);
 				}
-				
-				public Absolute (ArgumentInteger a)
+
+				public Absolute ( ArgumentInteger a )
 				{
-					if (a == null) a = (ArgumentInteger) generate(ArgumentInteger.class);
-					
+					if ( a == null ) a = (ArgumentInteger) generate(ArgumentInteger.class);
+
 					this.a = a;
 				}
-				
+
 				public String toString ()
 				{
 					return "Math.abs(" + a + ")";
 				}
-				
+
 				public int complexity ()
 				{
 					return super.complexity() + a.complexity();
 				}
-				
-				public boolean containsArgumentType (Class<?> type)
+
+				public boolean containsArgumentType ( Class < ? > type )
 				{
-					return super.containsArgumentType(type) || a.containsArgumentType(type);
+					return super.containsArgumentType(type)
+							|| a.containsArgumentType(type);
 				}
 
-				public Argument getA() 
+				public Argument getA ()
 				{
 					return a;
 				}
 			}
 		}
-		
-		public static class ArgumentIntegerVariable extends ArgumentInteger implements Variable
+
+		public static class ArgumentIntegerVariable extends ArgumentInteger
+																			implements
+																			Variable
 		{
 			public int id;
-			
+
 			public ArgumentIntegerVariable ()
 			{
 				id = 0;
 			}
-			
+
 			public String toString ()
 			{
-				return  "integers.get(" + id + ")";
+				return "integers.get(" + id + ")";
 			}
-			
-			public void setID (int id) 
+
+			public void setID ( int id )
 			{
 				this.id = id;
 			}
 		}
 	}
-	//
-	//
+
 	public static class ArgumentDouble extends Argument
 	{
-		public static abstract class ArgumentDoubleEventInfo extends ArgumentDouble implements EventInfo
+		public static abstract class ArgumentDoubleEventInfo extends
+															ArgumentDouble
+																			implements
+																			EventInfo
 		{
 			public String toString ()
 			{
 				return "event.get";
 			}
-			
-			public static class EventInfoPower extends ArgumentDoubleEventInfo implements Power
+
+			public static class EventInfoPower extends ArgumentDoubleEventInfo
+																				implements
+																				Power
 			{
 				public String toString ()
 				{
 					return super.toString() + "Power()";
 				}
 			}
-			
-			public static class EventInfoEnergy extends ArgumentDoubleEventInfo implements Energy
+
+			public static class EventInfoEnergy extends ArgumentDoubleEventInfo
+																				implements
+																				Energy
 			{
 				public String toString ()
 				{
 					return super.toString() + "Energy()";
 				}
 			}
-			
-			public static class EventInfoBearing extends ArgumentDoubleEventInfo implements Bearing
+
+			public static class EventInfoBearing extends
+												ArgumentDoubleEventInfo
+																		implements
+																		Bearing
 			{
 				public String toString ()
 				{
 					return super.toString() + "Bearing()";
 				}
 			}
-			
-			public static class EventInfoHeading extends ArgumentDoubleEventInfo implements Heading 
+
+			public static class EventInfoHeading extends
+												ArgumentDoubleEventInfo
+																		implements
+																		Heading
 			{
 				public String toString ()
 				{
-					return super.toString() +"Heading()";
+					return super.toString() + "Heading()";
 				}
 			}
-			
-			public static class EventInfoVelocity extends ArgumentDoubleEventInfo implements Velocity 
+
+			public static class EventInfoVelocity extends
+													ArgumentDoubleEventInfo
+																			implements
+																			Velocity
 			{
 				public String toString ()
 				{
 					return super.toString() + "Velocity()";
 				}
 			}
-			
-			public static class EventInfoDistance extends ArgumentDoubleEventInfo implements Distance
+
+			public static class EventInfoDistance extends
+													ArgumentDoubleEventInfo
+																			implements
+																			Distance
 			{
 				public String toString ()
 				{
 					return super.toString() + "Distance()";
 				}
 			}
-			
-			public static class EventInfoBullet extends ArgumentDoubleEventInfo implements Bullet
+
+			public static class EventInfoBullet extends ArgumentDoubleEventInfo
+																				implements
+																				Bullet
 			{
 				public String toString ()
 				{
 					return super.toString() + "Bullet().get";
 				}
-				
+
 				public static class BulletHeading extends EventInfoBullet
 				{
 					public String toString ()
@@ -1635,7 +1745,7 @@ public class Argument implements Generatable, Mutatable
 						return super.toString() + "Heading()";
 					}
 				}
-				
+
 				public static class BulletPower extends EventInfoBullet
 				{
 					public String toString ()
@@ -1643,7 +1753,7 @@ public class Argument implements Generatable, Mutatable
 						return super.toString() + "Power()";
 					}
 				}
-				
+
 				public static class BulletVelocity extends EventInfoBullet
 				{
 					public String toString ()
@@ -1651,7 +1761,7 @@ public class Argument implements Generatable, Mutatable
 						return super.toString() + "Velocity()";
 					}
 				}
-				
+
 				public static class BulletX extends EventInfoBullet
 				{
 					public String toString ()
@@ -1659,7 +1769,7 @@ public class Argument implements Generatable, Mutatable
 						return super.toString() + "X()";
 					}
 				}
-				
+
 				public static class BulletY extends EventInfoBullet
 				{
 					public String toString ()
@@ -1668,22 +1778,25 @@ public class Argument implements Generatable, Mutatable
 					}
 				}
 			}
-			
-			public static class EventInfoHitBullet extends ArgumentDoubleEventInfo implements HitBullet
+
+			public static class EventInfoHitBullet extends
+													ArgumentDoubleEventInfo
+																			implements
+																			HitBullet
 			{
 				public String toString ()
 				{
 					return super.toString() + "HitBullet().get";
 				}
-				
+
 				public static class HitBulletHeading extends EventInfoHitBullet
 				{
 					public String toString ()
 					{
-						return super.toString() +"Heading()";
+						return super.toString() + "Heading()";
 					}
 				}
-				
+
 				public static class HitBulletPower extends EventInfoHitBullet
 				{
 					public String toString ()
@@ -1691,15 +1804,16 @@ public class Argument implements Generatable, Mutatable
 						return super.toString() + "Power()";
 					}
 				}
-				
-				public static class HitBulletVelocity extends EventInfoHitBullet
+
+				public static class HitBulletVelocity extends
+														EventInfoHitBullet
 				{
 					public String toString ()
 					{
 						return super.toString() + "Velocity()";
 					}
 				}
-				
+
 				public static class HitBulletX extends EventInfoHitBullet
 				{
 					public String toString ()
@@ -1707,7 +1821,7 @@ public class Argument implements Generatable, Mutatable
 						return super.toString() + "X()";
 					}
 				}
-				
+
 				public static class HitBulletY extends EventInfoHitBullet
 				{
 					public String toString ()
@@ -1717,46 +1831,52 @@ public class Argument implements Generatable, Mutatable
 				}
 			}
 		}
-		
-		public static class ArgumentDoubleRobotInfo extends ArgumentDouble implements RobotInfo
+
+		public static class ArgumentDoubleRobotInfo extends ArgumentDouble
+																			implements
+																			RobotInfo
 		{
 			public String toString ()
 			{
-				return super.toString() +"this.get";
+				return super.toString() + "this.get";
 			}
-			
-			public static class RobotInfoTurnRemaining extends ArgumentDoubleRobotInfo
+
+			public static class RobotInfoTurnRemaining extends
+														ArgumentDoubleRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "TurnRemaining()";
 				}
 			}
-			
-			public static class RobotInfoDistanceRemaining extends ArgumentDoubleRobotInfo
-			{	
+
+			public static class RobotInfoDistanceRemaining extends
+															ArgumentDoubleRobotInfo
+			{
 				public String toString ()
 				{
 					return super.toString() + "DistanceRemaining()";
 				}
 			}
-			
-			public static class RobotInfoBattleFieldHeight extends ArgumentDoubleRobotInfo
+
+			public static class RobotInfoBattleFieldHeight extends
+															ArgumentDoubleRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "BattleFieldHeight()";
 				}
 			}
-			
-			public static class RobotInfoBattleFieldWidth extends ArgumentDoubleRobotInfo
+
+			public static class RobotInfoBattleFieldWidth extends
+															ArgumentDoubleRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "BattleFieldWidth()";
 				}
 			}
-			
+
 			public static class RobotInfoEnergy extends ArgumentDoubleRobotInfo
 			{
 				public String toString ()
@@ -1764,39 +1884,43 @@ public class Argument implements Generatable, Mutatable
 					return super.toString() + "Energy()";
 				}
 			}
-			
-			public static class RobotInfoGunCoolingRate extends ArgumentDoubleRobotInfo
+
+			public static class RobotInfoGunCoolingRate extends
+														ArgumentDoubleRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "GunCoolingRate()";
 				}
 			}
-			
-			public static class RobotInfoGunHeading extends ArgumentDoubleRobotInfo
+
+			public static class RobotInfoGunHeading extends
+													ArgumentDoubleRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "GunHeading()";
 				}
 			}
-			
-			public static class RobotInfoGunHeat extends ArgumentDoubleRobotInfo
+
+			public static class RobotInfoGunHeat extends
+												ArgumentDoubleRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "GunHeat()";
 				}
 			}
-			
-			public static class RobotInfoHeading extends ArgumentDoubleRobotInfo
+
+			public static class RobotInfoHeading extends
+												ArgumentDoubleRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "Heading()";
 				}
 			}
-			
+
 			public static class RobotInfoHeight extends ArgumentDoubleRobotInfo
 			{
 				public String toString ()
@@ -1804,15 +1928,16 @@ public class Argument implements Generatable, Mutatable
 					return super.toString() + "Height()";
 				}
 			}
-			
-			public static class RobotInfoRadarHeading extends ArgumentDoubleRobotInfo
+
+			public static class RobotInfoRadarHeading extends
+														ArgumentDoubleRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "RadarHeading()";
 				}
 			}
-			
+
 			public static class RobotInfoX extends ArgumentDoubleRobotInfo
 			{
 				public String toString ()
@@ -1820,7 +1945,7 @@ public class Argument implements Generatable, Mutatable
 					return super.toString() + "X()";
 				}
 			}
-			
+
 			public static class RobotInfoY extends ArgumentDoubleRobotInfo
 			{
 				public String toString ()
@@ -1828,16 +1953,18 @@ public class Argument implements Generatable, Mutatable
 					return super.toString() + "Y()";
 				}
 			}
-			
-			public static class RobotInfoGunTurnRemaining extends ArgumentDoubleRobotInfo
+
+			public static class RobotInfoGunTurnRemaining extends
+															ArgumentDoubleRobotInfo
 			{
 				public String toString ()
 				{
 					return super.toString() + "GunTurnRemaining()";
 				}
 			}
-			
-			public static class RobotInfoRadarTurnRemaining extends ArgumentDoubleRobotInfo
+
+			public static class RobotInfoRadarTurnRemaining extends
+															ArgumentDoubleRobotInfo
 			{
 				public String toString ()
 				{
@@ -1845,8 +1972,10 @@ public class Argument implements Generatable, Mutatable
 				}
 			}
 		}
-		
-		public static class ArgumentDoubleConstant extends ArgumentDouble implements Constant
+
+		public static class ArgumentDoubleConstant extends ArgumentDouble
+																			implements
+																			Constant
 		{
 			public static class PI extends ArgumentDoubleConstant
 			{
@@ -1855,7 +1984,7 @@ public class Argument implements Generatable, Mutatable
 					return "Math.PI";
 				}
 			}
-			
+
 			public static class E extends ArgumentDoubleConstant
 			{
 				public String toString ()
@@ -1863,7 +1992,7 @@ public class Argument implements Generatable, Mutatable
 					return "Math.E";
 				}
 			}
-			
+
 			public static class SQRT2 extends ArgumentDoubleConstant
 			{
 				public String toString ()
@@ -1871,10 +2000,10 @@ public class Argument implements Generatable, Mutatable
 					return "Math.sqrt(2)";
 				}
 			}
-			
+
 			public static class RandomConstant extends ArgumentDoubleConstant
 			{
-				double num = (rnd.nextDouble() * 400) - 200;
+				double num = ( rnd.nextDouble() * 400 ) - 200;
 
 				public String toString ()
 				{
@@ -1882,509 +2011,529 @@ public class Argument implements Generatable, Mutatable
 				}
 			}
 		}
-		
-		public static class ArgumentDoubleRandom extends ArgumentDouble implements Random
+
+		public static class ArgumentDoubleRandom extends ArgumentDouble
+																		implements
+																		Random
 		{
-			public static class DoubleRandomNoArguments extends ArgumentDoubleRandom
+			public static class DoubleRandomNoArguments extends
+														ArgumentDoubleRandom
 			{
 				public String toString ()
 				{
 					return "(random.nextDouble() * 200)";
 				}
 			}
-			
-			public static class DoubleRandomBound extends ArgumentDoubleRandom implements Compound.Unary
+
+			public static class DoubleRandomBound extends ArgumentDoubleRandom
+																				implements
+																				Compound.Unary
 			{
 				ArgumentDouble scale;
-				
+
 				public DoubleRandomBound ()
 				{
-					this((ArgumentDouble)generate(ArgumentDouble.class));
+					this((ArgumentDouble) generate(ArgumentDouble.class));
 				}
-				
-				public DoubleRandomBound (ArgumentDouble scale)
+
+				public DoubleRandomBound ( ArgumentDouble scale )
 				{
 					this.scale = scale;
 				}
-				
+
 				public String toString ()
 				{
 					return "(random.nextDouble() * " + scale + ")";
 				}
-				
+
 				public int complexity ()
 				{
 					return super.complexity() + scale.complexity();
 				}
 
-				public Argument getA() 
+				public Argument getA ()
 				{
 					return scale;
 				}
 			}
-			
-			public static class DoubleRandomOriginBound extends ArgumentDoubleRandom implements Compound.Binary
+
+			public static class DoubleRandomOriginBound extends
+														ArgumentDoubleRandom
+																			implements
+																			Compound.Binary
 			{
 				ArgumentDouble origin, scale;
-				
+
 				public DoubleRandomOriginBound ()
 				{
-					this((ArgumentDouble)generate(ArgumentDouble.class),
-							(ArgumentDouble)generate(ArgumentDouble.class));
+					this((ArgumentDouble) generate(ArgumentDouble.class),
+							(ArgumentDouble) generate(ArgumentDouble.class));
 				}
-				
-				public DoubleRandomOriginBound (ArgumentDouble origin, ArgumentDouble scale)
+
+				public DoubleRandomOriginBound ( ArgumentDouble origin,
+													ArgumentDouble scale )
 				{
 					this.origin = origin;
 					this.scale = scale;
 				}
-				
+
 				public String toString ()
 				{
-					return "(" + origin + " + random.nextDouble() * " + scale + ")";
-				}
-				
-				public int complexity ()
-				{
-					return super.complexity() + origin.complexity() + scale.complexity();
+					return "(" + origin + " + random.nextDouble() * " + scale
+							+ ")";
 				}
 
-				public Argument getA() 
+				public int complexity ()
+				{
+					return super.complexity() + origin.complexity()
+							+ scale.complexity();
+				}
+
+				public Argument getA ()
 				{
 					return origin;
 				}
 
-				public Argument getB() 
+				public Argument getB ()
 				{
 					return scale;
 				}
 			}
 		}
-		
-		public static class ArgumentDoubleCompound extends ArgumentDouble implements Compound
+
+		public static class ArgumentDoubleCompound extends ArgumentDouble
+																			implements
+																			Compound
 		{
-			public static class BinaryDouble extends ArgumentDoubleCompound implements Binary
+			public static class BinaryDouble extends ArgumentDoubleCompound
+																			implements
+																			Binary
 			{
 				ArgumentDouble a, b;
-				
+
 				public int complexity ()
 				{
 					return super.complexity() + a.complexity() + b.complexity();
 				}
-				
-				public boolean containsArgumentType (Class<?> type)
+
+				public boolean containsArgumentType ( Class < ? > type )
 				{
-					return super.containsArgumentType(type) || a.containsArgumentType(type) || b.containsArgumentType(type);
+					return super.containsArgumentType(type)
+							|| a.containsArgumentType(type)
+							|| b.containsArgumentType(type);
 				}
-				
+
 				public Argument getA ()
 				{
 					return a;
 				}
-				
+
 				public Argument getB ()
 				{
 					return b;
 				}
-				
+
 				public static class Addition extends BinaryDouble
 				{
 					public Addition ()
 					{
 						this(null, null);
 					}
-					
-					public Addition (ArgumentDouble a, ArgumentDouble b)
+
+					public Addition ( ArgumentDouble a, ArgumentDouble b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "(" + a + " + " + b + ")";
 					}
 				}
-				
+
 				public static class Subtraction extends BinaryDouble
 				{
 					public Subtraction ()
 					{
 						this(null, null);
 					}
-					
-					public Subtraction (ArgumentDouble a, ArgumentDouble b)
+
+					public Subtraction ( ArgumentDouble a, ArgumentDouble b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "(" + a + " - " + b + ")";
 					}
 				}
-				
+
 				public static class Multiplication extends BinaryDouble
 				{
 					public Multiplication ()
 					{
 						this(null, null);
 					}
-					
-					public Multiplication (ArgumentDouble a, ArgumentDouble b)
+
+					public Multiplication ( ArgumentDouble a, ArgumentDouble b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "(" + a + " * " + b + ")";
 					}
 				}
-				
+
 				public static class Division extends BinaryDouble
 				{
 					public Division ()
 					{
 						this(null, null);
 					}
-					
-					public Division (ArgumentDouble a, ArgumentDouble b)
+
+					public Division ( ArgumentDouble a, ArgumentDouble b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "(" + a + " / " + b + ")";
 					}
 				}
-				
+
 				public static class Power extends BinaryDouble
 				{
 					public Power ()
 					{
 						this(null, null);
 					}
-					
-					public Power (ArgumentDouble a, ArgumentDouble b)
+
+					public Power ( ArgumentDouble a, ArgumentDouble b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "Math.pow(" + a + ", " + b + ")";
 					}
 				}
-				
+
 				public static class Minimum extends BinaryDouble
 				{
 					public Minimum ()
 					{
 						this(null, null);
 					}
-					
-					public Minimum (ArgumentDouble a, ArgumentDouble b)
+
+					public Minimum ( ArgumentDouble a, ArgumentDouble b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
-						this.b = b; 
+						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "Math.min(" + a + ", " + b + ")";
 					}
 				}
-				
+
 				public static class Maximum extends BinaryDouble
 				{
 					public Maximum ()
 					{
 						this(null, null);
 					}
-					
-					public Maximum (ArgumentDouble a, ArgumentDouble b)
+
+					public Maximum ( ArgumentDouble a, ArgumentDouble b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "Math.max(" + a + ", " + b + ")";
 					}
 				}
-				
+
 				public static class Hypotenuse extends BinaryDouble
 				{
 					public Hypotenuse ()
 					{
 						this(null, null);
 					}
-					
-					public Hypotenuse (ArgumentDouble a, ArgumentDouble b)
+
+					public Hypotenuse ( ArgumentDouble a, ArgumentDouble b )
 					{
-						if (a == null || b == null)
+						if ( a == null || b == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 							b = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 						this.b = b;
 					}
-					
+
 					public String toString ()
 					{
 						return "Math.hypot(" + a + ", " + b + ")";
 					}
 				}
 			}
-			
-			public static class UnaryDouble extends ArgumentDoubleCompound implements Unary
+
+			public static class UnaryDouble extends ArgumentDoubleCompound
+																			implements
+																			Unary
 			{
 				ArgumentDouble a;
-				
+
 				public int complexity ()
 				{
 					return super.complexity() + a.complexity();
 				}
-				
-				public boolean containsArgumentType (Class<?> type)
+
+				public boolean containsArgumentType ( Class < ? > type )
 				{
-					return super.containsArgumentType(type) || a.containsArgumentType(type);
+					return super.containsArgumentType(type)
+							|| a.containsArgumentType(type);
 				}
-				
+
 				public Argument getA ()
 				{
 					return a;
 				}
-				
+
 				public static class Sine extends UnaryDouble
 				{
 					public Sine ()
 					{
 						this(null);
 					}
-					
-					public Sine (ArgumentDouble a)
+
+					public Sine ( ArgumentDouble a )
 					{
-						if (a == null) 
+						if ( a == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 					}
-					
+
 					public String toString ()
 					{
 						return "Math.sin(Math.toRadians(" + a + "))";
 					}
 				}
-				
+
 				public static class Cosine extends UnaryDouble
 				{
 					public Cosine ()
 					{
 						this(null);
 					}
-					
-					public Cosine (ArgumentDouble a)
+
+					public Cosine ( ArgumentDouble a )
 					{
-						if (a == null) 
+						if ( a == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 					}
-					
+
 					public String toString ()
 					{
 						return "Math.cos(Math.toRadians(" + a + "))";
 					}
 				}
-				
+
 				public static class Tangent extends UnaryDouble
 				{
 					public Tangent ()
 					{
 						this(null);
 					}
-					
-					public Tangent (ArgumentDouble a)
+
+					public Tangent ( ArgumentDouble a )
 					{
-						if (a == null) 
+						if ( a == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 					}
-					
+
 					public String toString ()
 					{
 						return "Math.tan(Math.toRadians(" + a + "))";
 					}
 				}
-				
+
 				public static class SquareRoot extends UnaryDouble
 				{
 					public SquareRoot ()
 					{
 						this(null);
 					}
-					
-					public SquareRoot (ArgumentDouble a)
+
+					public SquareRoot ( ArgumentDouble a )
 					{
-						if (a == null) 
+						if ( a == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 					}
-					
+
 					public String toString ()
 					{
 						return "Math.sqrt(" + a + ")";
 					}
 				}
-				
+
 				public static class CubeRoot extends UnaryDouble
 				{
 					public CubeRoot ()
 					{
 						this(null);
 					}
-					
-					public CubeRoot (ArgumentDouble a)
+
+					public CubeRoot ( ArgumentDouble a )
 					{
-						if (a == null) 
+						if ( a == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 					}
-					
+
 					public String toString ()
 					{
 						return "Math.cbrt(" + a + ")";
 					}
 				}
-				
+
 				public static class Logarithm extends UnaryDouble
 				{
 					public Logarithm ()
 					{
 						this(null);
 					}
-					
-					public Logarithm (ArgumentDouble a)
+
+					public Logarithm ( ArgumentDouble a )
 					{
-						if (a == null) 
+						if ( a == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 					}
-					
+
 					public String toString ()
 					{
 						return "Math.log(" + a + ")";
 					}
 				}
-				
+
 				public static class Exponent extends UnaryDouble
 				{
 					public Exponent ()
 					{
 						this(null);
 					}
-					
-					public Exponent (ArgumentDouble a)
+
+					public Exponent ( ArgumentDouble a )
 					{
-						if (a == null) 
+						if ( a == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 					}
-					
+
 					public String toString ()
 					{
 						return "Math.exp(" + a + ")";
 					}
 				}
-				
+
 				public static class Absolute extends UnaryDouble
 				{
 					public Absolute ()
 					{
 						this(null);
 					}
-					
-					public Absolute (ArgumentDouble a)
+
+					public Absolute ( ArgumentDouble a )
 					{
-						if (a == null) 
+						if ( a == null )
 						{
 							a = (ArgumentDouble) generate(ArgumentDouble.class);
 						}
-						
+
 						this.a = a;
 					}
-					
+
 					public String toString ()
 					{
 						return "Math.abs(" + a + ")";
@@ -2392,55 +2541,65 @@ public class Argument implements Generatable, Mutatable
 				}
 			}
 		}
-		
-		public static class ArgumentDoubleVariable extends ArgumentDouble implements Variable
+
+		public static class ArgumentDoubleVariable extends ArgumentDouble
+																			implements
+																			Variable
 		{
 			public int id;
-			
+
 			public ArgumentDoubleVariable ()
 			{
 				id = 0;
 			}
-			
+
 			public String toString ()
 			{
 				return "doubles.get(" + id + ")";
 			}
-			
-			public void setID (int id) 
+
+			public void setID ( int id )
 			{
 				this.id = id;
 			}
 		}
 	}
-	//
-	//
+
 	public static class ArgumentString extends Argument
 	{
-		public static abstract class ArgumentStringEventInfo extends ArgumentString implements EventInfo
+		public static abstract class ArgumentStringEventInfo extends
+															ArgumentString
+																			implements
+																			EventInfo
 		{
 			public String toString ()
 			{
 				return "event.get";
 			}
-			
-			public static class EventInfoName extends ArgumentStringEventInfo implements Name
+
+			public static class EventInfoName extends ArgumentStringEventInfo
+																				implements
+																				Name
 			{
 				public String toString ()
 				{
 					return super.toString() + "Name()";
 				}
 			}
-			
-			public static class BulletName extends ArgumentStringEventInfo implements Bullet
+
+			public static class BulletName extends ArgumentStringEventInfo
+																			implements
+																			Bullet
 			{
 				public String toString ()
 				{
 					return super.toString() + "Bullet().getName()";
 				}
 			}
-			
-			public static class HitBulletName extends ArgumentStringEventInfo implements HitBullet
+
+			public static class HitBulletName extends ArgumentStringEventInfo
+																				implements
+																				HitBullet
 			{
 				public String toString ()
 				{
@@ -2448,15 +2607,16 @@ public class Argument implements Generatable, Mutatable
 				}
 			}
 		}
-		
-		public static class RobotInfoName extends ArgumentString implements RobotInfo
+
+		public static class RobotInfoName extends ArgumentString implements
+																RobotInfo
 		{
 			public String toString ()
 			{
 				return "this.getName()";
 			}
 		}
-		
+
 		public static class Null extends ArgumentString implements Constant
 		{
 			public String toString ()
@@ -2464,26 +2624,27 @@ public class Argument implements Generatable, Mutatable
 				return "null";
 			}
 		}
-		
-		public static class ArgumentStringVariable extends ArgumentString implements Variable
+
+		public static class ArgumentStringVariable extends ArgumentString
+																			implements
+																			Variable
 		{
 			public int id;
-			
+
 			public ArgumentStringVariable ()
 			{
 				id = 0;
 			}
-			
+
 			public String toString ()
 			{
 				return "strings.get(" + id + ")";
 			}
-			
-			public void setID (int id) 
+
+			public void setID ( int id )
 			{
 				this.id = id;
 			}
 		}
 	}
-	//
 }
