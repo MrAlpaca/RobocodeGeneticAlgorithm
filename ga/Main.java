@@ -28,9 +28,6 @@ public class Main
 									stringsNum);
 							Argument curr = Argument.chromosomeGenerate(ArgumentBoolean.class, cNum, booleansNum, integersNum, doublesNum, stringsNum);
 							System.out.println("Boolean argument generated: " + curr);
-							System.out.println("Mutating current at a probability of 1");
-							curr.mutate(1);
-							System.out.println("After mutation: " + curr);
 						}
 					}
 				}
@@ -56,9 +53,6 @@ public class Main
 									stringsNum);
 							Argument curr = Argument.chromosomeGenerate(ArgumentInteger.class, cNum, booleansNum, integersNum, doublesNum, stringsNum);
 							System.out.println("Integer argument generated: " + curr);
-							System.out.println("Mutating current at a probability of 1");
-							curr.mutate(1);
-							System.out.println("After mutation: " + curr);
 						}
 					}
 				}
@@ -84,9 +78,6 @@ public class Main
 									stringsNum);
 							Argument curr = Argument.chromosomeGenerate(ArgumentDouble.class, cNum, booleansNum, integersNum, doublesNum, stringsNum);
 							System.out.println("Double argument generated: " + curr);
-							System.out.println("Mutating current at a probability of 1");
-							curr.mutate(1);
-							System.out.println("After mutation: " + curr);
 						}
 					}
 				}
@@ -112,9 +103,6 @@ public class Main
 									stringsNum);
 							Argument curr = Argument.chromosomeGenerate(ArgumentString.class, cNum, booleansNum, integersNum, doublesNum, stringsNum);
 							System.out.println("String argument generated: " + curr);
-							System.out.println("Mutating current at a probability of 1");
-							curr.mutate(1);
-							System.out.println("After mutation: " + curr);
 						}
 					}
 				}

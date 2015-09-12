@@ -98,8 +98,6 @@ import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringEventIn
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.RobotInfoName;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.ArgumentStringVariable;
 import RobocodeGeneticAlgorithm.ga.Argument.ArgumentString.Null;
-import RobocodeGeneticAlgorithm.ga.Argument.Compound.Binary;
-import RobocodeGeneticAlgorithm.ga.Argument.Compound.Unary;
 import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Bearing;
 import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Bullet;
 import RobocodeGeneticAlgorithm.ga.Argument.EventInfo.Distance;
@@ -118,45 +116,8 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class Argument implements Generatable, Mutatable
+public class Argument extends Mutatable implements Generatable
 {
-	public boolean containsArgumentType ( Class < ? > type )
-	{
-		return ( type.isInstance(this) );
-	}
-
-	public boolean isArgumentType ( Class < ? > type )
-	{
-		return ( type.isInstance(this) );
-	}
-
-	public String toString ()
-	{
-		return "";
-	}
-
-	public int complexity ()
-	{
-		return 1;
-	}
-
-	public void mutate ( double probability )
-	{
-		if ( this instanceof Unary )
-		{
-			( (Unary) this ).getA().mutate(probability);
-
-			if ( this instanceof Binary )
-			{
-				( (Binary) this ).getB().mutate(probability);
-			}
-		}
-		if ( rnd.nextDouble() < probability )
-		{
-			mutateArgument(this);
-		}
-	}
-
 	private static Generator < Argument > generator;
 
 	private static java.util.Random rnd = new java.util.Random();
@@ -650,30 +611,6 @@ public class Argument implements Generatable, Mutatable
 		}
 	}
 
-	public static void mutateArgument ( Argument a )
-	{
-		if ( a instanceof ArgumentBoolean )
-		{
-			a = generate(ArgumentBoolean.class);
-		}
-
-		else if ( a instanceof ArgumentInteger )
-		{
-			a = generate(ArgumentInteger.class);
-		}
-
-		else if ( a instanceof ArgumentDouble )
-		{
-			a = generate(ArgumentDouble.class);
-		}
-
-		else if ( a instanceof ArgumentString )
-		{
-			a = generate(ArgumentString.class);
-		}
-
-	}
-
 	public static interface EventInfo
 	{
 		public static interface Bullet extends EventInfo
@@ -939,11 +876,11 @@ public class Argument implements Generatable, Mutatable
 					return super.complexity() + a.complexity() + b.complexity();
 				}
 
-				public boolean containsArgumentType ( Class < ? > type )
+				public boolean containsType ( Class < ? > type )
 				{
-					return super.containsArgumentType(type)
-							|| a.containsArgumentType(type)
-							|| b.containsArgumentType(type);
+					return super.containsType(type)
+							|| a.containsType(type)
+							|| b.containsType(type);
 				}
 
 				public Argument getA ()
@@ -1185,10 +1122,10 @@ public class Argument implements Generatable, Mutatable
 					return super.complexity() + a.complexity();
 				}
 
-				public boolean containsArgumentType ( Class < ? > type )
+				public boolean containsType ( Class < ? > type )
 				{
-					return super.containsArgumentType(type)
-							|| a.containsArgumentType(type);
+					return super.containsType(type)
+							|| a.containsType(type);
 				}
 
 				public Argument getA ()
@@ -1470,11 +1407,11 @@ public class Argument implements Generatable, Mutatable
 					return super.complexity() + a.complexity() + b.complexity();
 				}
 
-				public boolean containsArgumentType ( Class < ? > type )
+				public boolean containsType ( Class < ? > type )
 				{
-					return super.containsArgumentType(type)
-							|| a.containsArgumentType(type)
-							|| b.containsArgumentType(type);
+					return super.containsType(type)
+							|| a.containsType(type)
+							|| b.containsType(type);
 				}
 
 				public Argument getA ()
@@ -1617,10 +1554,10 @@ public class Argument implements Generatable, Mutatable
 					return super.complexity() + a.complexity();
 				}
 
-				public boolean containsArgumentType ( Class < ? > type )
+				public boolean containsType ( Class < ? > type )
 				{
-					return super.containsArgumentType(type)
-							|| a.containsArgumentType(type);
+					return super.containsType(type)
+							|| a.containsType(type);
 				}
 
 				public Argument getA ()
@@ -2116,11 +2053,11 @@ public class Argument implements Generatable, Mutatable
 					return super.complexity() + a.complexity() + b.complexity();
 				}
 
-				public boolean containsArgumentType ( Class < ? > type )
+				public boolean containsType ( Class < ? > type )
 				{
-					return super.containsArgumentType(type)
-							|| a.containsArgumentType(type)
-							|| b.containsArgumentType(type);
+					return super.containsType(type)
+							|| a.containsType(type)
+							|| b.containsType(type);
 				}
 
 				public Argument getA ()
@@ -2345,10 +2282,10 @@ public class Argument implements Generatable, Mutatable
 					return super.complexity() + a.complexity();
 				}
 
-				public boolean containsArgumentType ( Class < ? > type )
+				public boolean containsType ( Class < ? > type )
 				{
-					return super.containsArgumentType(type)
-							|| a.containsArgumentType(type);
+					return super.containsType(type)
+							|| a.containsType(type);
 				}
 
 				public Argument getA ()
